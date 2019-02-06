@@ -1,3 +1,7 @@
 michael:
   name: Michael Example
   password_digest: <%= User.digest("z8aKm$@3rTEp#+bs") %>
+
+archer:
+  name: Sterling Archer
+  password_digest: <%= User.digest("z8aKm$@3rTEp#+bs") %>
