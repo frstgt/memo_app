@@ -74,4 +74,12 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.valid?
   end
 
+  test "associated notes should be destroyed" do
+    @user.save
+    @user.notes.create!(title: "Lorem ipsum")
+    assert_difference 'Note.count', -1 do
+      @user.destroy
+    end
+  end
+
 end
