@@ -164,7 +164,11 @@ input {
   margin: 30px 0 0 0;
 }
 
-/* notes */
+/* notes, memos */
+
+.new_command {
+  float: right;
+} 
 
 .notes {
   list-style: none;
@@ -175,17 +179,16 @@ input {
   }
   .title {
     display: block;
-    margin-left: 60px;
   }
   .description {
     display: block;
-    margin-left: 60px;
   }
   .timestamp {
     color: $gray-light;
-    display: block;
-    margin-left: 60px;
   }
+  .edit_command {
+    float: right;
+  }  
 }
 
 aside {
@@ -199,6 +202,24 @@ span.picture {
   margin-top: 10px;
   input {
     border: 0;
+  }
+}
+
+.memos {
+  list-style: none;
+  padding: 0;
+  li {
+    padding: 10px 0;
+    border-top: 1px solid #e8e8e8;
+  }
+  .title {
+    display: block;
+  }
+  .description {
+    display: block;
+  }
+  .edit_command {
+    float: right;
   }
 }
 

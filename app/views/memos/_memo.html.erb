@@ -1,0 +1,15 @@
+<li id="memo-<%= memo.id %>">
+  <span class="number">(<%= memo.number %>)</span>
+
+  <span class="content">
+    <%= memo.content %>
+    <%= image_tag memo.picture.url if memo.picture? %>
+  </span>
+
+
+  <span class="edit_command">
+    <%= link_to "[edit]", edit_note_memo_path(@note, memo) %>
+    <%= link_to "[delete]", note_memo_path(@note), method: :delete,
+                                     data: { confirm: "You sure?" } %>
+  </span>
+</li>

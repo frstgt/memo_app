@@ -12,4 +12,9 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
 
+  resources :notes
+  resources :notes do
+    resources :memos,      only: [:new, :create, :edit, :update]
+  end
+
 end

@@ -1,5 +1,7 @@
 class Note < ApplicationRecord
   belongs_to :user
+  has_many :memos, dependent: :destroy
+
   default_scope -> { order(updated_at: :desc) }
 
   validates :user_id, presence: true

@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190206135837) do
+ActiveRecord::Schema.define(version: 20190211114006) do
+
+  create_table "memos", force: :cascade do |t|
+    t.integer "number"
+    t.integer "note_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "content"
+    t.string "picture"
+    t.index ["note_id", "number"], name: "index_memos_on_note_id_and_number"
+    t.index ["note_id"], name: "index_memos_on_note_id"
+  end
 
   create_table "notes", force: :cascade do |t|
     t.string "title"

@@ -1,6 +1,7 @@
 orange:
   title: "I just ate an orange!"
   updated_at: <%= 10.minutes.ago %>
+  user: michael
 
 tau_manifesto:
   title: "Check out the @tauday site by @mhartl: http://tauday.com"

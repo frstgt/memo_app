@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  number: 3
+  content: MyText
+  picture: MyString
+  note: one
+
+two:
+  number: 2
+  content: MyText
+  picture: MyString
+  note: two
+
+thr:
+  number: 1
+  content: MyText
+  picture: MyString
+  note: two
