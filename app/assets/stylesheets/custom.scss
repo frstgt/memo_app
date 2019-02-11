@@ -166,9 +166,15 @@ input {
 
 /* notes, memos */
 
-.new_command {
-  float: right;
-} 
+.header {
+  display: block;
+  .count {
+    color: $gray-light;
+  }
+  .new_command {
+    float: right;
+  }
+}
 
 .notes {
   list-style: none;
@@ -183,12 +189,15 @@ input {
   .description {
     display: block;
   }
-  .timestamp {
-    color: $gray-light;
+  .footer {
+    display: block;
+    .timestamp {
+      color: $gray-light;
+    }
+    .edit_command {
+      float: right;
+    }
   }
-  .edit_command {
-    float: right;
-  }  
 }
 
 aside {
@@ -218,8 +227,17 @@ span.picture {
   .description {
     display: block;
   }
-  .edit_command {
-    float: right;
+  .footer {
+    display: block;
+    .timestamp {
+      color: $gray-light;
+    }
+    .number {
+      color: $gray-light;
+    }
+    .edit_command {
+      float: right;
+    }
   }
 }
 

@@ -18,7 +18,7 @@ class MemosController < ApplicationController
   end
 
   def edit
-    @note = @note.memos.find(params[:id])
+    @memo = @note.memos.find(params[:id])
   end
 
   def update

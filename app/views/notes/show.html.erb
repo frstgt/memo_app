@@ -13,13 +13,16 @@
   </aside>
 
   <div class="col-md-8">
-    <span class="new_command">
-      <%= link_to "[home]", current_user %>
-      <%= link_to "[new]", new_note_memo_path(@note) %>
+    <span class="header">
+      <span class="count">
+        Memos (<%= @note.memos.count %>)
+      </span>
+      <span class="new_command">
+        <%= link_to "[new]", new_note_memo_path(@note) %>
+      </span>
     </span>
 
     <% if @note.memos.any? %>
-      <h3>Memos (<%= @note.memos.count %>)</h3>
       <ol class="notes">
         <%= render @memos %>
       </ol>

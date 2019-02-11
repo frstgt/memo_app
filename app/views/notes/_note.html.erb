@@ -1,13 +1,16 @@
 <li id="note-<%= note.id %>">
   <span class="title"><b><%= link_to note.title, note %></b></span>
   <span class="description"><%= note.description %></span>
-  <span class="timestamp">
-    Created <%= time_ago_in_words(note.created_at) %> ago.
-    Updated <%= time_ago_in_words(note.updated_at) %> ago.
-  </span>
-  <span class="edit_command">
-    <%= link_to "[edit]", edit_note_path(note) %>
-    <%= link_to "[delete]", note, method: :delete,
+
+  <span class="footer">
+    <span class="timestamp">
+      Created <%= time_ago_in_words(note.created_at) %> ago.
+      Updated <%= time_ago_in_words(note.updated_at) %> ago.
+    </span>
+    <span class="edit_command">
+      <%= link_to "[edit]", edit_note_path(note) %>
+      <%= link_to "[delete]", note, method: :delete,
                                      data: { confirm: "You sure?" } %>
+    </span>
   </span>
 </li>

@@ -1,15 +1,23 @@
 <li id="memo-<%= memo.id %>">
-  <span class="number">(<%= memo.number %>)</span>
 
   <span class="content">
-    <%= memo.content %>
+    <%= markdown(memo.content).html_safe %>
     <%= image_tag memo.picture.url if memo.picture? %>
+    <%= memo.picture.url %>
   </span>
 
+  <span class="footer">
+    <span class="timestamp">
+      Created <%= time_ago_in_words(memo.created_at) %> ago.
+      Updated <%= time_ago_in_words(memo.updated_at) %> ago.
+    </span>
 
-  <span class="edit_command">
-    <%= link_to "[edit]", edit_note_memo_path(@note, memo) %>
-    <%= link_to "[delete]", note_memo_path(@note), method: :delete,
-                                     data: { confirm: "You sure?" } %>
+    <span class="number">(<%= memo.number %>)</span>
+
+    <span class="edit_command">
+      <%= link_to "[edit]", edit_note_memo_path(@note, memo) %>
+      <%= link_to "[delete]", note_memo_path(@note), method: :delete,
+                                       data: { confirm: "You sure?" } %>
+    </span>
   </span>
 </li>
