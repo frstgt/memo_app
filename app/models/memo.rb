@@ -8,6 +8,7 @@ class Memo < ApplicationRecord
   validates :note_id, presence: true
   validates :content, presence: true,
                       length: { maximum: 1000 }
+  validates :number, presence: true
 
   private
 

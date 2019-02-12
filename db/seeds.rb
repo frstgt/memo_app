@@ -12,17 +12,25 @@ User.create!(name:  "Example User",
 end
 
 users = User.order(:created_at)
-10.times do
-  title = Faker::Book.title
-  description = Faker::Lorem.sentence(20)
-  users.each { |user| user.notes.create!(title: title,
-                                          description: description) }
-end
+users.each { |user|
 
-notes = Note.order(:created_at)
-10.times do
-  content = Faker::Lorem.sentence(20)
-  notes.each { |note| note.memos.create!(type: TextMemo, content: content, user: note.user) }
-#  picture = 
-#  notes.each { |note| note.memos.create!(type: ImageMemo, picture: picture) }
-end
+  10.times do
+    title = Faker::Book.title
+    description = Faker::Lorem.sentence(20)
+    user.notes.create!(title: title, description: description)
+  end
+}
+
+users = User.order(:created_at)
+users.each { |user|
+  notes = user.notes
+  notes.each { |note|
+
+      number = 1
+      10.times do
+        content = Faker::Lorem.sentence(20)
+        note.memos.create!(content: content, number: number)
+        number += 1
+      end
+    }
+}

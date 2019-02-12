@@ -3,16 +3,14 @@
   <span class="content">
     <%= markdown(memo.content).html_safe %>
     <%= image_tag memo.picture.url if memo.picture? %>
-    <%= memo.picture.url %>
   </span>
 
   <span class="footer">
     <span class="timestamp">
-      Created <%= time_ago_in_words(memo.created_at) %> ago.
-      Updated <%= time_ago_in_words(memo.updated_at) %> ago.
+      created <%= time_ago_in_words(memo.created_at) %> ago.
+      updated <%= time_ago_in_words(memo.updated_at) %> ago.
+      (<%= memo.number %>)
     </span>
-
-    <span class="number">(<%= memo.number %>)</span>
 
     <span class="edit_command">
       <%= link_to "[edit]", edit_note_memo_path(@note, memo) %>

@@ -9,6 +9,10 @@
     <%= f.label :picture %>
     <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
   </span>
+  <span class="field">
+    <%= f.label :number %>
+    <%= f.number_field :number, min: '1', max: "#{@max}", value: "#{@value}", class: 'form-control' %>
+  </span>
 
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
 <% end %>

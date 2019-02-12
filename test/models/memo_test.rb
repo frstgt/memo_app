@@ -4,7 +4,7 @@ class MemoTest < ActiveSupport::TestCase
 
   def setup
     @note = notes(:orange)
-    @memo = @note.memos.build(content: "Test Memo")
+    @memo = @note.memos.build(content: "Test Memo", number: '1')
   end
 
   test "should be valid" do
