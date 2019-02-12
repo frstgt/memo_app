@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'pen_names/new'
+
   root 'static_pages#home'
   get  '/help',    to: 'static_pages#help'
   get  '/about',   to: 'static_pages#about'
@@ -16,5 +18,7 @@ Rails.application.routes.draw do
   resources :notes do
     resources :memos,      only: [:new, :create, :edit, :update]
   end
+
+  resources :pen_names,    only: [:new, :create, :edit, :update]
 
 end

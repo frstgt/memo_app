@@ -4,6 +4,11 @@
   <%= f.label :title %>
   <%= f.text_field :title, class: 'form-control' %>
 
+  <%= f.label :author %>
+  <%= f.select :pen_name_id,
+               current_user.pen_names.collect { |pen_name| [pen_name.name, pen_name.id] },
+                { include_blank: "" } %>
+
   <%= f.label :description %>
   <%= f.text_area :description, rows: '10', class: 'form-control' %>
 

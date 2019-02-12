@@ -109,6 +109,10 @@ aside {
   section.user_info {
     margin-top: 20px;
   }
+  section.note_info {
+    margin-top: 20px;
+  }
+
   section {
     padding: 10px 0;
     margin-top: 20px;
@@ -127,6 +131,9 @@ aside {
       letter-spacing: -1px;
       margin-bottom: 3px;
       margin-top: 0px;
+    }
+    .timestamp {
+      color: $gray-light;
     }
   }
 }
@@ -164,7 +171,7 @@ input {
   margin: 30px 0 0 0;
 }
 
-/* notes, memos */
+/* notes, memos, pen_names */
 
 .header {
   display: block;
@@ -184,6 +191,10 @@ input {
     border-top: 1px solid #e8e8e8;
   }
   .title {
+    display: block;
+  }
+  .author {
+    margin-left: 20px;
     display: block;
   }
   .description {
@@ -215,6 +226,30 @@ span.picture {
 }
 
 .memos {
+  list-style: none;
+  padding: 0;
+  li {
+    padding: 10px 0;
+    border-top: 1px solid #e8e8e8;
+  }
+  .title {
+    display: block;
+  }
+  .description {
+    display: block;
+  }
+  .footer {
+    display: block;
+    .timestamp {
+      color: $gray-light;
+    }
+    .edit_command {
+      float: right;
+    }
+  }
+}
+
+.pen_names {
   list-style: none;
   padding: 0;
   li {

@@ -1,10 +1,12 @@
 <li id="note-<%= note.id %>">
   <span class="title"><b><%= link_to note.title, note %></b></span>
+  <% if note.author %>
+    <span class="author"><i>by <%= note.author %></i></span>
+  <% end %>
   <span class="description"><%= note.description %></span>
 
   <span class="footer">
     <span class="timestamp">
-      created <%= time_ago_in_words(note.created_at) %> ago.
       updated <%= time_ago_in_words(note.updated_at) %> ago.
     </span>
     <span class="edit_command">

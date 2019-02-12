@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :notes, dependent: :destroy
+  has_many :pen_names, dependent: :destroy
 
   validates :name,  presence: true,
                     length: { minimum: 8, maximum: 32 },

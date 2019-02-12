@@ -2,14 +2,39 @@
 <div class="row">
 
   <aside class="col-md-4">
+
     <section class="user_info">
       <h1>
         <%= @user.name %>
       </h1>
+      <span class="timestamp">
+        created <%= time_ago_in_words(@user.created_at) %> ago.
+        updated <%= time_ago_in_words(@user.updated_at) %> ago.
+      </span>
     </section>
+
+    <hr>
+
+    <span class="header">
+      <span class="count">
+        pen names (<%= @user.pen_names.count %>)
+      </span>
+      <span class="new_command">
+        <%= link_to "[new]", new_pen_name_path %>
+      </span>
+    </span>
+
+    <% if @user.pen_names.any? %>
+      <ol class="pen_names">
+        <%= render @pen_names %>
+      </ol>
+      <%= will_paginate @pen_names %>
+    <% end %>
+
   </aside>
 
   <div class="col-md-8">
+
     <span class="header">
       <span class="count">
         notes (<%= @user.notes.count %>)
