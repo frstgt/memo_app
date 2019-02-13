@@ -10,7 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190212115604) do
+ActiveRecord::Schema.define(version: 20190212211705) do
+
+  create_table "groups", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "picture"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_groups_on_name", unique: true
+  end
+
+  create_table "memberships", force: :cascade do |t|
+    t.integer "group_id"
+    t.integer "member_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id", "member_id"], name: "index_memberships_on_group_id_and_member_id", unique: true
+    t.index ["group_id"], name: "index_memberships_on_group_id"
+    t.index ["member_id"], name: "index_memberships_on_member_id"
+  end
 
   create_table "memos", force: :cascade do |t|
     t.integer "number"

@@ -4,11 +4,9 @@
   <aside class="col-md-4">
 
     <section class="user_info">
-      <h1>
-        <%= @user.name %>
-      </h1>
+      <span class="name">(u) <i><%= @user.name %></i></span>
       <span class="timestamp">
-        created <%= time_ago_in_words(@user.created_at) %> ago.
+        created <%= time_ago_in_words(@user.created_at) %> ago.<br>
         updated <%= time_ago_in_words(@user.updated_at) %> ago.
       </span>
     </section>

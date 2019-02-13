@@ -1,0 +1,34 @@
+<% provide(:title, @group.name) %>
+<div class="row">
+
+  <aside class="col-md-4">
+    <section class="group_info">
+      <%= group_icon_for(@group, {size: 40}) %>
+      <span class="name">(g) <i><%= @group.name %></i></span>
+      <span class="description"><%= @group.description %></span>
+      <span class="timestamp">
+        created <%= time_ago_in_words(@group.created_at) %> ago.<br>
+        updated <%= time_ago_in_words(@group.updated_at) %> ago.
+      </span>
+    </section>
+
+    <hr>
+
+    <span class="header">
+      <span class="count">
+        members (<%= @group.members.count %>)
+      </span>
+      <span class="new_command">
+        <%= link_to "[new]", "#" %>
+      </span>
+    </span>
+
+    <% if @group.members.any? %>
+      <ol class="pen_names">
+        <%= render @members %>
+      </ol>
+      <%= will_paginate @members %>
+    <% end %>
+  </aside>
+
+</div>

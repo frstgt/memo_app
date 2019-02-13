@@ -1,0 +1,34 @@
+<% provide(:title, @pen_name.name) %>
+<div class="row">
+
+  <aside class="col-md-4">
+    <section class="pen_name_info">
+      <%= pen_name_icon_for(@pen_name, {size: 40}) %>
+      <span class="name">(p) <i><%= @pen_name.name %></i></span>
+      <span class="description"><%= @pen_name.description %></span>
+      <span class="timestamp">
+        created <%= time_ago_in_words(@pen_name.created_at) %> ago.<br>
+        updated <%= time_ago_in_words(@pen_name.updated_at) %> ago.
+      </span>
+    </section>
+
+    <hr>
+
+    <span class="header">
+      <span class="count">
+        groups (<%= @pen_name.groups.count %>)
+      </span>
+      <span class="new_command">
+        <%= link_to "[new]", new_group_path %>
+      </span>
+    </span>
+
+    <% if @pen_name.groups.any? %>
+      <ol class="pen_names">
+        <%= render @groups %>
+      </ol>
+      <%= will_paginate @groups %>
+    <% end %>
+  </aside>
+
+</div>

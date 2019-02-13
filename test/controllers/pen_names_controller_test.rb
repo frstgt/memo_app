@@ -7,9 +7,9 @@ class PenNamesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get new" do
-    skip "what's wrong?"
     log_in_as(@user)
-    get pen_names_new_url
+    p is_logged_in?
+    get new_pen_name_url
     assert_response :success
   end
 
