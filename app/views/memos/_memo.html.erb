@@ -13,7 +13,7 @@
 
     <span class="edit_command">
       <%= link_to "[edit]", edit_note_memo_path(@note, memo) %>
-      <%= link_to "[delete]", note_memo_path(@note), method: :delete,
+      <%= link_to "[delete]", note_memo_path(@note, memo), method: :delete,
                                        data: { confirm: "You sure?" } %>
     </span>
   </span>

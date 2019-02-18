@@ -4,14 +4,18 @@ class GroupsController < ApplicationController
 
   def show
     @group = Group.find_by(id: params[:id])
-
-    @members = @group.members.paginate(page: params[:page])
+    @leading_members = @group.leading_members
+  end
+  def members
+    @group = Group.find_by(id: params[:id])
+    @leading_members = @group.leading_members    
+    @general_members = @group.general_members.paginate(page: params[:page])    
   end
 
   private
 
     def note_params
-      params.require(:note).permit(:title, :description, :pen_name_id)
+      params.require(:note).permit(:title, :description, :pen_name_id, :picture)
     end
 
     def correct_member

@@ -17,10 +17,13 @@ Rails.application.routes.draw do
   resources :pen_names
 
   resources :groups
+  resources :groups do
+    get :members, on: :member
+  end
 
   resources :notes
   resources :notes do
-    resources :memos,      only: [:new, :create, :edit, :update]
+    resources :memos,      only: [:new, :create, :edit, :update, :destroy]
   end
 
 end

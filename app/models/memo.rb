@@ -9,6 +9,7 @@ class Memo < ApplicationRecord
   validates :content, presence: true,
                       length: { maximum: 1000 }
   validates :number, presence: true
+  validate  :picture_size
 
   private
 

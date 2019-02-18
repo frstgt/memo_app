@@ -1,19 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+apple:
   number: 3
-  content: MyText
-  picture: MyString
-  note: one
+  content: apple content
+  picture: apple picture
+  note: cat
 
-two:
+banana:
   number: 2
-  content: MyText
-  picture: MyString
-  note: two
+  content: banana content
+  picture: banana picture
+  note: cat
 
-thr:
+top_number:
   number: 1
-  content: MyText
-  picture: MyString
-  note: two
+  content: cocoa content
+  picture: cocoa picture
+  note: cat

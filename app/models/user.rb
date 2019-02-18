@@ -19,4 +19,12 @@ class User < ApplicationRecord
     BCrypt::Password.create(string, cost: cost)
   end
 
+  def groups
+    g = []
+    for p in self.pen_names do
+      g |= p.groups
+    end
+    g
+  end
+
 end

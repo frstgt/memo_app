@@ -21,21 +21,26 @@
         <%= render :partial => "member", :collection => @leading_members %>
       </ol>
     <% end %>
-
   </aside>
 
   <div class="col-md-8">
 
     <span class="header">
       <span class="count">
-        group notes (<%= @group.members.count %>)
+        general members (<%= @group.general_members.count %>)
       </span>
       <span class="new_command">
-        <%= link_to "[members]", members_group_path(@group) %>
-        <%= link_to "[new]", "#" %>
+        <%= link_to "[note]", @group %>
+        <%= link_to "[new]", new_note_path %>
       </span>
     </span>
 
+    <% if @group.general_members.any? %>
+      <ol class="members">
+        <%= render :partial => "member", :collection => @general_members %>
+      </ol>
+      <%= will_paginate @general_members %>
+    <% end %>
   </div>
 
 </div>

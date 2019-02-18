@@ -4,7 +4,7 @@ class PenNamesController < ApplicationController
 
   def show
     @pen_name = current_user.pen_names.find(params[:id])
-    @notes = @pen_name.notes
+    @notes = @pen_name.notes.paginate(page: params[:page])
     @groups = @pen_name.groups.paginate(page: params[:page])
   end
 
@@ -45,7 +45,7 @@ class PenNamesController < ApplicationController
   private
 
     def pen_name_params
-      params.require(:pen_name).permit(:name, :description)
+      params.require(:pen_name).permit(:name, :description, :picture)
     end
 
     def correct_user

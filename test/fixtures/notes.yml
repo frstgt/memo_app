@@ -1,13 +1,13 @@
-orange:
+cat:
   title: "I just ate an orange!"
   updated_at: <%= 10.minutes.ago %>
   user: michael
 
-tau_manifesto:
+dog:
   title: "Check out the @tauday site by @mhartl: http://tauday.com"
   updated_at: <%= 3.years.ago %>
 
-cat_video:
+pig:
   title: "Sad cats are sad: http://youtu.be/PKffm2uI4dk"
   updated_at: <%= 2.hours.ago %>
 

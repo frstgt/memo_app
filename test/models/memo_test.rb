@@ -3,7 +3,7 @@ require 'test_helper'
 class MemoTest < ActiveSupport::TestCase
 
   def setup
-    @note = notes(:orange)
+    @note = notes(:cat)
     @memo = @note.memos.build(content: "Test Memo", number: '1')
   end
 
@@ -27,7 +27,7 @@ class MemoTest < ActiveSupport::TestCase
   end
 
   test "order should be least number first" do
-    assert_equal memos(:thr), Memo.first
+    assert_equal memos(:top_number), Memo.first
   end
 
 end
