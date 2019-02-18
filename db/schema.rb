@@ -10,7 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190212211705) do
+ActiveRecord::Schema.define(version: 20190218114831) do
+
+  create_table "books", force: :cascade do |t|
+    t.string "title"
+    t.string "author"
+    t.text "description"
+    t.string "picture"
+    t.integer "protection"
+    t.integer "user_id"
+    t.integer "pen_name_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pen_name_id"], name: "index_books_on_pen_name_id"
+    t.index ["user_id"], name: "index_books_on_user_id"
+  end
 
   create_table "groups", force: :cascade do |t|
     t.string "name"
@@ -50,9 +64,19 @@ ActiveRecord::Schema.define(version: 20190212211705) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "pen_name_id"
+    t.string "picture"
     t.index ["pen_name_id"], name: "index_notes_on_pen_name_id"
     t.index ["user_id", "updated_at"], name: "index_notes_on_user_id_and_updated_at"
     t.index ["user_id"], name: "index_notes_on_user_id"
+  end
+
+  create_table "pages", force: :cascade do |t|
+    t.text "content"
+    t.string "picture"
+    t.integer "book_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_pages_on_book_id"
   end
 
   create_table "pen_names", force: :cascade do |t|

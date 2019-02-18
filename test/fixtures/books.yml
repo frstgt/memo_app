@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyText
+  author: MyString
+  picture: MyString
+  protection: 1
+  user: one
+  pen_name: one
+
+two:
+  title: MyString
+  description: MyText
+  author: MyString
+  picture: MyString
+  protection: 1
+  user: two
+  pen_name: two

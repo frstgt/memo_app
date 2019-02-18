@@ -26,4 +26,13 @@ Rails.application.routes.draw do
     resources :memos,      only: [:new, :create, :edit, :update, :destroy]
   end
 
+  resources :books,        only: [:new, :create]
+  resources :books do
+    resources :pages,      only: [:new, :create]
+  end
+
+  # gnotes, gmemos
+
+  # gbooks, gpages
+
 end
