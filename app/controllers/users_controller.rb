@@ -9,6 +9,12 @@ class UsersController < ApplicationController
     @groups = @user.groups
   end
 
+  def books
+    @user = User.find(params[:id])
+    @private_books = @user.books.where(protection: Book::PRIVATE)
+    @books = @private_books.paginate(page: params[:page])
+  end
+
   def new
     @user = User.new
   end

@@ -12,16 +12,16 @@
         groups (<%= @pen_name.groups.count %>)
       </span>
       <span class="new_command">
-        <%= link_to "[new]", new_group_path %>
+        <%= link_to "[new]", "#" %>
       </span>
     </span>
 
     <% if @pen_name.groups.any? %>
-      <ol class="pen_names">
+      <ol class="groups">
         <%= render @groups %>
       </ol>
-      <%= will_paginate @groups %>
     <% end %>
+
   </aside>
 
   <div class="col-md-8">

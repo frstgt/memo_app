@@ -1,6 +1,5 @@
 <li id="member-<%= member.id %>">
-  <%= pen_name_icon_for(member, {size: 40}) %>
-  <span class="position">(<%= @group.position(member) %>)</span>
+  <span class="position">(<%= @group.position(member).downcase %>)</span><br>
   <span class="name"><i><%= member.name %></i></span>
   <span class="description"><%= member.description %></span>
 

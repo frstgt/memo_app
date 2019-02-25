@@ -4,8 +4,8 @@ class PenNamesController < ApplicationController
 
   def show
     @pen_name = current_user.pen_names.find(params[:id])
+    @groups = @pen_name.groups
     @notes = @pen_name.notes.paginate(page: params[:page])
-    @groups = @pen_name.groups.paginate(page: params[:page])
   end
 
   def new

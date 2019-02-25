@@ -1,0 +1,29 @@
+<% provide(:title, @book.title) %>
+<div class="row">
+
+  <aside class="col-md-4">
+
+    <%= render "book_info" %>
+
+  </aside>
+
+  <div class="col-md-8">
+
+    <span class="header">
+      <span class="count">
+        pages (<%= @book.pages.count %>)
+      </span>
+      <span class="new_command">
+        <%= link_to "[books]", books_user_path(@user) %>
+      </span>
+    </span>
+
+    <% if @book.pages.any? %>
+      <ol class="notes">
+        <%= render @pages %>
+      </ol>
+      <%= will_paginate @pages %>
+    <% end %>
+  </div>
+
+</div>

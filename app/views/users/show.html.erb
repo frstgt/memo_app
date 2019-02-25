@@ -22,19 +22,19 @@
       </ol>
     <% end %>
 
-  <hr>
+    <hr>
 
     <span class="header">
       <span class="count">
         groups (<%= @user.groups.count %>)
       </span>
       <span class="new_command">
-        <%= link_to "[new]", new_group_path %>
+        <%= link_to "[new]", "#" %>
       </span>
     </span>
 
     <% if @user.groups.any? %>
-      <ol class="pen_names">
+      <ol class="groups">
         <%= render @groups %>
       </ol>
     <% end %>
@@ -48,6 +48,8 @@
         notes (<%= @user.notes.count %>)
       </span>
       <span class="new_command">
+        <%= link_to "[groups]", groups_path %>
+        <%= link_to "[books]", books_user_path(@user) %>
         <%= link_to "[new]", new_note_path %>
       </span>
     </span>

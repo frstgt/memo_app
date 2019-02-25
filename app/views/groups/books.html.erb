@@ -1,4 +1,4 @@
-<% provide(:title, @group.name) %>
+<% provide(:title, "Group Books") %>
 <div class="row">
 
   <aside class="col-md-4">
@@ -11,15 +11,18 @@
 
     <span class="header">
       <span class="count">
-        group notes (<%= @group.members.count %>)
+        books (<%= @group_books.count %>)
       </span>
       <span class="new_command">
-        <%= link_to "[members]", members_group_path(@group) %>
-        <%= link_to "[books]", books_group_path(@group) %>
-        <%= link_to "[new]", "#" %>
       </span>
     </span>
 
+    <% if @group_books.any? %>
+      <ol class="notes">
+        <%= render @books %>
+      </ol>
+      <%= will_paginate @books %>
+    <% end %>
   </div>
 
 </div>

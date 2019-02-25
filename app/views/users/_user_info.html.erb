@@ -1,6 +1,7 @@
 <section class="user_info">
 
-  <span class="name">(user) <b><%= @user.name %></b></span>
+  (user)<br>
+  <span class="name"><b><%= @user.name %></b></span>
 
   <span class="timestamp">
     created <%= time_ago_in_words(@user.created_at) %> ago.<br>
