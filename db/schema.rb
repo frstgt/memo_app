@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190218114831) do
+ActiveRecord::Schema.define(version: 20190225032110) do
 
   create_table "books", force: :cascade do |t|
     t.string "title"
@@ -48,13 +48,17 @@ ActiveRecord::Schema.define(version: 20190218114831) do
 
   create_table "memos", force: :cascade do |t|
     t.integer "number"
-    t.integer "note_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "content"
     t.string "picture"
-    t.index ["note_id", "number"], name: "index_memos_on_note_id_and_number"
-    t.index ["note_id"], name: "index_memos_on_note_id"
+    t.string "type"
+    t.integer "group_note_id"
+    t.integer "user_note_id"
+    t.index ["group_note_id", "number"], name: "index_memos_on_group_note_id_and_number"
+    t.index ["group_note_id"], name: "index_memos_on_group_note_id"
+    t.index ["user_note_id", "number"], name: "index_memos_on_user_note_id_and_number"
+    t.index ["user_note_id"], name: "index_memos_on_user_note_id"
   end
 
   create_table "notes", force: :cascade do |t|
@@ -65,6 +69,9 @@ ActiveRecord::Schema.define(version: 20190218114831) do
     t.datetime "updated_at", null: false
     t.integer "pen_name_id"
     t.string "picture"
+    t.string "type"
+    t.integer "group_id"
+    t.index ["group_id"], name: "index_notes_on_group_id"
     t.index ["pen_name_id"], name: "index_notes_on_pen_name_id"
     t.index ["user_id", "updated_at"], name: "index_notes_on_user_id_and_updated_at"
     t.index ["user_id"], name: "index_notes_on_user_id"

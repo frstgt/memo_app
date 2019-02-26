@@ -3,6 +3,7 @@ class Group < ApplicationRecord
                                 foreign_key: "group_id",
                                 dependent:   :destroy
   has_many :members, through: :active_memberships, source: :member
+  has_many :group_notes, dependent: :destroy
 
   default_scope -> { order(updated_at: :desc) }
 

@@ -3,7 +3,7 @@
 
   <aside class="col-md-4">
 
-    <%= render "group_info" %>
+    <%= render "info" %>
 
     <hr>
 
@@ -12,7 +12,6 @@
         leading members (<%= @leading_members.count %>)
       </span>
       <span class="new_command">
-        <%= link_to "[new]", "#" %>
       </span>
     </span>
 
@@ -30,8 +29,6 @@
         general members (<%= @group.general_members.count %>)
       </span>
       <span class="new_command">
-        <%= link_to "[note]", @group %>
-        <%= link_to "[new]", new_note_path %>
       </span>
     </span>
 

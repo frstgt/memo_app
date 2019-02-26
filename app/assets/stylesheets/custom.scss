@@ -163,9 +163,6 @@ input {
   .count {
     color: $gray-light;
   }
-  .new_command {
-    float: right;
-  }
 }
 
 aside {
@@ -197,10 +194,11 @@ span.picture {
     .timestamp {
       color: $gray-light;
     }
-    .edit_command {
-      float: right;
-    }
   }
+}
+
+.command {
+  float: right;
 }
 
 /* miscellaneous */

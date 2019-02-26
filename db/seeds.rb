@@ -48,7 +48,7 @@ groups.each_with_index { |group, n|
   Membership.create!(group: group, member: members[n*10+9], position: Membership::VISITOR)
 }
 
-# notes
+# user_notes
 users.each { |user|
   pen_names = user.pen_names
   pen_names.each { |pen_name|
@@ -56,19 +56,45 @@ users.each { |user|
     2.times do
       title = Faker::Book.title
       description = Faker::Lorem.sentence(20)
-      user.notes.create!(title: title, description: description, pen_name_id: pen_name.id)
+      user.user_notes.create!(title: title, description: description, pen_name_id: pen_name.id)
     end
   }
 }
-# memos
+# user_memos
 users.each { |user|
-  notes = user.notes
+  notes = user.user_notes
   notes.each { |note|
 
       number = 1
       10.times do
         content = Faker::Lorem.sentence(20)
-        note.memos.create!(content: content, number: number)
+        note.user_memos.create!(content: content, number: number)
+        number += 1
+      end
+    }
+}
+
+# group_notes
+groups.each { |group|
+  pen_names = group.members
+  pen_names.each { |pen_name|
+
+    2.times do
+      title = Faker::Book.title
+      description = Faker::Lorem.sentence(20)
+      group.group_notes.create!(title: title, description: description, pen_name_id: pen_name.id)
+    end
+  }
+}
+# group_memos
+groups.each { |group|
+  notes = group.group_notes
+  notes.each { |note|
+
+      number = 1
+      10.times do
+        content = Faker::Lorem.sentence(20)
+        note.group_memos.create!(content: content, number: number)
         number += 1
       end
     }

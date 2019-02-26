@@ -1,12 +1,12 @@
 <li id="pen_name-<%= pen_name.id %>">
-  <span class="name"><b><%= link_to pen_name.name, pen_name %></b></span>
+  <span class="name"><b><%= pen_name.name %></b></span>
   <span class="description"><%= pen_name.description %></span>
 
   <span class="footer">
     <span class="timestamp">
       updated <%= time_ago_in_words(pen_name.updated_at) %> ago.
     </span>
-    <span class="edit_command">
+    <span class="command">
       <%= link_to "[edit]", edit_pen_name_path(pen_name) %>
       <%= link_to "[delete]", pen_name, method: :delete,
                                      data: { confirm: "You sure?" } %>

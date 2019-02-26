@@ -2,24 +2,11 @@
 <div class="row">
 
   <aside class="col-md-4">
-
-    <%= render "group_info" %>
-
+    <%= render "side" %>
   </aside>
 
   <div class="col-md-8">
-
-    <span class="header">
-      <span class="count">
-        group notes (<%= @group.members.count %>)
-      </span>
-      <span class="new_command">
-        <%= link_to "[members]", members_group_path(@group) %>
-        <%= link_to "[books]", books_group_path(@group) %>
-        <%= link_to "[new]", "#" %>
-      </span>
-    </span>
-
+    <%= render "main" %>
   </div>
 
 </div>

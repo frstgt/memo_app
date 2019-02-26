@@ -1,0 +1,18 @@
+<li id="user_note-<%= user_note.id %>">
+  <span class="title"><b><%= link_to user_note.title, unote_path(user_note) %></b></span>
+  <% if user_note.pen_name %>
+    <span class="author"><i>by <%= user_note.pen_name.name %></i></span>
+  <% end %>
+  <span class="description"><%= user_note.description %></span>
+
+  <span class="footer">
+    <span class="timestamp">
+      updated <%= time_ago_in_words(user_note.updated_at) %> ago.
+    </span>
+    <span class="command">
+      <%= link_to "[edit]", edit_unote_path(user_note) %>
+      <%= link_to "[delete]", unote_path(user_note), method: :delete,
+                                     data: { confirm: "You sure?" } %>
+    </span>
+  </span>
+</li>

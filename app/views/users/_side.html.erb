@@ -1,0 +1,37 @@
+
+<%= render "info" %>
+
+<hr>
+
+<span class="header">
+  <span class="count">
+    pen names (<%= @user.pen_names.count %>)
+  </span>
+  <span class="command">
+    <%= link_to "[new]", new_pen_name_path %>
+  </span>
+</span>
+
+<% if @user.pen_names.any? %>
+  <ol class="pen_names">
+    <%= render @pen_names %>
+  </ol>
+<% end %>
+
+<hr>
+
+<span class="header">
+  <span class="count">
+    groups (<%= @user.groups.count %>)
+  </span>
+  <span class="command">
+    <%= link_to "[groups]", groups_path %>
+    <%= link_to "[new]", new_group_path %>
+  </span>
+</span>
+
+<% if @user.groups.any? %>
+  <ol class="groups">
+    <%= render @groups %>
+  </ol>
+<% end %>

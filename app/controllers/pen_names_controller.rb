@@ -1,12 +1,6 @@
 class PenNamesController < ApplicationController
   before_action :logged_in_user
-  before_action :correct_user,  only: [:show, :edit, :update, :destroy]
-
-  def show
-    @pen_name = current_user.pen_names.find(params[:id])
-    @groups = @pen_name.groups
-    @notes = @pen_name.notes.paginate(page: params[:page])
-  end
+  before_action :correct_user,  only: [:edit, :update, :destroy]
 
   def new
     @pen_name = current_user.pen_names.build

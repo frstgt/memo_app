@@ -1,23 +1,21 @@
 class GroupsController < ApplicationController
   before_action :logged_in_user
+  before_action :correct_member,   only: [:members, :edit, :update, :destroy]
+  before_action :master_or_vice,   only: [:edit, :update, :destroy]
   before_action :correct_pen_name, only: [:create]
-  before_action :correct_member,   only: [:show, :edit, :update, :destroy]
-  before_action :master_or_vice,   only: [:edit, :update]
-  before_action :last_member,      only: [:destroy]
+  before_action :only_member,      only: [:destroy]
 
   def index
     @all_groups = Group.all
-    @groups = @all_groups.paginate(page: params[:page])
+    @page_groups = @all_groups.paginate(page: params[:page])
   end
 
   def show
     @group = Group.find_by(id: params[:id])
-    # @group_notes
+    @all_notes = @group.group_notes
+    @page_notes = @all_notes.paginate(page: params[:page])
   end
-  def books
-    @group = Group.find_by(id: params[:id])
-#    @group_books = @group.books.where(protection: Book::GROUP)
-  end
+
   def members
     @group = Group.find_by(id: params[:id])
     @leading_members = @group.leading_members    
@@ -81,7 +79,7 @@ class GroupsController < ApplicationController
       redirect_to root_url unless @group.user_has_master_or_vice?(current_user)
     end
 
-    def last_member
+    def only_member
       redirect_to root_url unless @gourp.members.count == 1
     end
 

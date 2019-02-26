@@ -1,0 +1,18 @@
+<span class="header">
+
+  <span class="count">
+    memos (<%= @all_memos.count %>)
+  </span>
+
+  <span class="new_command">
+    <%= link_to "[new]", new_unote_umemo_path(@note) %>
+  </span>
+
+</span>
+
+<% if @all_memos.any? %>
+  <ol class="notes">
+    <%= render @page_memos %>
+  </ol>
+  <%= will_paginate @page_memos %>
+<% end %>

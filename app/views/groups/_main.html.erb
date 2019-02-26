@@ -1,0 +1,14 @@
+<span class="header">
+  <span class="count">
+    group notes (<%= @all_notes.count %>)
+  </span>
+  <span class="command">
+    <%= link_to "[new]", new_group_gnote_path(@group) %>
+  </span>
+</span>
+
+<% if @all_notes.any? %>
+  <ol class="notes">
+    <%= render @page_notes %>
+  </ol>
+<% end %>

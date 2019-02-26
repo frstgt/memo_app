@@ -6,7 +6,7 @@
     <span class="timestamp">
       updated <%= time_ago_in_words(group.updated_at) %> ago.
     </span>
-    <span class="edit_command">
+    <span class="command">
       <%= link_to "[edit]", edit_group_path(group) %>
       <%= link_to "[delete]", group, method: :delete,
                                      data: { confirm: "You sure?" } %>

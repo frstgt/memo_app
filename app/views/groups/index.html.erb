@@ -13,9 +13,9 @@
 
     <% if @all_groups.any? %>
       <ol class="groups">
-        <%= render @groups %>
+        <%= render @page_groups %>
       </ol>
-      <%= will_paginate @groups %>
+      <%= will_paginate @page_groups %>
     <% end %>
 
   </div>

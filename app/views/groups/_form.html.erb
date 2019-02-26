@@ -19,6 +19,17 @@
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
 <% end %>
 
+<span class="alert alert-info positions">
+  <b>positions</b><br>
+  (leading members)
+  - master:
+  - vice:
+  - chief:
+  (general members)
+  - common:
+  - visitor:
+</span>
+
 <script type="text/javascript">
   $('#group_picture').bind('change', function() {
     var size_in_megabytes = this.files[0].size/1024/1024;

@@ -4,7 +4,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @notes = @user.notes.paginate(page: params[:page])
+    @all_notes = @user.user_notes
+    @page_notes = @all_notes.paginate(page: params[:page])
     @pen_names = @user.pen_names
     @groups = @user.groups
   end

@@ -1,0 +1,20 @@
+<li id="user_memo-<%= user_memo.id %>">
+
+  <span class="content">
+    <%= markdown(user_memo.content).html_safe %>
+    <%= image_tag user_memo.picture.url if user_memo.picture? %>
+  </span>
+
+  <span class="footer">
+    <span class="timestamp">
+      updated <%= time_ago_in_words(user_memo.updated_at) %> ago.
+      (<%= user_memo.number %>)
+    </span>
+
+    <span class="command">
+      <%= link_to "[edit]", edit_unote_umemo_path(@note, user_memo) %>
+      <%= link_to "[delete]", unote_umemo_path(@note, user_memo), method: :delete,
+                                       data: { confirm: "You sure?" } %>
+    </span>
+  </span>
+</li>
