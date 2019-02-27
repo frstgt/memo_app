@@ -1,0 +1,23 @@
+  <aside class="col-md-4">
+  </aside>
+
+  <div class="col-md-8">
+
+    <span class="header">
+      <span class="count">
+        protected books (<%= @all_books.count %>)
+      </span>
+      <span class="new_command">
+      </span>
+    </span>
+
+    <% if @all_books.any? %>
+      <ol class="groups">
+        <%= render @page_books %>
+      </ol>
+      <%= will_paginate @page_books %>
+    <% end %>
+
+  </div>
+
+</div>

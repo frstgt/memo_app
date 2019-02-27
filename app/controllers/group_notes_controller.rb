@@ -1,7 +1,7 @@
 class GroupNotesController < ApplicationController
   before_action :logged_in_user
   before_action :correct_member
-  before_action :master_or_vice_or_chief,                      only: [:new, :create, :destroy]
+  before_action :master_or_vice_or_chief,                      only: [:new, :create, :destroy, :to_book]
   before_action :master_or_vice_or_chief_or_common,            only: [:edit, :update]
 
   def show
@@ -41,6 +41,15 @@ class GroupNotesController < ApplicationController
   def destroy
     @group.group_notes.find(params[:id]).destroy
     flash[:success] = "Note deleted"
+    redirect_to @group
+  end
+
+  #
+
+  def to_book
+    if @note.to_book
+      flash[:success] = "Book published"
+    end
     redirect_to @group
   end
 

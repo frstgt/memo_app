@@ -3,7 +3,7 @@
 
   <aside class="col-md-4">
 
-    <%= render "book_info" %>
+    <%= render "info" %>
 
   </aside>
 
@@ -14,7 +14,6 @@
         pages (<%= @book.pages.count %>)
       </span>
       <span class="new_command">
-        <%= link_to "[books]", books_user_path(@user) %>
       </span>
     </span>
 

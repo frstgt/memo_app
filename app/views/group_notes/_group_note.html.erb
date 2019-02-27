@@ -14,6 +14,8 @@
       <%= link_to "[edit]", edit_group_gnote_path(@group, group_note) %>
       <%= link_to "[delete]", group_gnote_path(@group, group_note), method: :delete,
                                      data: { confirm: "You sure?" } %>
+      <%= link_to "[to_book]", to_book_group_gnote_path(@group, group_note),
+                                data: { confirm: "You sure?" } %>
     </span>
   </span>
 </li>

@@ -12,7 +12,9 @@
     <span class="command">
       <%= link_to "[edit]", edit_unote_path(user_note) %>
       <%= link_to "[delete]", unote_path(user_note), method: :delete,
-                                     data: { confirm: "You sure?" } %>
+                              data: { confirm: "You sure?" } %>
+      <%= link_to "[to_book]", to_book_unote_path(user_note),
+                                data: { confirm: "You sure?" } %>
     </span>
   </span>
 </li>

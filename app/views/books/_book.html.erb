@@ -1,8 +1,10 @@
 <li id="book-<%= book.id %>">
   <span class="title"><b><%= link_to book.title, book %></b></span>
   <span class="author"><i>by <%= book.pen_name.name %></i></span>
+  <% if book.group %>
+    <span class="group"><i>@ <%= book.group.name %></i></span>
+  <% end %>
   <span class="description"><%= book.description %></span>
-
   <span class="footer">
     <span class="timestamp">
       updated <%= time_ago_in_words(book.updated_at) %> ago.

@@ -3,6 +3,7 @@
     group notes (<%= @all_notes.count %>)
   </span>
   <span class="command">
+    <%= link_to "[books]", books_path %>
     <%= link_to "[new]", new_group_gnote_path(@group) %>
   </span>
 </span>

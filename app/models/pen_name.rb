@@ -1,6 +1,7 @@
 class PenName < ApplicationRecord
   belongs_to :user
   has_many :notes
+  has_many :books
 
   mount_uploader :picture, PictureUploader
 

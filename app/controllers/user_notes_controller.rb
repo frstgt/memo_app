@@ -1,6 +1,6 @@
 class UserNotesController < ApplicationController
   before_action :logged_in_user
-  before_action :correct_user,  only: [:show, :edit, :update, :destroy]
+  before_action :correct_user,  only: [:show, :edit, :update, :destroy, :to_book]
 
   def show
     @note = current_user.user_notes.find(params[:id])
@@ -39,6 +39,15 @@ class UserNotesController < ApplicationController
   def destroy
     current_user.user_notes.find(params[:id]).destroy
     flash[:success] = "Note deleted"
+    redirect_to current_user
+  end
+
+  #
+
+  def to_book
+    if @note.to_book
+      flash[:success] = "Book published"
+    end
     redirect_to current_user
   end
 

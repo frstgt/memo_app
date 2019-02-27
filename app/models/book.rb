@@ -1,6 +1,7 @@
 class Book < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :pen_name, optional: true
+  belongs_to :group, optional: true
   has_many :pages, dependent: :destroy
 
   default_scope -> { order(created_at: :desc) }
@@ -10,13 +11,6 @@ class Book < ApplicationRecord
   validates :title, presence: true, length: { maximum: 100 }
   validates :author, presence: true, length: { maximum: 100 }
   validates :description, length: { maximum: 1000 }
-
-  PRIVATE = 0
-  SITE = 1
-  PUBLIC = 2
-  PROTECTIONS = ["Private", "Site", "Public"]
-  validates :protection, presence: true,
-                        inclusion: { in: [PRIVATE, SITE, PUBLIC] }
 
   validate  :picture_size
 
