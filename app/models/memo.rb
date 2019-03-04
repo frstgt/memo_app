@@ -4,6 +4,7 @@ class Memo < ApplicationRecord
 
   mount_uploader :picture, PictureUploader
 
+  validates :title, length: { maximum: 100 }
   validates :content, presence: true,
                       length: { maximum: 1000 }
   validates :number, presence: true

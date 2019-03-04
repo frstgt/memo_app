@@ -16,8 +16,8 @@ Rails.application.routes.draw do
   resources :pen_names
 
   resources :user_notes, only: [:show, :new, :create, :edit, :update, :destroy]
-  resources :user_notes, as: 'unotes' do
-    resources :user_memos, as: 'umemos', only: [:new, :create, :edit, :update, :destroy]
+  resources :user_notes do
+    resources :user_memos, only: [:new, :create, :edit, :update, :destroy]
 
     get :to_book, on: :member
   end
@@ -26,8 +26,8 @@ Rails.application.routes.draw do
   resources :groups do
 
     resources :group_notes, only: [:show, :new, :create, :edit, :update, :destroy]
-    resources :group_notes, as: 'gnotes' do
-      resources :group_memos, as: 'gmemos',  only: [:new, :create, :edit, :update, :destroy]
+    resources :group_notes do
+      resources :group_memos,  only: [:new, :create, :edit, :update, :destroy]
 
       get :to_book, on: :member
     end

@@ -1,24 +1,29 @@
 <li id="group_memo-<%= group_memo.id %>">
 
-  <span class="header">
-  </span>
+  <div class="card mb-3">
 
-  <span class="body">
-    <span class="content">
-      <%= markdown(group_memo.content).html_safe %>
-      <%= image_tag group_memo.picture.url if group_memo.picture? %>
-    </span>
-  </span>
+    <div class="card-body">
+      <% if group_memo.title %>
+        <h4 class="card-title"><%= group_memo.title %></h4>
+      <% end %>
+      <p class="card-text"><%= group_memo.content %></p>
+    </div>
+
+    <% if group_memo.picture? %>
+      <%= image_tag group_memo.picture.url, class: "card-img" %>
+    <% end %>
+
+  </div>
 
   <span class="footer">
-    <span class="timestamp">
+    <span class="timestamp text-muted">
       updated <%= time_ago_in_words(group_memo.updated_at) %> ago.
-      (<%= group_memo.number %>)
     </span>
+
     <span class="command">
-      <%= link_to "[edit]", edit_group_gnote_gmemo_path(@group, @note, group_memo) %>
-      <%= link_to "[delete]", group_gnote_gmemo_path(@group, @note, group_memo), method: :delete,
-                                       data: { confirm: "You sure?" } %>
+      <%= link_to "[edit]", edit_group_group_note_group_memo_path(@group, @note, group_memo) %>
+      <%= link_to "[delete]", group_group_note_group_memo_path(@group, @note, group_memo),
+                              method: :delete, data: { confirm: "You sure?" } %>
     </span>
   </span>
 

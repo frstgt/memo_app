@@ -6,6 +6,7 @@ class GroupMemosController < MemosController
 
   def new
     @memo = @memo.group_memos.build
+    @url = new_group_gnote_gmemo_path(@group, @note, @memo)
     @max = @value = @note.group_memos.count + 1
   end
 
@@ -24,6 +25,7 @@ class GroupMemosController < MemosController
 
   def edit
     @memo = @note.group_memos.find(params[:id])
+    @url = edit_group_gnote_gmemo_path(@group, @note, @memo)
     @max = @note.group_memos.count + 1
     @value = @memo.number
   end
@@ -48,6 +50,10 @@ class GroupMemosController < MemosController
   end
 
   private
+
+    def memo_params
+      params.require(:group_memo).permit(:title, :content, :picture, :number, :layout)
+    end
 
     def correct_member
       @group = Group.find_by(id: params[:group_id])

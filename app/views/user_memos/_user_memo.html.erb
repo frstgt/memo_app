@@ -1,24 +1,30 @@
 <li id="user_memo-<%= user_memo.id %>">
 
-  <span class="header">
-  </span>
+  <div class="card mb-3">
 
-  <span class="body">
-    <span class="content">
-      <%= markdown(user_memo.content).html_safe %>
-      <%= image_tag user_memo.picture.url if user_memo.picture? %>
-    </span>
-  </span>
+    <div class="card-body">
+      <% if user_memo.title %>
+        <h4 class="card-title"><%= user_memo.title %></h4>
+      <% end %>
+      <p class="card-text"><%= user_memo.content %></p>
+    </div>
+
+    <% if user_memo.picture? %>
+      <%= image_tag user_memo.picture.url, class: "card-img" %>
+    <% end %>
+
+  </div>
 
   <span class="footer">
-    <span class="timestamp">
+    <span class="timestamp text-muted">
       updated <%= time_ago_in_words(user_memo.updated_at) %> ago.
-      (<%= user_memo.number %>)
     </span>
+
     <span class="command">
-      <%= link_to "[edit]", edit_unote_umemo_path(@note, user_memo) %>
-      <%= link_to "[delete]", unote_umemo_path(@note, user_memo), method: :delete,
-                                       data: { confirm: "You sure?" } %>
+      <%= link_to "[edit]", edit_user_note_user_memo_path(@note, user_memo) %>
+      <%= link_to "[delete]", user_note_user_memo_path(@note, user_memo),
+                              method: :delete, data: { confirm: "You sure?" } %>
     </span>
   </span>
+
 </li>

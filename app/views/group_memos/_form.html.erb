@@ -1,13 +1,17 @@
-<%= form_for([@note, @memo]) do |f| %>
+<%= form_for([@group, @note, @memo]) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
   <span class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title, rows: '10', class: 'form-control' %>
     <%= f.label :content %>
     <%= f.text_area :content, rows: '10', class: 'form-control' %>
   </span>
   <span class="picture">
     <%= f.label :picture %>
+    <%= image_tag @memo.picture.url(:thumb) if @memo.picture? %>
     <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
+    <%= f.select :layout, Memo::LAYOUTS, { selected: Memo::AT_BOTTOM } %>
   </span>
   <span class="field">
     <%= f.label :number %>
@@ -15,6 +19,7 @@
   </span>
 
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+
 <% end %>
 
 <script type="text/javascript">

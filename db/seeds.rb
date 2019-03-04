@@ -56,20 +56,16 @@ users.each do |user|
     2.times do
       title = Faker::Book.title
       description = Faker::Lorem.sentence(20)
-      user.user_notes.create!(title: title, description: description, pen_name_id: pen_name.id)
-    end
-  end
-end
-# user_memos
-users.each do |user|
-  notes = user.user_notes
-  notes.each do |note|
+      note = user.user_notes.create!(title: title, description: description, pen_name_id: pen_name.id)
 
-    number = 1
-    10.times do
-      content = Faker::Lorem.sentence(20)
-      note.user_memos.create!(content: content, number: number)
-      number += 1
+      number = 1
+      10.times do
+        title = Faker::Book.title
+        content = Faker::Lorem.sentence(20)
+        layout = Memo::LAYOUTS.sample[1]
+        note.user_memos.create!(title: title, content: content, layout: layout, number: number)
+        number += 1
+      end
     end
   end
 end
@@ -82,20 +78,16 @@ groups.each do |group|
     2.times do
       title = Faker::Book.title
       description = Faker::Lorem.sentence(20)
-      group.group_notes.create!(title: title, description: description, pen_name_id: pen_name.id)
-    end
-  end
-end
-# group_memos
-groups.each do |group|
-  notes = group.group_notes
-  notes.each do |note|
+      note = group.group_notes.create!(title: title, description: description, pen_name_id: pen_name.id)
 
-    number = 1
-    10.times do
-      content = Faker::Lorem.sentence(20)
-      note.group_memos.create!(content: content, number: number)
-      number += 1
+      number = 1
+      10.times do
+        title = Faker::Book.title
+        content = Faker::Lorem.sentence(20)
+        layout = Memo::LAYOUTS.sample[1]
+        note.group_memos.create!(title: title, content: content, layout: layout, number: number)
+        number += 1
+      end
     end
   end
 end

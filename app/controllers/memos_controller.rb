@@ -3,10 +3,6 @@ class MemosController < ApplicationController
 
   private
 
-    def memo_params
-      params.require(:memo).permit(:content, :picture, :number)
-    end
-
     def update_number(memos, new_memo)
       if new_memo.number < 1 then
         new_memo.update_attributes({number: 1})
