@@ -1,7 +1,10 @@
 class User < ApplicationRecord
   has_many :user_notes, dependent: :destroy
   has_many :pen_names, dependent: :destroy
-  has_many :books
+  has_many :active_readerships, class_name:  "Readership",
+                                foreign_key: "user_id",
+                                dependent:   :destroy
+  has_many :books, through: :active_readerships, source: :book
 
   validates :name,  presence: true,
                     length: { minimum: 8, maximum: 32 },

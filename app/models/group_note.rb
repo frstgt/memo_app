@@ -10,8 +10,6 @@ class GroupNote < Note
                       author: self.pen_name.name + " @ " + self.group.name,
                       description: self.description,
                       picture: self.picture,
-                      user_id: self.user_id,
-                      group_id: self.group_id,
                       pen_name_id: self.pen_name_id)
       self.user_memos.each { |memo|
         Page.create(content: memo.content,

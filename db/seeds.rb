@@ -108,18 +108,11 @@ users.each do |user|
     title = Faker::Book.title
     author = pen_name.name
     description = Faker::Lorem.sentence(20)
-    user.books.create!(title: title, author: author, description: description,
-                          pen_name_id: pen_name.id)
-  end
-end
-# pages
-users.each do |user|
-  books = user.books
-  books.each do |book|
-
+    book = Book.create!(title: title, author: author, description: description,
+                  pen_name_id: pen_name.id)
     10.times do
       content = Faker::Lorem.sentence(20)
-      book.pages.create!(content: content)
+      book.pages.create!(content: content, book_id: book.id)
     end
   end
 end
@@ -130,20 +123,15 @@ groups.each do |group|
   pen_names.each do |pen_name|
 
     title = Faker::Book.title
-    author = pen_name.name
+    author = pen_name.name + " @ " + group.name
     description = Faker::Lorem.sentence(20)
-    group.books.create!(title: title, author: author, description: description,
-                          pen_name_id: pen_name.id)
-  end
-end
-# pages
-groups.each do |group|
-  books = group.books
-  books.each do |book|
+    book = Book.create!(title: title, author: author, description: description,
+                         pen_name_id: pen_name.id)
 
     10.times do
       content = Faker::Lorem.sentence(20)
-      book.pages.create!(content: content)
+      book.pages.create!(content: content, book_id: book.id)
     end
   end
 end
+

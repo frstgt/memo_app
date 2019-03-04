@@ -4,21 +4,21 @@
   <aside class="col-md-4">
 
     <%= render "info" %>
-
+    
   </aside>
 
   <div class="col-md-8">
 
-    <span class="header">
+    <span class="main_header">
       <span class="count">
         pages (<%= @book.pages.count %>)
       </span>
-      <span class="new_command">
+      <span class="command">
       </span>
     </span>
 
     <% if @book.pages.any? %>
-      <ol class="notes">
+      <ol class="main_list">
         <%= render @pages %>
       </ol>
       <%= will_paginate @pages %>

@@ -1,6 +1,12 @@
 <li id="pen_name-<%= pen_name.id %>">
-  <span class="name"><b><%= pen_name.name %></b></span>
-  <span class="description"><%= pen_name.description %></span>
+
+  <span class="header">
+    <span class="name"><b><%= link_to pen_name.name, pen_name %></b></span>
+  </span>
+
+  <span class="body">
+    <span class="description"><%= pen_name.description %></span>
+  </span>
 
   <span class="footer">
     <span class="timestamp">

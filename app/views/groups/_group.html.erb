@@ -1,6 +1,12 @@
 <li id="group-<%= group.id %>">
-  <span class="name"><b><%= link_to group.name, group %></b></span>
-  <span class="description"><%= group.description %></span>
+
+  <span class="header">
+    <span class="name"><b><%= link_to group.name, group %></b></span>
+  </span>
+
+  <span class="body">
+    <span class="description"><%= group.description %></span>
+  </span>
 
   <span class="footer">
     <span class="timestamp">
@@ -12,4 +18,5 @@
                                      data: { confirm: "You sure?" } %>
     </span>
   </span>
+
 </li>

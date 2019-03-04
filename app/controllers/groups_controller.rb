@@ -8,6 +8,7 @@ class GroupsController < ApplicationController
   def index
     @all_groups = Group.all
     @page_groups = @all_groups.paginate(page: params[:page])
+    @sample_groups = @all_groups.sample(3)
   end
 
   def show

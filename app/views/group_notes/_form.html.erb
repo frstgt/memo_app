@@ -6,7 +6,7 @@
 
   <%= f.label :author %>
   <%= f.select :pen_name_id,
-               current_user.pen_names.collect { |pen_name| [pen_name.name, pen_name.id] },
+               @group.members.collect { |pen_name| [pen_name.name, pen_name.id] },
                 { include_blank: "" } %>
 
   <%= f.label :description %>

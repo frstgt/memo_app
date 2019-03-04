@@ -1,7 +1,13 @@
 <li id="member-<%= member.id %>">
-  <span class="position">(<%= @group.position(member).downcase %>)</span><br>
-  <span class="name"><i><%= member.name %></i></span>
-  <span class="description"><%= member.description %></span>
+
+  <span class="header">
+    <span class="position">(<%= @group.position(member).downcase %>)</span><br>
+    <span class="name"><i><%= member.name %></i></span>
+  </span>
+
+  <span class="body">
+    <span class="description"><%= member.description %></span>
+  </span>
 
   <span class="footer">
     <span class="timestamp">
@@ -10,4 +16,5 @@
     <span class="edit_command">
     </span>
   </span>
+
 </li>

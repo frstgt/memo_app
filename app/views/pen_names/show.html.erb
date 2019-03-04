@@ -1,15 +1,30 @@
+<% provide(:title, @pen_name.name) %>
+<div class="row">
+
   <aside class="col-md-4">
+
+    <section class="info">
+      (pen name)<br>
+      <span class="name"><b><%= @pen_name.name %></b></span>
+      <span class="description"><%= @pen_name.description %></span>
+      <span class="timestamp">
+        created <%= time_ago_in_words(@pen_name.created_at) %> ago.<br>
+        updated <%= time_ago_in_words(@pen_name.updated_at) %> ago.
+      </span>
+    </section>
+
+    <hr>
 
     <span class="side_header">
       <span class="count">
-        pickup books (<%= @sample_books.count %>)
+        groups (<%= @groups.count %>)
       </span>
       <span class="command">
       </span>
     </span>
-    <% if @sample_books.any? %>
+    <% if @groups.any? %>
       <ol class="side_list">
-        <%= render @sample_books %>
+        <%= render @groups %>
       </ol>
     <% end %>
 

@@ -158,7 +158,14 @@ input {
 
 /* notes, memos, pen_names, groups */
 
-.header {
+.main_header {
+  display: block;
+  .count {
+    color: $gray-light;
+  }
+}
+
+.side_header {
   display: block;
   .count {
     color: $gray-light;
@@ -179,18 +186,48 @@ span.picture {
   }
 }
 
-.notes, .memos, .books, .pages, .pen_names, .groups, .members {
+.main_list {
   list-style: none;
   padding: 0;
   li {
     padding: 10px 0;
     border-top: 1px solid #e8e8e8;
   }
-  .description {
+  .header {
     display: block;
+    margin-left: 0px;
+  }
+  .body {
+    display: block;
+    margin-left: 0px;
   }
   .footer {
     display: block;
+    margin-left: 0px;
+    .timestamp {
+      color: $gray-light;
+    }
+  }
+}
+
+.side_list {
+  list-style: none;
+  padding: 0;
+  li {
+    padding: 10px 0;
+    border-top: 1px solid #e8e8e8;
+  }
+  .header {
+    display: block;
+    margin-left: 0px;
+  }
+  .body {
+    display: block;
+    margin-left: 0px;
+  }
+  .footer {
+    display: block;
+    margin-left: 0px;
     .timestamp {
       color: $gray-light;
     }

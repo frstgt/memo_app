@@ -2,6 +2,19 @@ class PenNamesController < ApplicationController
   before_action :logged_in_user
   before_action :correct_user,  only: [:edit, :update, :destroy]
 
+  def index
+    @all_pen_names = PenName.all
+    @page_pen_names = @all_pen_names.paginate(page: params[:page])
+    @sample_pen_names = @all_pen_names.sample(3)
+  end
+
+  def show
+    @pen_name = PenName.find_by(id: params[:id])
+    @all_books = @pen_name.books
+    @page_books = @all_books.paginate(page: params[:page])
+    @groups = @pen_name.groups
+  end
+
   def new
     @pen_name = current_user.pen_names.build
   end

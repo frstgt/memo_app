@@ -1,18 +1,18 @@
-<% provide(:title, "Groups") %>
+<% provide(:title, "PenNames") %>
 <div class="row">
 
   <aside class="col-md-4">
 
     <span class="side_header">
       <span class="count">
-        pickup groups (<%= @sample_groups.count %>)
+        pickup pen names (<%= @sample_pen_names.count %>)
       </span>
-      <span class="new_command">
+      <span class="command">
       </span>
     </span>
-    <% if @sample_groups.any? %>
+    <% if @sample_pen_names.any? %>
       <ol class="side_list">
-        <%= render @sample_groups %>
+        <%= render @sample_pen_names %>
       </ol>
     <% end %>
 
@@ -22,16 +22,16 @@
 
     <span class="main_header">
       <span class="count">
-        group notes (<%= @all_groups.count %>)
+        pen names (<%= @all_pen_names.count %>)
       </span>
-      <span class="new_command">
+      <span class="command">
       </span>
     </span>
-    <% if @all_groups.any? %>
+    <% if @all_pen_names.any? %>
       <ol class="main_list">
-        <%= render @page_groups %>
+        <%= render @page_pen_names %>
       </ol>
-      <%= will_paginate @page_groups %>
+      <%= will_paginate @page_pen_names %>
     <% end %>
 
   </div>

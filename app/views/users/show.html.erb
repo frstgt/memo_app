@@ -2,11 +2,70 @@
 <div class="row">
 
   <aside class="col-md-4">
-    <%= render "side" %>
-  </aside>
+
+    <section class="info">
+      (user)<br>
+      <span class="name"><b><%= @user.name %></b></span>
+      <span class="timestamp">
+        created <%= time_ago_in_words(@user.created_at) %> ago.<br>
+        updated <%= time_ago_in_words(@user.updated_at) %> ago.
+      </span>
+    </section>
+
+    <hr>
+
+    <span class="side_header">
+      <span class="count">
+        pen names (<%= @user.pen_names.count %>)
+      </span>
+      <span class="command">
+        <%= link_to "[pen names]", pen_names_path %>
+        <%= link_to "[new]", new_pen_name_path %>
+      </span>
+    </span>
+    <% if @user.pen_names.any? %>
+      <ol class="side_list">
+        <%= render @pen_names %>
+      </ol>
+    <% end %>
+
+    <hr>
+
+    <span class="side_header">
+      <span class="count">
+        groups (<%= @user.groups.count %>)
+      </span>
+      <span class="command">
+        <%= link_to "[groups]", groups_path %>
+        <%= link_to "[new]", new_group_path %>
+      </span>
+    </span>
+    <% if @user.groups.any? %>
+      <ol class="side_list">
+        <%= render @groups %>
+      </ol>
+    <% end %>
+
+</aside>
 
   <div class="col-md-8">
-    <%= render "main" %>
+
+    <span class="main_header">
+      <span class="count">
+        user notes (<%= @all_notes.count %>)
+      </span>
+      <span class="command">
+        <%= link_to "[books]", books_path %>
+        <%= link_to "[new]", new_unote_path %>
+      </span>
+    </span>
+    <% if @all_notes.any? %>
+      <ol class="main_list">
+        <%= render @page_notes %>
+      </ol>
+      <%= will_paginate @page_notes %>
+    <% end %>
+
   </div>
 
 </div>

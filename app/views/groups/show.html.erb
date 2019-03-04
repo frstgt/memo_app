@@ -2,11 +2,33 @@
 <div class="row">
 
   <aside class="col-md-4">
-    <%= render "side" %>
+
+    <%= render "info" %>
+
+    <span class="command">
+      <%= link_to "[members]", members_group_path(@group) %>
+    </span>
+
   </aside>
 
   <div class="col-md-8">
-    <%= render "main" %>
+
+    <span class="main_header">
+      <span class="count">
+        group notes (<%= @all_notes.count %>)
+      </span>
+      <span class="command">
+        <%= link_to "[books]", books_path %>
+        <%= link_to "[new]", new_group_gnote_path(@group) %>
+      </span>
+    </span>
+    <% if @all_notes.any? %>
+      <ol class="main_list">
+        <%= render @page_notes %>
+      </ol>
+      <%= will_paginate @page_notes %>
+    <% end %>
+
   </div>
 
 </div>

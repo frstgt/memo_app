@@ -7,14 +7,13 @@ Rails.application.routes.draw do
   get  '/about',   to: 'static_pages#about'
   get  '/contact', to: 'static_pages#contact'
 
-  get  '/signup',  to: 'users#new'
   resources :users
-  
+  get  '/signup',  to: 'users#new'
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
 
-  resources :pen_names, only: [:new, :create, :edit, :update, :destroy]
+  resources :pen_names
 
   resources :user_notes, only: [:show, :new, :create, :edit, :update, :destroy]
   resources :user_notes, as: 'unotes' do
@@ -40,8 +39,9 @@ Rails.application.routes.draw do
   resources :books, only: [:new, :create]
   resources :books do
     resources :pages, only: [:new, :create]
-    get :inside, on: :collection # site
-    get :outside, on: :collection # public
+
+    get :evaluations, on: :member
+    post :evaluate, on: :member
   end
 
 end

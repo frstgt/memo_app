@@ -1,14 +1,12 @@
 class PenName < ApplicationRecord
   belongs_to :user
-  has_many :notes
   has_many :books
-
-  mount_uploader :picture, PictureUploader
-
   has_many :passive_memberships, class_name:  "Membership",
                                   foreign_key: "member_id",
                                   dependent:   :destroy
   has_many :groups, through: :passive_memberships,  source: :group
+
+  mount_uploader :picture, PictureUploader
 
   # no default_scope
 

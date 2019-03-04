@@ -1,14 +1,10 @@
-<section class="book_info">
-
+<section class="info">
   (book)<br>
   <span class="title"><b><%= @book.title %></b></span><br>
   <span class="author"><i>by <%= @book.author %></i></span>
   <span class="description"><%= @book.description %></span>
-
   <span class="timestamp">
     created <%= time_ago_in_words(@book.created_at) %> ago.<br>
     updated <%= time_ago_in_words(@book.updated_at) %> ago.
   </span>
-
 </section>
-    

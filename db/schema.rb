@@ -10,21 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190227053033) do
+ActiveRecord::Schema.define(version: 20190227084713) do
 
   create_table "books", force: :cascade do |t|
     t.string "title"
     t.string "author"
     t.text "description"
     t.string "picture"
-    t.integer "user_id"
     t.integer "pen_name_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "group_id"
-    t.index ["group_id"], name: "index_books_on_group_id"
     t.index ["pen_name_id"], name: "index_books_on_pen_name_id"
-    t.index ["user_id"], name: "index_books_on_user_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -97,6 +93,17 @@ ActiveRecord::Schema.define(version: 20190227053033) do
     t.index ["name"], name: "index_pen_names_on_name", unique: true
     t.index ["user_id", "updated_at"], name: "index_pen_names_on_user_id_and_updated_at"
     t.index ["user_id"], name: "index_pen_names_on_user_id"
+  end
+
+  create_table "readerships", force: :cascade do |t|
+    t.integer "reader_id"
+    t.integer "book_id"
+    t.integer "evaluation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_readerships_on_book_id"
+    t.index ["reader_id", "book_id"], name: "index_readerships_on_reader_id_and_book_id", unique: true
+    t.index ["reader_id"], name: "index_readerships_on_reader_id"
   end
 
   create_table "users", force: :cascade do |t|

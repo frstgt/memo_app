@@ -1,18 +1,29 @@
 class Book < ApplicationRecord
-  belongs_to :user, optional: true
-  belongs_to :pen_name, optional: true
-  belongs_to :group, optional: true
+  belongs_to :pen_name
   has_many :pages, dependent: :destroy
+  has_many :passive_readerships, class_name:  "Readership",
+                                  foreign_key: "reader_id",
+                                  dependent:   :destroy
+  has_many :readers, through: :passive_readerships,  source: :reader
 
   default_scope -> { order(created_at: :desc) }
 
   mount_uploader :picture, PictureUploader
 
+  validates :pen_name_id, presence: true
   validates :title, presence: true, length: { maximum: 100 }
   validates :author, presence: true, length: { maximum: 100 }
   validates :description, length: { maximum: 1000 }
 
   validate  :picture_size
+
+  def evaluate(user, evaluation)
+    readership = passive_readerships.find_by(reader_id: user.id)
+    if readership
+      readership.destroy
+    end
+    passive_readerships.create(reader_id: user.id, evaluation: evaluation)
+  end
 
   private
 
