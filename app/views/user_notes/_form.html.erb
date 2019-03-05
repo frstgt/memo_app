@@ -23,6 +23,8 @@
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
 <% end %>
 
+<%= render 'shared/picture_requirements' %>
+
 <script type="text/javascript">
   $('#note_picture').bind('change', function() {
     var size_in_megabytes = this.files[0].size/1024/1024;

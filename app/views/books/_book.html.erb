@@ -13,7 +13,7 @@
 
   <span class="footer">
     <span class="timestamp">
-      updated <%= time_ago_in_words(book.updated_at) %> ago.
+      updated <%= time_ago_in_words(book.created_at) %> ago.
     </span>
     <span class="command">
       <%= link_to "[evaluations]", evaluations_book_path(book) %>
