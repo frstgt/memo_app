@@ -5,12 +5,24 @@
 
     <section class="info">
       (pen name)<br>
-      <span class="name"><b><%= @pen_name.name %></b></span>
-      <span class="description"><%= @pen_name.description %></span>
-      <span class="timestamp">
-        created <%= time_ago_in_words(@pen_name.created_at) %> ago.<br>
-        updated <%= time_ago_in_words(@pen_name.updated_at) %> ago.
+
+      <span class="header">
+        <span class="name"><b><%= @pen_name.name %></b></span>
       </span>
+
+      <span class="body">
+        <span class="description"><%= @pen_name.description %></span>
+      </span>
+
+      <%= icon_for(@pen_name, { name: @pen_name.name, size: 256 }) %>
+
+      <span class="footer">
+        <span class="timestamp">
+          created <%= time_ago_in_words(@pen_name.created_at) %> ago.<br>
+          updated <%= time_ago_in_words(@pen_name.updated_at) %> ago.
+        </span>
+      </span>
+
     </section>
 
     <hr>

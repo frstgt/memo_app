@@ -1,10 +1,6 @@
 <li id="member-<%= member.id %>">
 
-  <% if member.picture? %>
-    <%= image_tag member.picture.url, width: 64, height: 64 %>
-  <% else %>
-
-  <% end %>
+  <%= icon_for(member, { name: member.name, size: 64 }) %>
 
   <span class="header">
     <span class="position">(<%= @group.position(member).downcase %>)</span><br>

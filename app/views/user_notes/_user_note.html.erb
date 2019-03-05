@@ -1,10 +1,6 @@
 <li id="user_note-<%= user_note.id %>">
 
-    <% if user_note.picture? %>
-      <%= image_tag user_note.picture.url, width: 64, height: 64 %>
-    <% else %>
-
-    <% end %>
+    <%= icon_for(user_note, { name: user_note.title, size: 64 }) %>
 
     <span class="header">
       <span class="title"><b><%= link_to user_note.title, user_note_path(user_note) %></b></span>

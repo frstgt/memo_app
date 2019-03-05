@@ -1,12 +1,22 @@
 <section class="group_info">
 
   (group)<br>
-  <span class="name"><b><%= @group.name %></b></span>
-  <span class="description"><%= @group.description %></span>
 
-  <span class="timestamp">
-    created <%= time_ago_in_words(@group.created_at) %> ago.<br>
-    updated <%= time_ago_in_words(@group.updated_at) %> ago.
+  <span class="header">
+    <span class="name"><b><%= @group.name %></b></span>
+  </span>
+
+  <span class="body">
+    <span class="description"><%= @group.description %></span>
+  </span>
+
+  <%= icon_for(@group, { name: @group.name, size: 256 }) %>
+
+  <span class="footer">
+    <span class="timestamp">
+      created <%= time_ago_in_words(@group.created_at) %> ago.<br>
+      updated <%= time_ago_in_words(@group.updated_at) %> ago.
+    </span>
   </span>
 
 </section>

@@ -1,6 +1,4 @@
 module ApplicationHelper
-  require "redcarpet"
-  require "coderay"
 
   def full_title(page_title = '')
     base_title = "Memo App"
@@ -11,44 +9,17 @@ module ApplicationHelper
     end
   end
 
-  class HTMLwithCoderay < Redcarpet::Render::HTML
-    def block_code(code, language)
-      language = language.split(':')[0]
+  def icon_for(object, options = { name: noname, size: 80 })
 
-      case language.to_s
-      when 'rb'
-        lang = 'ruby'
-      when 'yml'
-        lang = 'yaml'
-      when 'css'
-        lang = 'css'
-      when 'html'
-        lang = 'html'
-      when ''
-        lang = 'md'
-      else
-        lang = language
-      end
-
-      CodeRay.scan(code, lang).div
+    if object.picture?
+      icon = object.picture.url
+    else
+      icon = "noimage_icons/noimage.png"
     end
-  end
+    name = options[:name]
+    size = options[:size]
 
-  def markdown(text)
-    html_render = HTMLwithCoderay.new(filter_html: true, hard_wrap: true)
-    options = {
-      autolink: true,
-      space_after_headers: true,
-      no_intra_emphasis: true,
-      fenced_code_blocks: true,
-      tables: true,
-      hard_wrap: true,
-      xhtml: true,
-      lax_html_blocks: true,
-      strikethrough: true
-    }
-    markdown = Redcarpet::Markdown.new(html_render, options)
-    markdown.render(text)
+    image_tag(icon, alt: name, width: size, height: size, class: "icon")
   end
 
 end

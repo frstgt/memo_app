@@ -1,9 +1,17 @@
 <li id="page-<%= page.id %>">
 
   <span class="body">
-    <span class="title"><b><%= page.title %></b></span>
-    <span class="content"><%= page.content %></span>
+    
+    <span class="header">
+      <span class="title"><b><%= page.title %></b></span>
+    </span>
+
+    <span class="body">
+      <span class="content"><%= page.content %></span>
+    </span>
+
     <%= image_tag page.picture.url if page.picture? %>
+
   </span>
 
 </li>

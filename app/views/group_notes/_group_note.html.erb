@@ -1,10 +1,6 @@
 <li id="group_note-<%= group_note.id %>">
 
-  <% if group_note.picture? %>
-    <%= image_tag group_note.picture.url, width: 64, height: 64 %>
-  <% else %>
-
-  <% end %>
+  <%= icon_for(group_note, { name: group_note.title, size: 64 }) %>
 
   <span class="header">
     <span class="title"><b><%= link_to group_note.title, group_group_note_path(@group, group_note) %></b></span>

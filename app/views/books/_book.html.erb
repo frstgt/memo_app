@@ -1,10 +1,6 @@
 <li id="book-<%= book.id %>">
 
-  <% if book.picture? %>
-    <%= image_tag book.picture.url, width: 64, height: 64 %>
-  <% else %>
-
-  <% end %>
+  <%= icon_for(book, { name: book.title, size: 64 }) %>
 
   <span class="header">
     <span class="title"><b><%= link_to book.title, book %></b></span>

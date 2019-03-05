@@ -1,10 +1,6 @@
 <li id="pen_name-<%= pen_name.id %>">
 
-  <% if pen_name.picture? %>
-    <%= image_tag pen_name.picture.url, width: 64, height: 64 %>
-  <% else %>
-
-  <% end %>
+  <%= icon_for(pen_name, { name: pen_name.name, size: 64 }) %>
 
   <span class="header">
     <span class="name"><b><%= link_to pen_name.name, pen_name %></b></span>

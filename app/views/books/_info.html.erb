@@ -1,10 +1,23 @@
 <section class="info">
+
   (book)<br>
-  <span class="title"><b><%= @book.title %></b></span><br>
-  <span class="author"><i>by <%= @book.author %></i></span>
-  <span class="description"><%= @book.description %></span>
-  <span class="timestamp">
-    created <%= time_ago_in_words(@book.created_at) %> ago.<br>
-    updated <%= time_ago_in_words(@book.updated_at) %> ago.
+
+  <span class="header">
+    <span class="title"><b><%= @book.title %></b></span><br>
+    <span class="author"><i>by <%= @book.author %></i></span>
   </span>
+
+  <span class="body">
+    <span class="description"><%= @book.description %></span>
+  </span>
+
+  <%= icon_for(@book, { name: @book.title, size: 256 }) %>
+
+  <span class="footer">
+    <span class="timestamp">
+      created <%= time_ago_in_words(@book.created_at) %> ago.<br>
+      updated <%= time_ago_in_words(@book.updated_at) %> ago.
+    </span>
+  </span>
+
 </section>

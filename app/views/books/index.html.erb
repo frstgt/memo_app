@@ -2,7 +2,7 @@
 
     <span class="side_header">
       <span class="count">
-        pickup books (<%= @sample_books.count %>)
+        pickups (<%= @sample_books.count %>)
       </span>
       <span class="command">
       </span>
@@ -25,7 +25,7 @@
       </span>
     </span>
     <% if @all_books.any? %>
-      <ol class="main_list">
+      <ol class="note_list">
         <%= render @page_books %>
       </ol>
       <%= will_paginate @page_books %>
