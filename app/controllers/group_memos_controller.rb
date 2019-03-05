@@ -52,7 +52,7 @@ class GroupMemosController < MemosController
   private
 
     def memo_params
-      params.require(:group_memo).permit(:title, :content, :picture, :number, :layout)
+      params.require(:group_memo).permit(:title, :content, :picture, :number)
     end
 
     def correct_member

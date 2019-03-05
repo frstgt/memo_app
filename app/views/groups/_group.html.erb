@@ -1,5 +1,11 @@
 <li id="group-<%= group.id %>">
 
+  <% if group.picture? %>
+    <%= image_tag group.picture.url, width: 64, height: 64 %>
+  <% else %>
+
+  <% end %>
+    
   <span class="header">
     <span class="name"><b><%= link_to group.name, group %></b></span>
   </span>
@@ -9,7 +15,7 @@
   </span>
 
   <span class="footer">
-    <span class="timestamp">
+    <span class="timestamp text-muted">
       updated <%= time_ago_in_words(group.updated_at) %> ago.
     </span>
     <span class="command">

@@ -18,7 +18,7 @@
     </span>
 
     <% if @book.pages.any? %>
-      <ol class="main_list">
+      <ol class="memo_list">
         <%= render @pages %>
       </ol>
       <%= will_paginate @pages %>

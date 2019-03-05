@@ -1,26 +1,31 @@
 <li id="user_note-<%= user_note.id %>">
 
-  <span class="header">
-    <span class="title"><b><%= link_to user_note.title, user_note_path(user_note) %></b></span>
-    <% if user_note.pen_name %>
-      <span class="author"><i>by <%= user_note.pen_name.name %></i></span>
+    <% if user_note.picture? %>
+      <%= image_tag user_note.picture.url, width: 64, height: 64 %>
+    <% else %>
+
     <% end %>
-  </span>
 
-  <span class="body">
-    <span class="description"><%= user_note.description %></span>
-  </span>
-
-  <span class="footer">
-    <span class="timestamp">
-      updated <%= time_ago_in_words(user_note.updated_at) %> ago.
+    <span class="header">
+      <span class="title"><b><%= link_to user_note.title, user_note_path(user_note) %></b></span>
+      <% if user_note.pen_name %>
+        <span class="author"><i>by <%= user_note.pen_name.name %></i></span>
+      <% end %>
     </span>
-    <span class="command">
-      <%= link_to "[edit]", edit_user_note_path(user_note) %>
-      <%= link_to "[delete]", user_note_path(user_note), method: :delete,
-                              data: { confirm: "You sure?" } %>
-      <%= link_to "[to_book]", to_book_user_note_path(user_note),
+
+    <span class="body">
+      <span class="description"><%= user_note.description %></span>
+    </span>
+
+    <span class="footer">
+      <span class="timestamp text-muted">updated <%= time_ago_in_words(user_note.updated_at) %> ago.</span>
+      <span class="command">
+        <%= link_to "[edit]", edit_user_note_path(user_note) %>
+        <%= link_to "[delete]", user_note_path(user_note), method: :delete,
                                 data: { confirm: "You sure?" } %>
+        <%= link_to "[to_book]", to_book_user_note_path(user_note),
+                                  data: { confirm: "You sure?" } %>
+      </span>
     </span>
-  </span>
+
 </li>

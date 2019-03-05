@@ -46,7 +46,7 @@
       </ol>
     <% end %>
 
-</aside>
+  </aside>
 
   <div class="col-md-8">
 
@@ -60,7 +60,7 @@
       </span>
     </span>
     <% if @all_notes.any? %>
-      <ol class="main_list">
+      <ol class="note_list">
         <%= render @page_notes %>
       </ol>
       <%= will_paginate @page_notes %>

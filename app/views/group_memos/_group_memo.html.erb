@@ -1,19 +1,18 @@
 <li id="group_memo-<%= group_memo.id %>">
 
-  <div class="card mb-3">
+  <span class="header">
+    <% if group_memo.title %>
+      <span class="title"><b><%= group_memo.title %></b></span>
+    <% end %>
+  </span>
 
-    <div class="card-body">
-      <% if group_memo.title %>
-        <h4 class="card-title"><%= group_memo.title %></h4>
-      <% end %>
-      <p class="card-text"><%= group_memo.content %></p>
-    </div>
+  <span class="body">
+    <span class="content"><%= group_memo.content %></span>
 
     <% if group_memo.picture? %>
-      <%= image_tag group_memo.picture.url, class: "card-img" %>
+      <%= image_tag group_memo.picture.url %>
     <% end %>
-
-  </div>
+  </span>
 
   <span class="footer">
     <span class="timestamp text-muted">

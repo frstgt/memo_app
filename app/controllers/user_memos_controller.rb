@@ -48,7 +48,7 @@ class UserMemosController < MemosController
   private
 
     def memo_params
-      params.require(:user_memo).permit(:title, :content, :picture, :number, :layout)
+      params.require(:user_memo).permit(:title, :content, :picture, :number)
     end
 
     def correct_note

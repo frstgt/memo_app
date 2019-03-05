@@ -12,7 +12,8 @@ class GroupNote < Note
                       picture: self.picture,
                       pen_name_id: self.pen_name_id)
       self.user_memos.each { |memo|
-        Page.create(content: memo.content,
+        Page.create(title: memo.title,
+                    content: memo.content,
                     picture: memo.picture,
                     book_id: book.id)
       }

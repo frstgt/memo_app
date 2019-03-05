@@ -3,7 +3,7 @@ password = "z8aKm$@3rTEp#+bs"
 User.create!(name:  "Example User",
              password:              password,
              password_confirmation: password)
-29.times do |n|
+9.times do |n|
   name  = Faker::Name.name
   User.create!(name:  name,
                password:              password,
@@ -12,7 +12,7 @@ end
 users = User.order(:created_at)
 
 # groups
-3.times do |n|
+2.times do |n|
   name  = Faker::Team.name
   description = Faker::Lorem.sentence(20)
   Group.create!(name: name, description: description)
@@ -35,17 +35,11 @@ for user in users do
   members.append(user.pen_names.first)
 end
 groups.each_with_index { |group, n|
-
-  Membership.create!(group: group, member: members[n*10+0], position: Membership::MASTER)
-  Membership.create!(group: group, member: members[n*10+1], position: Membership::VICE)
-  Membership.create!(group: group, member: members[n*10+2], position: Membership::CHIEF)
-  Membership.create!(group: group, member: members[n*10+3], position: Membership::CHIEF)
-  Membership.create!(group: group, member: members[n*10+4], position: Membership::COMMON)
-  Membership.create!(group: group, member: members[n*10+5], position: Membership::COMMON)
-  Membership.create!(group: group, member: members[n*10+6], position: Membership::COMMON)
-  Membership.create!(group: group, member: members[n*10+7], position: Membership::COMMON)
-  Membership.create!(group: group, member: members[n*10+8], position: Membership::COMMON)
-  Membership.create!(group: group, member: members[n*10+9], position: Membership::VISITOR)
+  Membership.create!(group: group, member: members[n*5+0], position: Membership::MASTER)
+  Membership.create!(group: group, member: members[n*5+1], position: Membership::VICE)
+  Membership.create!(group: group, member: members[n*5+2], position: Membership::CHIEF)
+  Membership.create!(group: group, member: members[n*5+3], position: Membership::COMMON)
+  Membership.create!(group: group, member: members[n*5+4], position: Membership::VISITOR)
 }
 
 # user_notes
@@ -62,8 +56,7 @@ users.each do |user|
       10.times do
         title = Faker::Book.title
         content = Faker::Lorem.sentence(20)
-        layout = Memo::LAYOUTS.sample[1]
-        note.user_memos.create!(title: title, content: content, layout: layout, number: number)
+        note.user_memos.create!(title: title, content: content, number: number)
         number += 1
       end
     end
@@ -84,8 +77,7 @@ groups.each do |group|
       10.times do
         title = Faker::Book.title
         content = Faker::Lorem.sentence(20)
-        layout = Memo::LAYOUTS.sample[1]
-        note.group_memos.create!(title: title, content: content, layout: layout, number: number)
+        note.group_memos.create!(title: title, content: content, number: number)
         number += 1
       end
     end
@@ -103,8 +95,9 @@ users.each do |user|
     book = Book.create!(title: title, author: author, description: description,
                   pen_name_id: pen_name.id)
     10.times do
+      title = Faker::Book.title
       content = Faker::Lorem.sentence(20)
-      book.pages.create!(content: content, book_id: book.id)
+      book.pages.create!(title: title, content: content, book_id: book.id)
     end
   end
 end
@@ -121,8 +114,9 @@ groups.each do |group|
                          pen_name_id: pen_name.id)
 
     10.times do
+      title = Faker::Book.title
       content = Faker::Lorem.sentence(20)
-      book.pages.create!(content: content, book_id: book.id)
+      book.pages.create!(title: title, content: content, book_id: book.id)
     end
   end
 end

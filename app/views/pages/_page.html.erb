@@ -1,7 +1,8 @@
 <li id="page-<%= page.id %>">
 
-  <span class="content">
-    <%= markdown(page.content).html_safe %>
+  <span class="body">
+    <span class="title"><b><%= page.title %></b></span>
+    <span class="content"><%= page.content %></span>
     <%= image_tag page.picture.url if page.picture? %>
   </span>
 

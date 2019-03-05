@@ -1,13 +1,16 @@
 <li id="group_note-<%= group_note.id %>">
 
+  <% if group_note.picture? %>
+    <%= image_tag group_note.picture.url, width: 64, height: 64 %>
+  <% else %>
+
+  <% end %>
+
   <span class="header">
-    <span class="title">
-      <b><%= link_to group_note.title, group_group_note_path(@group, group_note) %></b>
-    </span>
+    <span class="title"><b><%= link_to group_note.title, group_group_note_path(@group, group_note) %></b></span>
     <% if group_note.pen_name %>
       <span class="author"><i>by <%= group_note.pen_name.name %></i></span>
     <% end %>
-    <span class="group"><i>@ <%= group_note.group.name %></i></span>
   </span>
 
   <span class="body">
@@ -15,13 +18,11 @@
   </span>
 
   <span class="footer">
-    <span class="timestamp">
-      updated <%= time_ago_in_words(group_note.updated_at) %> ago.
-    </span>
+    <span class="timestamp text-muted">updated <%= time_ago_in_words(group_note.updated_at) %> ago.</span>
     <span class="command">
       <%= link_to "[edit]", edit_group_group_note_path(@group, group_note) %>
       <%= link_to "[delete]", group_group_note_path(@group, group_note), method: :delete,
-                                     data: { confirm: "You sure?" } %>
+                              data: { confirm: "You sure?" } %>
       <%= link_to "[to_book]", to_book_group_group_note_path(@group, group_note),
                                 data: { confirm: "You sure?" } %>
     </span>

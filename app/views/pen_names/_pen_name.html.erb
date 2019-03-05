@@ -1,5 +1,11 @@
 <li id="pen_name-<%= pen_name.id %>">
 
+  <% if pen_name.picture? %>
+    <%= image_tag pen_name.picture.url, width: 64, height: 64 %>
+  <% else %>
+
+  <% end %>
+
   <span class="header">
     <span class="name"><b><%= link_to pen_name.name, pen_name %></b></span>
   </span>
@@ -9,13 +15,13 @@
   </span>
 
   <span class="footer">
-    <span class="timestamp">
+    <span class="timestamp text-muted">
       updated <%= time_ago_in_words(pen_name.updated_at) %> ago.
     </span>
     <span class="command">
       <%= link_to "[edit]", edit_pen_name_path(pen_name) %>
-      <%= link_to "[delete]", pen_name, method: :delete,
-                                     data: { confirm: "You sure?" } %>
+      <%= link_to "[delete]", pen_name,
+                              method: :delete, data: { confirm: "You sure?" } %>
     </span>
   </span>
 </li>

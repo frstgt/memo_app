@@ -33,7 +33,7 @@
     </span>
 
     <% if @group.general_members.any? %>
-      <ol class="main_list">
+      <ol class="note_list">
         <%= render :partial => "member", :collection => @general_members %>
       </ol>
       <%= will_paginate @general_members %>

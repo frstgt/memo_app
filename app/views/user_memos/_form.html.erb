@@ -12,7 +12,6 @@
     <%= f.label :picture %><br>
     <%= image_tag @memo.picture.url(:thumb) if @memo.picture? %>
     <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
-    <%= f.select :layout, Memo::LAYOUTS, { selected: Memo::AT_BOTTOM } %>
   </span>
   <span class="field">
     <%= f.label :number %>

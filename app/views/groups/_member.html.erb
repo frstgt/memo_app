@@ -1,8 +1,14 @@
 <li id="member-<%= member.id %>">
 
+  <% if member.picture? %>
+    <%= image_tag member.picture.url, width: 64, height: 64 %>
+  <% else %>
+
+  <% end %>
+
   <span class="header">
     <span class="position">(<%= @group.position(member).downcase %>)</span><br>
-    <span class="name"><i><%= member.name %></i></span>
+    <span class="name"><b><%= link_to member.name, member %></b></span>
   </span>
 
   <span class="body">
@@ -10,7 +16,7 @@
   </span>
 
   <span class="footer">
-    <span class="timestamp">
+    <span class="timestamp text-muted">
       updated <%= time_ago_in_words(member.updated_at) %> ago.
     </span>
     <span class="edit_command">

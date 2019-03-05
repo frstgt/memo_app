@@ -186,27 +186,52 @@ span.picture {
   }
 }
 
-.main_list {
+.note_list { // notes, books, pen_names, groups
   list-style: none;
   padding: 0;
   li {
-    padding: 10px 0;
+    padding: 10px 0px;
+    border-top: 1px solid #e8e8e8;
+  }
+  img {
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
+  }
+  .header {
+    margin-top: 5em;
+    padding-top: 0;
+  }
+  .body {
+    display: block;
+    margin-left: 74px;
+  }
+  .footer {
+    display: block;
+    margin-left: 74px;
+  }
+}
+.memo_list { // memos, pages
+  list-style: none;
+  padding: 0;
+  li {
+    padding: 10px 0px;
     border-top: 1px solid #e8e8e8;
   }
   .header {
-    display: block;
-    margin-left: 0px;
+    margin-top: 5em;
+    padding-top: 0;
   }
   .body {
     display: block;
     margin-left: 0px;
+    img {
+      display: block;
+    }
   }
   .footer {
     display: block;
     margin-left: 0px;
-    .timestamp {
-      color: $gray-light;
-    }
   }
 }
 
@@ -214,23 +239,25 @@ span.picture {
   list-style: none;
   padding: 0;
   li {
-    padding: 10px 0;
+    padding: 10px 0px;
     border-top: 1px solid #e8e8e8;
   }
+  img {
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
+  }
   .header {
-    display: block;
-    margin-left: 0px;
+    margin-top: 5em;
+    padding-top: 0;
   }
   .body {
     display: block;
-    margin-left: 0px;
+    margin-left: 74px;
   }
   .footer {
     display: block;
-    margin-left: 0px;
-    .timestamp {
-      color: $gray-light;
-    }
+    margin-left: 74px;
   }
 }
 
