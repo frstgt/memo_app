@@ -4,6 +4,11 @@
     
   <span class="header">
     <span class="name"><b><%= link_to group.name, group %></b></span>
+    <% if group.is_open? %>
+      <span class="badge badge-primary">open</span>
+    <% else %>
+      <span class="badge badge-dark">close</span>
+    <% end %>
   </span>
 
   <span class="body">
@@ -14,11 +19,36 @@
     <span class="timestamp text-muted">
       updated <%= time_ago_in_words(group.updated_at) %> ago.
     </span>
+
     <span class="command">
-      <%= link_to "[edit]", edit_group_path(group) %>
-      <%= link_to "[delete]", group, method: :delete,
-                                     data: { confirm: "You sure?" } %>
+      <% if group.has_member?(current_user) %>
+        <span class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            [unjoin] <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <% pen_name = group.get_member(current_user) %>
+            <li><%= link_to pen_name.name,
+                    unjoin_group_path(group, { group: {pen_name_id: pen_name.id} }),
+                    data: { confirm: "You sure?" } %></li>
+          </ul>
+        </span>
+      <% else %>
+        <span class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            [join] <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <% current_user.pen_names.each do |pen_name| %>
+              <li><%= link_to pen_name.name,
+                              join_group_path(group, { group: {pen_name_id: pen_name.id} }),
+                              data: { confirm: "You sure?" } %></li>
+            <% end %>
+          </ul>
+        </span>
+      <% end %>
     </span>
+
   </span>
 
 </li>

@@ -15,7 +15,8 @@ users = User.order(:created_at)
 2.times do |n|
   name  = Faker::Team.name
   description = Faker::Lorem.sentence(20)
-  Group.create!(name: name, description: description)
+  Group.create!(name: name, description: description,
+                status: 1)
 end
 groups = Group.order(:created_at)
 
@@ -25,7 +26,8 @@ users.each do |user|
   2.times do
     name = Faker::Name.name
     description = Faker::Lorem.sentence(20)
-    user.pen_names.create!(name: name, description: description)
+    user.pen_names.create!(name: name, description: description,
+                          status: 1)
   end
 end
 
@@ -50,13 +52,15 @@ users.each do |user|
     2.times do
       title = Faker::Book.title
       description = Faker::Lorem.sentence(20)
-      note = user.user_notes.create!(title: title, description: description, pen_name_id: pen_name.id)
+      note = user.user_notes.create!(title: title, description: description,
+                                    pen_name_id: pen_name.id)
 
       number = 1
       10.times do
         title = Faker::Book.title
         content = Faker::Lorem.sentence(20)
-        note.user_memos.create!(title: title, content: content, number: number)
+        note.user_memos.create!(title: title, content: content,
+                                number: number)
         number += 1
       end
     end
@@ -71,13 +75,15 @@ groups.each do |group|
     2.times do
       title = Faker::Book.title
       description = Faker::Lorem.sentence(20)
-      note = group.group_notes.create!(title: title, description: description, pen_name_id: pen_name.id)
+      note = group.group_notes.create!(title: title, description: description,
+                                      pen_name_id: pen_name.id, status: 1)
 
       number = 1
       10.times do
         title = Faker::Book.title
         content = Faker::Lorem.sentence(20)
-        note.group_memos.create!(title: title, content: content, number: number)
+        note.group_memos.create!(title: title, content: content,
+                                number: number)
         number += 1
       end
     end
@@ -97,7 +103,8 @@ users.each do |user|
     10.times do
       title = Faker::Book.title
       content = Faker::Lorem.sentence(20)
-      book.pages.create!(title: title, content: content, book_id: book.id)
+      book.pages.create!(title: title, content: content,
+                          book_id: book.id)
     end
   end
 end
@@ -116,8 +123,17 @@ groups.each do |group|
     10.times do
       title = Faker::Book.title
       content = Faker::Lorem.sentence(20)
-      book.pages.create!(title: title, content: content, book_id: book.id)
+      book.pages.create!(title: title, content: content,
+                        book_id: book.id)
     end
   end
 end
 
+# readerships
+users.each do |user|
+  books = Book.order(:created_at).sample(10)
+  books.each do |book|
+    evaluation = [-1,0,1,2,3].sample
+    Readership.create!(reader_id: user.id, book_id: book.id, evaluation: evaluation)
+  end
+end

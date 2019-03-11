@@ -11,7 +11,6 @@ class UserNotesController < ApplicationController
   def new
     @note = current_user.user_notes.build
   end
-
   def create
     @note = current_user.user_notes.build(note_params)
     if @note.save
@@ -25,12 +24,11 @@ class UserNotesController < ApplicationController
   def edit
     @note = current_user.user_notes.find(params[:id])
   end
-
   def update
     @note = current_user.user_notes.find(params[:id])
     if @note.update_attributes(note_params)
       flash[:success] = "Note updated"
-      redirect_to current_user
+      redirect_to @note
     else
       render 'edit'
     end
@@ -48,7 +46,7 @@ class UserNotesController < ApplicationController
     if @note.to_book
       flash[:success] = "Book published"
     end
-    redirect_to current_user
+    redirect_to @note
   end
 
   private

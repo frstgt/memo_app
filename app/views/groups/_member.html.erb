@@ -3,7 +3,7 @@
   <%= icon_for(member, { name: member.name, size: 64 }) %>
 
   <span class="header">
-    <span class="position">(<%= @group.position(member).downcase %>)</span><br>
+    <span class="position">(<%= @group.get_position(member).downcase %>)</span><br>
     <span class="name"><b><%= link_to member.name, member %></b></span>
   </span>
 
@@ -15,7 +15,22 @@
     <span class="timestamp text-muted">
       updated <%= time_ago_in_words(member.updated_at) %> ago.
     </span>
-    <span class="edit_command">
+    <span class="command">
+
+        <span class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            [position] <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <% Membership::POSITIONS.each do |position, value| %>
+              <li><%= link_to position,
+                              position_group_path(@group,
+                                                  { group: {pen_name_id: member.id, position: value} }),
+                              data: { confirm: "You sure?" } %></li>
+            <% end %>
+          </ul>
+        </span>
+
     </span>
   </span>
 

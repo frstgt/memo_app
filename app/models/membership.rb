@@ -10,7 +10,13 @@ class Membership < ApplicationRecord
   CHIEF = 2
   COMMON = 3
   VISITOR = 4
-  POSITIONS = ["Master", "Vice", "Chief", "Common", "Visitor"]
+  POSITIONS = [
+    ["Master", MASTER],
+    ["Vice", VICE],
+    ["Chief", CHIEF],
+    ["Common", COMMON],
+    ["Visitor", VISITOR]
+  ]
   validates :position, presence: true,
                         inclusion: { in: [MASTER, VICE, CHIEF, COMMON, VISITOR] }
 

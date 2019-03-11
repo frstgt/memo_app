@@ -7,6 +7,11 @@
     <% if group_note.pen_name %>
       <span class="author"><i>by <%= group_note.pen_name.name %></i></span>
     <% end %>
+    <% if group_note.is_open? %>
+      <span class="badge badge-primary">open</span>
+    <% else %>
+      <span class="badge badge-dark">close</span>
+    <% end %>
   </span>
 
   <span class="body">
@@ -15,13 +20,6 @@
 
   <span class="footer">
     <span class="timestamp text-muted">updated <%= time_ago_in_words(group_note.updated_at) %> ago.</span>
-    <span class="command">
-      <%= link_to "[edit]", edit_group_group_note_path(@group, group_note) %>
-      <%= link_to "[delete]", group_group_note_path(@group, group_note), method: :delete,
-                              data: { confirm: "You sure?" } %>
-      <%= link_to "[to_book]", to_book_group_group_note_path(@group, group_note),
-                                data: { confirm: "You sure?" } %>
-    </span>
   </span>
 
 </li>

@@ -4,6 +4,11 @@
 
   <span class="header">
     <span class="name"><b><%= link_to pen_name.name, pen_name %></b></span>
+    <% if pen_name.is_open? %>
+      <span class="badge badge-primary">open</span>
+    <% else %>
+      <span class="badge badge-dark">close</span>
+    <% end %>
   </span>
 
   <span class="body">
@@ -13,11 +18,6 @@
   <span class="footer">
     <span class="timestamp text-muted">
       updated <%= time_ago_in_words(pen_name.updated_at) %> ago.
-    </span>
-    <span class="command">
-      <%= link_to "[edit]", edit_pen_name_path(pen_name) %>
-      <%= link_to "[delete]", pen_name,
-                              method: :delete, data: { confirm: "You sure?" } %>
     </span>
   </span>
 </li>

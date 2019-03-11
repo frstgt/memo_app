@@ -2,11 +2,9 @@ class Book < ApplicationRecord
   belongs_to :pen_name
   has_many :pages, dependent: :destroy
   has_many :passive_readerships, class_name:  "Readership",
-                                  foreign_key: "reader_id",
+                                  foreign_key: "book_id",
                                   dependent:   :destroy
   has_many :readers, through: :passive_readerships,  source: :reader
-
-  default_scope -> { order(created_at: :desc) }
 
   mount_uploader :picture, PictureUploader
 
@@ -17,12 +15,23 @@ class Book < ApplicationRecord
 
   validate  :picture_size
 
-  def evaluate(user, evaluation)
+  default_scope -> { order(created_at: :desc) }
+
+  def set_evaluation(user, evaluation)
     readership = passive_readerships.find_by(reader_id: user.id)
     if readership
-      readership.destroy
+      readership.update_attributes({evaluation: evaluation})
+    else
+      passive_readerships.create(reader_id: user.id, evaluation: evaluation)
     end
-    passive_readerships.create(reader_id: user.id, evaluation: evaluation)
+  end
+  def get_evaluation(user)
+    readership = passive_readerships.find_by(reader_id: user.id)
+    if readership
+      readership.evaluation
+    else
+      0
+    end
   end
 
   private

@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_action :logged_in_user, only: [:index, :show, :evaluate, :evaluations]
+  before_action :logged_in_user, only: [:index, :show, :evaluate]
 
   def index
     @all_books = Book.all
@@ -12,13 +12,17 @@ class BooksController < ApplicationController
     @pages = @book.pages.paginate(page: params[:page])
   end
 
-  def evaluations
-    @book =  Book.find_by(id: params[:id])
-    @evaluations = Readership::EVALUATIONS
-  end
   def evaluate
     @book =  Book.find_by(id: params[:id])
-    @book.evaluate(current_user, params[:evaluation])
+    if @book
+      @evaluation = params[:book][:evaluation].to_i
+      if @evaluation > 3
+        @evaluation = 3
+      elsif @evaluation < -1
+        @evaluation = -1
+      end
+      @book.set_evaluation(current_user, @evaluation)
+    end
     redirect_to books_path
   end
 

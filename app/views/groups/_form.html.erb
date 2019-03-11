@@ -19,18 +19,8 @@
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
 <% end %>
 
-<span class="alert alert-info positions">
-  <b>positions</b><br>
-  (leading members)
-  - master:
-  - vice:
-  - chief:
-  (general members)
-  - common:
-  - visitor:
-</span>
-
 <%= render 'shared/picture_requirements' %>
+<%= render 'shared/group_positions' %>
 
 <script type="text/javascript">
   $('#group_picture').bind('change', function() {

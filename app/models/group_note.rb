@@ -3,6 +3,17 @@ class GroupNote < Note
   has_many :group_memos, dependent: :destroy
 
   validates :group_id, presence: true
+  validates :status,  presence: true
+
+  def to_open
+    self.update_attributes({status: 1})
+  end
+  def to_close
+    self.update_attributes({status: 0})
+  end
+  def is_open?
+    self.status == 1
+  end
 
   def to_book
     if self.pen_name

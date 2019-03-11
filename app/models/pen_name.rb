@@ -16,6 +16,27 @@ class PenName < ApplicationRecord
                     uniqueness: true
   validates :description, length: { maximum: 1000 }
   validate  :picture_size
+  validates :status,  presence: true
+
+  def to_open
+    self.update_attributes({status: 1})
+  end
+  def to_close
+    self.update_attributes({status: 0})
+  end
+  def is_open?
+    self.status == 1
+  end
+
+  def join(group)
+    passive_memberships.create(group_id: group.id, position: Membership::VISITOR)
+  end
+  def unjoin(group)
+    membership = passive_memberships.find_by(group_id: group.id)
+    if membership
+      membership.destroy
+    end
+  end
 
   private
 

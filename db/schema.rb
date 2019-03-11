@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190304212029) do
+ActiveRecord::Schema.define(version: 20190305060713) do
 
   create_table "books", force: :cascade do |t|
     t.string "title"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20190304212029) do
     t.string "picture"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "status", default: 0
     t.index ["name"], name: "index_groups_on_name", unique: true
   end
 
@@ -69,6 +70,7 @@ ActiveRecord::Schema.define(version: 20190304212029) do
     t.string "picture"
     t.string "type"
     t.integer "group_id"
+    t.integer "status", default: 0
     t.index ["group_id"], name: "index_notes_on_group_id"
     t.index ["pen_name_id"], name: "index_notes_on_pen_name_id"
     t.index ["user_id", "updated_at"], name: "index_notes_on_user_id_and_updated_at"
@@ -92,6 +94,7 @@ ActiveRecord::Schema.define(version: 20190304212029) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "picture"
+    t.integer "status", default: 0
     t.index ["name"], name: "index_pen_names_on_name", unique: true
     t.index ["user_id", "updated_at"], name: "index_pen_names_on_user_id_and_updated_at"
     t.index ["user_id"], name: "index_pen_names_on_user_id"

@@ -8,7 +8,14 @@
 
       <span class="header">
         <span class="title"><b><%= @note.title %></b></span><br>
-        <span class="author"><i>by <%= @note.pen_name.name %></i></span>
+        <% if @note.pen_name %>
+          <span class="author"><i>by <%= @note.pen_name.name %></i></span>
+        <% end %>
+        <% if @note.is_open? %>
+          <span class="badge badge-primary">open</span>
+        <% else %>
+          <span class="badge badge-dark">close</span>
+        <% end %>
       </span>
 
       <span class="body">
@@ -21,6 +28,19 @@
         <span class="timestamp">
           created <%= time_ago_in_words(@note.created_at) %> ago.<br>
           updated <%= time_ago_in_words(@note.updated_at) %> ago.
+        </span>
+        <span class="command">
+          <% if @note.is_open? %>
+            <%= link_to "[to_close]", to_close_group_group_note_path(@note) %>
+          <% else %>
+            <%= link_to "[to_open]", to_open_group_group_note_path(@note) %>
+          <% end %>
+          <%= link_to "[to_book]", to_book_group_group_note_path(@group, @note),
+                                data: { confirm: "You sure?" } %>
+
+          <%= link_to "[edit]", edit_group_group_note_path(@group, @note) %>
+          <%= link_to "[delete]", group_group_note_path(@group, @note), method: :delete,
+                              data: { confirm: "You sure?" } %>
         </span>
       </span>
 

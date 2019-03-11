@@ -4,6 +4,11 @@
 
   <span class="header">
     <span class="name"><b><%= @group.name %></b></span>
+    <% if @group.is_open? %>
+      <span class="badge badge-primary">open</span>
+    <% else %>
+      <span class="badge badge-dark">close</span>
+    <% end %>
   </span>
 
   <span class="body">
@@ -16,6 +21,17 @@
     <span class="timestamp">
       created <%= time_ago_in_words(@group.created_at) %> ago.<br>
       updated <%= time_ago_in_words(@group.updated_at) %> ago.
+    </span>
+    <span class="command">
+
+      <% if @group.is_open? %>
+        <%= link_to "[to_close]", to_close_group_path(@group) %>
+      <% else %>
+        <%= link_to "[to_open]", to_open_group_path(@group) %>
+      <% end %>
+      <%= link_to "[edit]", edit_group_path(@group) %>
+      <%= link_to "[delete]", @group, method: :delete,
+                                     data: { confirm: "You sure?" } %>
     </span>
   </span>
 

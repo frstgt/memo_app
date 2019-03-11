@@ -15,9 +15,52 @@ class Group < ApplicationRecord
                     uniqueness: true
   validates :description, length: { maximum: 1000 }
   validate  :picture_size
+  validates :status,  presence: true
 
-  def first_master(pen_name)
-    active_memberships.create(member_id: pen_name.id, position: Membership::MASTER)
+  def to_open
+    self.update_attributes({status: 1})
+  end
+  def to_close
+    self.update_attributes({status: 0})
+  end
+  def is_open?
+    self.status == 1
+  end
+
+  def join(pen_name, position=Membership::VISITOR)
+    unless self.has_member?(pen_name.user)
+      active_memberships.create(member_id: pen_name.id, position: position)
+      true
+    else
+      false
+    end
+  end
+  def unjoin(pen_name)
+    membership = active_memberships.find_by(member_id: pen_name.id)
+    if membership
+      membership.destroy
+      true
+    else
+      false
+    end
+  end
+
+  def set_position(pen_name, position)
+    membership = active_memberships.find_by(member_id: pen_name.id)
+    if membership
+      membership.update_attributes({position: position})
+      true
+    else
+      false
+    end
+  end
+  def get_position(pen_name)
+    membership = active_memberships.find_by(member_id: pen_name.id)
+    if membership
+      Membership::POSITIONS[membership.position][0]
+    else
+      nil
+    end
   end
 
   def leading_members
@@ -31,42 +74,47 @@ class Group < ApplicationRecord
     PenName.where("id IN (#{member_ids})", group_id: id)
   end
 
-  def position(pen_name)
-    membership = active_memberships.find_by(member_id: pen_name.id)
-    Membership::POSITIONS[membership.position]
-  end
-
   def is_master?(pen_name)
     membership = active_memberships.find_by(member_id: pen_name.id)
-    membership.position == Membership::MASTER
+    membership and membership.position == Membership::MASTER
   end
   def is_master_or_vice?(pen_name)
     membership = active_memberships.find_by(member_id: pen_name.id)
-    membership.position <= Membership::VICE
+    membership and membership.position <= Membership::VICE
   end
   def is_master_or_vice_or_chief?(pen_name)
     membership = active_memberships.find_by(member_id: pen_name.id)
-    membership.position <= Membership::CHIEF
+    membership and membership.position <= Membership::CHIEF
   end
   def is_master_or_vice_or_chief_or_common?(pen_name)
     membership = active_memberships.find_by(member_id: pen_name.id)
-    membership.position <= Membership::COMMON
+    membership and membership.position <= Membership::COMMON
   end
 
-  def user_has_master?(user)
+  def has_master?(user)
     user.pen_names.any? { |pen_name| self.is_master?(pen_name) }
   end
-  def user_has_master_or_vice?(user)
+  def has_master_or_vice?(user)
     user.pen_names.any? { |pen_name| self.is_master_or_vice?(pen_name) }
   end
-  def user_has_master_or_vice_or_chief?(user)
+  def has_master_or_vice_or_chief?(user)
     user.pen_names.any? { |pen_name| self.is_master_or_vice_or_chief?(pen_name) }
   end
-  def user_has_master_or_vice_or_chief_or_common?(user)
-    user.pen_names.any? { |pen_name| self.is_master_or_vice_or_chief_or_commonf?(pen_name) }
+  def has_master_or_vice_or_chief_or_common?(user)
+    user.pen_names.any? { |pen_name| self.is_master_or_vice_or_chief_or_common?(pen_name) }
   end
-  def user_has_member?(user)
+  def has_member?(user)
     user.pen_names.any? { |pen_name| self.members.include?(pen_name) }
+  end
+  
+  def get_member(user)
+    member = nil
+    user.pen_names.each { |pen_name|
+      if self.members.include?(pen_name)
+        member = pen_name
+      end
+    }
+    member
   end
 
   private

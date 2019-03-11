@@ -15,13 +15,6 @@
 
     <span class="footer">
       <span class="timestamp text-muted">updated <%= time_ago_in_words(user_note.updated_at) %> ago.</span>
-      <span class="command">
-        <%= link_to "[edit]", edit_user_note_path(user_note) %>
-        <%= link_to "[delete]", user_note_path(user_note), method: :delete,
-                                data: { confirm: "You sure?" } %>
-        <%= link_to "[to_book]", to_book_user_note_path(user_note),
-                                  data: { confirm: "You sure?" } %>
-      </span>
     </span>
 
 </li>
