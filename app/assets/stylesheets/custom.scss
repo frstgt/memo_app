@@ -1,7 +1,13 @@
-@import "bootstrap-sprockets";
 @import "bootstrap";
 
 /* mixins, variables, etc. */
+
+$gray-base: #000 !default;
+$gray-darker: lighten($gray-base, 13.5%) !default; // #222
+$gray: lighten($gray-base, 33.5%) !default; // #555
+$gray-light: lighten($gray-base, 46.7%) !default; // #777
+
+$state-danger-text: #a94442 !default;
 
 $gray-medium-light: #eaeaea;
 
@@ -59,22 +65,26 @@ p {
   line-height: 1.7em;
 }
 
-
 /* header */
 
-#logo {
-  float: left;
-  margin-right: 10px;
-  font-size: 1.7em;
-  color: white;
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  padding-top: 9px;
-  font-weight: bold;
-  &:hover {
+header {
+
+  #logo {
+    float: left;
+    margin-right: 10px;
+    font-size: 1.7em;
     color: white;
-    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    padding-top: 3px;
+    font-weight: bold;
+    &:hover {
+      color: white;
+      text-decoration: none;
+    }
   }
+
+  margin-bottom: 20px;
 }
 
 /* footer */
@@ -100,6 +110,17 @@ footer {
       float: left;
       margin-left: 15px;
     }
+  }
+}
+
+.row {
+  .col-md-4 {
+    padding-left: 0px;
+    padding-right: 10px;
+  }
+  .col-md-8 {
+    padding-left: 10px;
+    padding-right: 0px;
   }
 }
 
@@ -145,7 +166,9 @@ input {
 }
 
 .field_with_errors {
-  @extend .has-error;
+  input {
+    @extend .is-invalid;
+  }
   .form-control {
     color: $state-danger-text;
   }

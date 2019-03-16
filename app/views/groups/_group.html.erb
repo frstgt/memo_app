@@ -7,6 +7,7 @@
     <span class="name"><b><%= link_to group.name, group %></b></span>
     <% if pen_name %>
       <i>(<%= pen_name.name %> as <%= group.get_position_name(pen_name) %>)</i>
+      <span class="badge badge-info">our</span>
     <% end %>
 
     <% if group.is_open? %>
@@ -27,16 +28,18 @@
 
     <span class="command">
       <% if pen_name %>
-        <span class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            [unjoin] <b class="caret"></b>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-right">
-            <li><%= link_to pen_name.name,
-                    unjoin_group_path(group, { group: {pen_name_id: pen_name.id} }),
-                    data: { confirm: "You sure?" } %></li>
-          </ul>
-        </span>
+        <% if group.is_general_member?(pen_name) %>
+          <span class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              [unjoin] <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li><%= link_to pen_name.name,
+                      unjoin_group_path(group, { group: {pen_name_id: pen_name.id} }),
+                      data: { confirm: "You sure?" } %></li>
+            </ul>
+          </span>
+        <% end %>
       <% else %>
         <span class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
