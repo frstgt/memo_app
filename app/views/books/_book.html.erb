@@ -5,6 +5,9 @@
   <span class="header">
     <span class="title"><b><%= link_to book.title, book %></b></span>
     <span class="author"><i>by <%= book.author %></i></span>
+    <% if book.pen_name.user == current_user %>
+      <span class="badge badge-info">mine</span>
+    <% end %>
   </span>
 
   <span class="body">
@@ -22,8 +25,8 @@
           [<%= book.get_evaluation(current_user) %>]
           <b class="caret"></b>
         </a>
-        <ul class="dropdown-menu">
-          <% (-1..3).each do |value| %>
+        <ul class="dropdown-menu dropdown-menu-right">
+          <% 5.downto(-5).each do |value| %>
             <li><%= link_to value, evaluate_book_path(book, { book: {evaluation: value} }) %></li>
           <% end %>
         </ul>

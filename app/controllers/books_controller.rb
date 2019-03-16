@@ -16,11 +16,8 @@ class BooksController < ApplicationController
     @book =  Book.find_by(id: params[:id])
     if @book
       @evaluation = params[:book][:evaluation].to_i
-      if @evaluation > 3
-        @evaluation = 3
-      elsif @evaluation < -1
-        @evaluation = -1
-      end
+      @evaluation = 5 if @evaluation > 5
+      @evaluation = -5 if @evaluation < -5
       @book.set_evaluation(current_user, @evaluation)
     end
     redirect_to books_path

@@ -4,10 +4,13 @@
 
   <span class="header">
     <span class="name"><b><%= link_to pen_name.name, pen_name %></b></span>
+    <% if pen_name.user == current_user %>
+      <span class="badge badge-info">me</span>
+    <% end %>
     <% if pen_name.is_open? %>
       <span class="badge badge-primary">open</span>
     <% else %>
-      <span class="badge badge-dark">close</span>
+      <span class="badge badge-dark">closed</span>
     <% end %>
   </span>
 

@@ -1,13 +1,18 @@
 <li id="group-<%= group.id %>">
+  <% pen_name = group.get_user_member(current_user) %>
 
   <%= icon_for(group, { name: group.name, size: 64 }) %>
     
   <span class="header">
     <span class="name"><b><%= link_to group.name, group %></b></span>
+    <% if pen_name %>
+      <i>(<%= pen_name.name %> as <%= group.get_position_name(pen_name) %>)</i>
+    <% end %>
+
     <% if group.is_open? %>
       <span class="badge badge-primary">open</span>
     <% else %>
-      <span class="badge badge-dark">close</span>
+      <span class="badge badge-dark">closed</span>
     <% end %>
   </span>
 
@@ -21,13 +26,12 @@
     </span>
 
     <span class="command">
-      <% if group.has_member?(current_user) %>
+      <% if pen_name %>
         <span class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             [unjoin] <b class="caret"></b>
           </a>
-          <ul class="dropdown-menu">
-            <% pen_name = group.get_member(current_user) %>
+          <ul class="dropdown-menu dropdown-menu-right">
             <li><%= link_to pen_name.name,
                     unjoin_group_path(group, { group: {pen_name_id: pen_name.id} }),
                     data: { confirm: "You sure?" } %></li>
@@ -38,7 +42,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             [join] <b class="caret"></b>
           </a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu dropdown-menu-right">
             <% current_user.pen_names.each do |pen_name| %>
               <li><%= link_to pen_name.name,
                               join_group_path(group, { group: {pen_name_id: pen_name.id} }),

@@ -3,8 +3,11 @@
   <%= icon_for(member, { name: member.name, size: 64 }) %>
 
   <span class="header">
-    <span class="position">(<%= @group.get_position(member).downcase %>)</span><br>
+    <span class="position">(<%= @group.get_position_name(member) %>)</span>
     <span class="name"><b><%= link_to member.name, member %></b></span>
+    <% if member.user == current_user %>
+      <span class="badge badge-info">me</span>
+    <% end %>
   </span>
 
   <span class="body">
@@ -17,19 +20,35 @@
     </span>
     <span class="command">
 
+      <% do_pos_id = @group.get_position_id(@user_member) %>
+      <% from_pos_id = @group.get_position_id(member) %>
+
+      <% if do_pos_id == Membership::MASTER and do_pos_id == from_pos_id %>
+        <%= link_to "[change master]",
+                    change_master_group_path(@group), data: { confirm: "You sure?" } %>
+      <% end %>
+
+      <% if do_pos_id <= Membership::CHIEF and do_pos_id < from_pos_id %>
+
         <span class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             [position] <b class="caret"></b>
           </a>
-          <ul class="dropdown-menu">
-            <% Membership::POSITIONS.each do |position, value| %>
-              <li><%= link_to position,
-                              position_group_path(@group,
-                                                  { group: {pen_name_id: member.id, position: value} }),
-                              data: { confirm: "You sure?" } %></li>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <% Membership::POSITIONS[(do_pos_id+1)..4].each do |to_pos_name, to_pos_id| %>
+
+              <% if from_pos_id != to_pos_id %>
+                <li><%= link_to to_pos_name,
+                                position_group_path(@group,
+                                                    { group: {pen_name_id: member.id, position: to_pos_id} }),
+                                data: { confirm: "You sure?" } %></li>
+              <% end %>
+
             <% end %>
           </ul>
         </span>
+
+      <% end %>
 
     </span>
   </span>

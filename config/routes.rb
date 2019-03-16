@@ -13,11 +13,11 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
 
-  resources :pen_names
   resources :pen_names do
     get :to_open, on: :member
     get :to_close, on: :member
   end
+  resources :pen_names
 
   resources :user_notes, only: [:show, :new, :create, :edit, :update, :destroy]
   resources :user_notes do
@@ -26,7 +26,6 @@ Rails.application.routes.draw do
     get :to_book, on: :member
   end
 
-  resources :groups
   resources :groups do
 
     resources :group_notes, only: [:show, :new, :create, :edit, :update, :destroy]
@@ -40,11 +39,14 @@ Rails.application.routes.draw do
 
     get :to_open, on: :member
     get :to_close, on: :member
+
+    get :members, on: :member
     get :join, on: :member
     get :unjoin, on: :member
+    get :change_master, on: :member
     get :position, on: :member
-    get :members, on: :member
   end
+  resources :groups
 
   resources :books, only: [:new, :create]
   resources :books do

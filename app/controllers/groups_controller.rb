@@ -1,13 +1,22 @@
 class GroupsController < ApplicationController
   before_action :logged_in_user
-  before_action :allowed_user,       only: [:show, :join]
+  before_action :group_is_exist,             except: [:new, :create, :index, :closed]
+  before_action :user_have_member,           except: [:new, :create, :show, :join, :index, :closed]
 
-  before_action :correct_member,     only: [:members, :edit, :update, :destroy]
-  before_action :common_or_visitor,  only: [:unjoin]
-  before_action :master_or_vice,     only: [:edit, :update, :destroy, :to_open, :to_close, :position]
+  before_action :allowed_user,                 only: [:show, :join]
 
-  before_action :correct_pen_name,   only: [:create, :join, :unjoin]
-  before_action :only_member,        only: [:destroy]
+  before_action :user_have_general_member,     only: [:unjoin]
+  before_action :user_have_leading_member,     only: [:position]
+  before_action :user_have_core_member,        only: [:edit, :update, :destroy,
+                                                      :to_open, :to_close]
+  before_action :user_is_master,               only: [:change_master]
+
+  before_action :user_pen_name,                only: [:create, :join, :unjoin]
+  before_action :group_member,                 only: [:position]
+  before_action :position_check1,               only: [:position]
+  before_action :position_check2,               only: [:position]
+
+  before_action :user_is_only_member,          only: [:destroy]
 
   def index
     @all_groups = Group.where(status: 1)
@@ -32,7 +41,7 @@ class GroupsController < ApplicationController
     @group = Group.new(group_params)
     if @group.save
 
-      @group.join(@pen_name, Memberships::MASTER)
+      @group.first_master(@user_pen_name)
 
       flash[:success] = "Group created"
       redirect_to groups_path
@@ -64,21 +73,28 @@ class GroupsController < ApplicationController
   end
   def to_close
     @group.to_close
+    @group.irregular_members.each do |visitor|
+      @group.unjoin(visitor)
+    end
     redirect_to @group
   end
 
   def join
-    @group.join(@pen_name)
+    p params
+    @group.join(@user_pen_name)
     redirect_to groups_path
   end
   def unjoin
-    @group.unjoin(@pen_name)
+    @group.unjoin(@user_pen_name)
     redirect_to groups_path
   end
+
+  def change_master
+    @group.change_master
+    redirect_to members_group_path(@group)
+  end
   def position
-    @pen_name = @group.members.find_by(id: params[:group][:pen_name_id])
-    @position = params[:group][:position]
-    @group.set_position(@pen_name, @position)
+    @group.set_position(@group_member, @to_pos)
     redirect_to members_group_path(@group)
   end
 
@@ -88,34 +104,60 @@ class GroupsController < ApplicationController
       params.require(:group).permit(:name, :description, :picture, :pen_name_id)
     end
 
-    def allowed_user
+    def group_is_exist
       @group = Group.find_by(id: params[:id])
-      unless @group and (@group.has_member?(current_user) or @group.is_open?)
+      redirect_to root_url unless @group
+    end
+    def user_have_member
+      @user_member = @group.get_user_member(current_user)
+      redirect_to root_url unless @user_member
+    end
+
+    def allowed_user
+      unless @group and (@group.get_user_member(current_user) or @group.is_open?)
         redirect_to root_url
       end
     end
 
-    def correct_pen_name
-      @pen_name = current_user.pen_names.find_by(id: params[:group][:pen_name_id])
-      redirect_to root_url if @pen_name==nil
+    def group_member
+      @group_member = @group.members.find_by(id: params[:group][:pen_name_id])
+      redirect_to root_url unless @group_member
+    end
+    def user_pen_name
+      @user_pen_name = current_user.pen_names.find_by(id: params[:group][:pen_name_id])
+      redirect_to root_url unless @user_pen_name
+    end
+    def position_check1
+      @do_pos = @group.get_position_id(@user_member)
+      @from_pos = @group.get_position_id(@group_member)
+      @to_pos = params[:group][:position].to_i
+      @to_pos = Membership::MASTER if @to_pos < Membership::MASTER
+      @to_pos = Membership::VISITOR if @to_pos > Membership::VISITOR
+      unless @do_pos <= Membership::CHIEF and @do_pos < @from_pos and @do_pos < @to_pos and @from_pos != @to_pos
+          redirect_to root_url
+      end
+    end
+    def position_check2
+      unless @to_pos == Membership::VICE and @group.core_members.count < 3
+        redirect_to members_group_path(@group)
+      end
     end
 
-    def correct_member
-      @group = Group.find_by(id: params[:id])
-      redirect_to root_url unless @group.has_member?(current_user)
+    def user_is_master
+      redirect_to root_url unless @group.is_master?(@user_member)
     end
-    def master_or_vice
-      @group = Group.find_by(id: params[:id])
-      redirect_to root_url unless @group.has_master_or_vice?(current_user)
+    def user_have_core_member
+      redirect_to root_url unless @group.is_core_member?(@user_member)
     end
-    def common_or_visitor
-      @group = Group.find_by(id: params[:id])
-      redirect_to root_url if @group.has_master_or_vice_or_chief?(current_user)
+    def user_have_leading_member
+      redirect_to root_url unless @group.is_leading_member?(@user_member)
+    end
+    def user_have_general_member
+      redirect_to root_url unless @group.is_general_member?(@user_member)
     end
 
-    def only_member
-      @group = Group.find_by(id: params[:id])
-      redirect_to root_url unless @gourp.members.count == 1
+    def user_is_only_member
+      redirect_to root_url unless @group.is_master?(@user_member) and @gourp.members.count == 1
     end
 
 end

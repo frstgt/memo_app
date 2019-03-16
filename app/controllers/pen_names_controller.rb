@@ -51,6 +51,11 @@ class PenNamesController < ApplicationController
   end
   def to_close
     @pen_name.to_close
+    @pen_name.groups.each do |group|
+      if group.is_visitor(@pen_name)
+        group.unjoin(@pen_name)
+      end
+    end
     redirect_to @pen_name
   end
   
