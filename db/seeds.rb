@@ -131,9 +131,9 @@ end
 
 # readerships
 users.each do |user|
-  books = Book.order(:created_at).sample(10)
+  books = Book.order(:created_at)
   books.each do |book|
-    evaluation = [-1,0,1,2,3].sample
+    evaluation = [-5,-4,-3,-2,-1,0,1,2,3,4,5].sample
     Readership.create!(reader_id: user.id, book_id: book.id, evaluation: evaluation)
   end
 end

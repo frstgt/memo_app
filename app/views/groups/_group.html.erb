@@ -7,7 +7,7 @@
     <span class="name"><b><%= link_to group.name, group %></b></span>
     <% if pen_name %>
       <i>(<%= pen_name.name %> as <%= group.get_position_name(pen_name) %>)</i>
-      <span class="badge badge-info">our</span>
+      <span class="badge badge-secondary">our</span>
     <% end %>
 
     <% if group.is_open? %>
@@ -24,6 +24,9 @@
   <span class="footer">
     <span class="timestamp text-muted">
       updated <%= time_ago_in_words(group.updated_at) %> ago.
+    </span>
+    <span class="counter text-muted">
+      (members: <%= group.members.count %>)      
     </span>
 
     <span class="command">

@@ -5,7 +5,7 @@
   <span class="header">
     <span class="name"><b><%= link_to pen_name.name, pen_name %></b></span>
     <% if pen_name.user == current_user %>
-      <span class="badge badge-info">me</span>
+      <span class="badge badge-secondary">me</span>
     <% end %>
     <% if pen_name.is_open? %>
       <span class="badge badge-primary">open</span>
@@ -22,5 +22,7 @@
     <span class="timestamp text-muted">
       updated <%= time_ago_in_words(pen_name.updated_at) %> ago.
     </span>
+    <span class="counter text-muted">
+      (books: <%= pen_name.books.count %>, groups: <%= pen_name.groups.count %>)
   </span>
 </li>

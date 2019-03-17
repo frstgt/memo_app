@@ -6,7 +6,7 @@
     <span class="title"><b><%= link_to book.title, book %></b></span>
     <span class="author"><i>by <%= book.author %></i></span>
     <% if book.pen_name.user == current_user %>
-      <span class="badge badge-info">mine</span>
+      <span class="badge badge-secondary">mine</span>
     <% end %>
   </span>
 
@@ -18,11 +18,14 @@
     <span class="timestamp text-muted">
       updated <%= time_ago_in_words(book.created_at) %> ago.
     </span>
+    <span class="counter text-muted">
+      (positive: <%= book.positive_count %>, negative: <%= book.negative_count %>)
+    </span>
 
     <span class="command">
       <span class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          [<%= book.get_evaluation(current_user) %>]
+          [evaluate: <%= book.get_evaluation(current_user) %>]
           <b class="caret"></b>
         </a>
         <ul class="dropdown-menu dropdown-menu-right">

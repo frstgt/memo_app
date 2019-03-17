@@ -17,6 +17,18 @@ class Book < ApplicationRecord
 
   default_scope -> { order(created_at: :desc) }
 
+  def count_evaluations(condition)
+    reader_ids = "SELECT reader_id FROM readerships
+                  WHERE book_id = :book_id AND #{condition}"
+    User.where("id IN (#{reader_ids})", book_id: id).count
+  end
+  def positive_count
+    self.count_evaluations("evaluation > 0")
+  end
+  def negative_count
+    self.count_evaluations("evaluation < 0")
+  end
+
   def set_evaluation(user, evaluation)
     readership = passive_readerships.find_by(reader_id: user.id)
     if readership
