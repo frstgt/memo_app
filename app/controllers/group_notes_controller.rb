@@ -1,9 +1,13 @@
 class GroupNotesController < ApplicationController
   before_action :logged_in_user
-  before_action :allowed_user,                      only: [:show]
-  before_action :correct_member
-  before_action :master_or_vice_or_chief,           only: [:new, :create, :destroy, :to_book, :to_open, :to_close]
-  before_action :master_or_vice_or_chief_or_common, only: [:edit, :update]
+  before_action :group_is_exist
+  before_action :user_have_member
+  before_action :note_is_exist,          except: [:new, :create]
+
+  before_action :allowed_user,             only: [:show]
+
+  before_action :user_have_leading_member, only: [:new, :create, :destroy, :to_book, :to_open, :to_close]
+  before_action :user_have_regular_member, only: [:edit, :update]
 
   def show
     @all_memos = @note.group_memos
@@ -68,26 +72,30 @@ class GroupNotesController < ApplicationController
       params.require(:group_note).permit(:title, :description, :pen_name_id, :picture)
     end
 
-    def allowed_user
+    def group_is_exist
       @group = Group.find_by(id: params[:group_id])
-      @note = GroupNote.find_by(id: params[:id])
-      unless @note and (@group.has_master_or_vice_or_chief_or_common?(current_user) or @note.is_open?)
+      redirect_to root_url unless @group
+    end
+    def note_is_exist
+      @note = @group.group_notes.find_by(id: params[:id])
+      redirect_to root_url unless @note
+    end
+    def user_have_member
+      @user_member = @group.get_user_member(current_user)
+      redirect_to root_url unless @user_member
+    end
+
+    def allowed_user
+      unless @group.is_regular_member?(@user_member) or @note.is_open?
         redirect_to root_url
       end
     end
 
-    def correct_member
-      @group = Group.find_by(id: params[:group_id])
-      redirect_to root_url unless @group.has_member?(current_user)
+    def user_have_leading_member
+      redirect_to root_url unless @group.is_leading_member?(@user_member)
     end
-
-    def master_or_vice_or_chief
-      @group = Group.find_by(id: params[:group_id])
-      redirect_to root_url unless @group.has_master_or_vice_or_chief?(current_user)
-    end
-    def master_or_vice_or_chief_or_common
-      @group = Group.find_by(id: params[:group_id])
-      redirect_to root_url unless @group.has_master_or_vice_or_chief_or_common?(current_user)
+    def user_have_regular_member
+      redirect_to root_url unless @group.is_regular_member?(@user_member)
     end
 
 end

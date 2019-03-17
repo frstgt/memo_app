@@ -1,12 +1,15 @@
 class GroupMemosController < MemosController
-  before_action :correct_member
-  before_action :correct_note
-  before_action :correct_memo,                      only: [:edit, :update, :destroy]
-  before_action :master_or_vice_or_chief_or_common, only: [:edit, :update, :destroy]
+  before_action :logged_in_user
+  before_action :group_is_exist
+  before_action :note_is_exist
+  before_action :user_have_member
+
+  before_action :memo_is_exist,          except: [:new, :create]
+
+  before_action :user_have_regular_member, only: [:edit, :update, :destroy]
 
   def new
-    @memo = @memo.group_memos.build
-    @url = new_group_gnote_gmemo_path(@group, @note, @memo)
+    @memo = @note.group_memos.build
     @max = @value = @note.group_memos.count + 1
   end
 
@@ -25,7 +28,6 @@ class GroupMemosController < MemosController
 
   def edit
     @memo = @note.group_memos.find(params[:id])
-    @url = edit_group_gnote_gmemo_path(@group, @note, @memo)
     @max = @note.group_memos.count + 1
     @value = @memo.number
   end
@@ -55,23 +57,26 @@ class GroupMemosController < MemosController
       params.require(:group_memo).permit(:title, :content, :picture, :number)
     end
 
-    def correct_member
+    def group_is_exist
       @group = Group.find_by(id: params[:group_id])
-      redirect_to root_url unless @group.user_has_member?(current_user)
+      redirect_to root_url unless @group
+    end
+    def note_is_exist
+      @note = @group.group_notes.find_by(id: params[:group_note_id])
+      redirect_to root_url unless @note
+    end
+    def memo_is_exist
+      @memo = @note.group_memos.find_by(id: params[:id])
+      redirect_to root_url unless @memo
     end
 
-    def correct_note
-      @note = @group.group_notes.find_by(id: :group_note_id)      
-      redirect_to root_url if @note.nil?
+    def user_have_member
+      @user_member = @group.get_user_member(current_user)
+      redirect_to root_url unless @user_member
     end
 
-    def correct_memo
-      @memo = @note.memos.find_by(id: params[:id])
-      redirect_to root_url if @memo.nil?
-    end
-
-    def master_or_vice_or_chief_or_common
-      redirect_to root_url unless @group.user_has_master_or_vice_or_chief_or_common?(current_user)
+    def user_have_regular_member
+      redirect_to root_url unless @group.user_is_regular_member?(@user_member)
     end
 
 end

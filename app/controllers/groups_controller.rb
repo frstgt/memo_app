@@ -9,14 +9,14 @@ class GroupsController < ApplicationController
   before_action :user_have_leading_member,     only: [:position]
   before_action :user_have_core_member,        only: [:edit, :update, :destroy,
                                                       :to_open, :to_close]
-  before_action :user_is_master,               only: [:change_master]
+  before_action :user_have_master,             only: [:change_master]
 
   before_action :user_pen_name,                only: [:create, :join, :unjoin]
   before_action :group_member,                 only: [:position]
-  before_action :position_check1,               only: [:position]
-  before_action :position_check2,               only: [:position]
+  before_action :position_check1,              only: [:position]
+  before_action :position_check2,              only: [:position]
 
-  before_action :user_is_only_member,          only: [:destroy]
+  before_action :user_have_only_member,        only: [:destroy]
 
   def index
     @all_groups = Group.where(status: 1)
@@ -143,7 +143,7 @@ class GroupsController < ApplicationController
       end
     end
 
-    def user_is_master
+    def user_have_master
       redirect_to root_url unless @group.is_master?(@user_member)
     end
     def user_have_core_member
@@ -156,7 +156,7 @@ class GroupsController < ApplicationController
       redirect_to root_url unless @group.is_general_member?(@user_member)
     end
 
-    def user_is_only_member
+    def user_have_only_member
       redirect_to root_url unless @group.is_master?(@user_member) and @gourp.members.count == 1
     end
 
