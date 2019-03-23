@@ -1,7 +1,7 @@
 class GroupNotesController < ApplicationController
   before_action :logged_in_user
   before_action :group_is_exist
-  before_action :user_have_member
+  before_action :user_have_member,       except: [:show]
   before_action :note_is_exist,          except: [:new, :create]
 
   before_action :allowed_user,             only: [:show]
@@ -52,18 +52,18 @@ class GroupNotesController < ApplicationController
 
   def to_open
     @note.to_open
-    redirect_to @note
+    redirect_to group_group_note_path(@group, @note)
   end
   def to_close
     @note.to_close
-    redirect_to @note
+    redirect_to group_group_note_path(@group, @note)
   end
 
   def to_book
     if @note.to_book
       flash[:success] = "Book published"
     end
-    redirect_to @note
+    redirect_to group_group_note_path(@group, @note)
   end
 
   private
@@ -86,7 +86,8 @@ class GroupNotesController < ApplicationController
     end
 
     def allowed_user
-      unless @group.is_regular_member?(@user_member) or @note.is_open?
+      @user_member = @group.get_user_member(current_user)
+      unless (@user_member and @group.is_regular_member?(@user_member)) or @note.is_open?
         redirect_to root_url
       end
     end

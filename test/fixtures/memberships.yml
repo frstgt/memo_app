@@ -1,0 +1,24 @@
+# positions
+# leader 0
+# subleader 1
+# common 2
+# visitor 3
+
+group1_leader:
+  group: group1
+  member: "user1_pen_name1"
+  position: 0
+group1_subleader:
+  group: group1
+  member: "user2_pen_name1"
+  position: 1
+group1_common:
+  group: group1
+  member: "user3_pen_name1"
+  position: 2
+group1_visitor:
+  group: group1
+  member: "user4_pen_name1"
+  position: 3
+
+

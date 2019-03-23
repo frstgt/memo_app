@@ -7,7 +7,6 @@ class Group < ApplicationRecord
 
   default_scope -> { order(updated_at: :desc) }
 
-  attr_accessor  :pen_name_id
   mount_uploader :picture, PictureUploader
 
   validates :name,  presence: true,
@@ -17,26 +16,30 @@ class Group < ApplicationRecord
   validate  :picture_size
   validates :status,  presence: true
 
+  attr_accessor  :pen_name_id
+
+  ST_OPEN = 1
+  ST_CLOSE = 0
   def to_open
-    self.update_attributes({status: 1})
+    self.update_attributes({status: ST_OPEN})
   end
   def to_close
-    self.update_attributes({status: 0})
+    self.update_attributes({status: ST_CLOSE})
   end
   def is_open?
-    self.status == 1
+    self.status == ST_OPEN
   end
 
-  def first_master(pen_name)
+  def first_leader(pen_name)
     if self.members.count == 0
-      active_memberships.create(member_id: pen_name.id, position: Membership::MASTER)
+      active_memberships.create(member_id: pen_name.id, position: Membership::POS_LEADER)
       true
     else
       false
     end
   end
-  def change_master
-    members = self.core_members
+  def change_leader
+    members = self.leading_members
     if members.count > 2
       memberships = []
       members.each do |member|
@@ -44,10 +47,10 @@ class Group < ApplicationRecord
         memberships.append(membership)
       end
       memberships.sort_by! do |member|
-        [member.position, member.created_at]
+        [member.position, member.updated_at]
       end
-      memberships[0].update_attributes({position: Membership::VICE})
-      memberships[1].update_attributes({position: Membership::MASTER})
+      memberships[0].update_attributes({position: Membership::POS_SUBLEADER})
+      memberships[1].update_attributes({position: Membership::POS_LEADER})
       true
     else
       false
@@ -56,7 +59,7 @@ class Group < ApplicationRecord
 
   def join(pen_name)
     unless self.get_user_member(pen_name.user)
-      active_memberships.create(member_id: pen_name.id, position: Membership::VISITOR)
+      active_memberships.create(member_id: pen_name.id, position: Membership::POS_VISITOR)
       true
     else
       false
@@ -91,7 +94,7 @@ class Group < ApplicationRecord
   end
   def get_position_name(pen_name)
     position_id = self.get_position_id(pen_name)
-    if position_id <= Membership::VISITOR
+    if position_id <= Membership::POS_VISITOR
       Membership::POSITIONS[position_id][0]
     else
       "Invalid"
@@ -103,45 +106,38 @@ class Group < ApplicationRecord
                   WHERE group_id = :group_id AND #{condition} ORDER BY position DESC"
     PenName.where("id IN (#{member_ids})", group_id: id)
   end
-  def core_members # 
-    self.search_members("position <= #{Membership::VICE}")
-  end
   def leading_members
-    self.search_members("position <= #{Membership::CHIEF}")
-  end
-  def regular_members
-    self.search_members("position <= #{Membership::COMMON}")
-  end
-  def irregular_members
-    self.search_members("position = #{Membership::VISITOR}")
+    self.search_members("position <= #{Membership::POS_SUBLEADER}")
   end
   def general_members
-    self.search_members("position >= #{Membership::COMMON}")
+    self.search_members("position >= #{Membership::POS_COMMON}")
+  end
+  def regular_members
+    self.search_members("position <= #{Membership::POS_COMMON}")
+  end
+  def irregular_members
+    self.search_members("position = #{Membership::POS_VISITOR}")
   end
 
-  def is_master?(pen_name)
+  def is_leader?(pen_name)
     membership = active_memberships.find_by(member_id: pen_name.id)
-    membership and membership.position == Membership::MASTER
+    membership and membership.position == Membership::POS_LEADER
   end
-  def is_core_member?(pen_name) # master, vice
+  def is_leading_member?(pen_name) # leader, subleader
     membership = active_memberships.find_by(member_id: pen_name.id)
-    membership and membership.position <= Membership::VICE
-  end
-  def is_leading_member?(pen_name) # master, vice, chief
-    membership = active_memberships.find_by(member_id: pen_name.id)
-    membership and membership.position <= Membership::CHIEF
-  end
-  def is_regular_member?(pen_name) # master, vice, chief, common
-    membership = active_memberships.find_by(member_id: pen_name.id)
-    membership and membership.position <= Membership::COMMON
+    membership and membership.position <= Membership::POS_SUBLEADER
   end
   def is_general_member?(pen_name) # common, visitor
     membership = active_memberships.find_by(member_id: pen_name.id)
-    membership and membership.position >= Membership::COMMON
+    membership and membership.position >= Membership::POS_COMMON
   end
-  def is_vistor?(pen_name)
+  def is_regular_member?(pen_name) # leader, subleader, common
     membership = active_memberships.find_by(member_id: pen_name.id)
-    membership and membership.position == Membership::VISITOR
+    membership and membership.position <= Membership::POS_COMMON
+  end
+  def is_iregular_member?(pen_name) # visitor
+    membership = active_memberships.find_by(member_id: pen_name.id)
+    membership and membership.position == Membership::POS_VISITOR
   end
   def is_member?(pen_name)
     membership = active_memberships.find_by(member_id: pen_name.id)

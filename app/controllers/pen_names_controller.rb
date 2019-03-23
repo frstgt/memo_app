@@ -74,7 +74,7 @@ class PenNamesController < ApplicationController
 
     def correct_user
       @pen_name = current_user.pen_names.find_by(id: params[:id])
-      redirect_to if @pen_name.nil?
+      redirect_to root_url if @pen_name.nil?
     end
 
 end

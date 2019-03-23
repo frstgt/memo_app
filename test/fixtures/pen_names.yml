@@ -1,14 +1,12 @@
-car:
-  name: car name
-  description: car description
-  user: michael
+<% 10.times do |n| %>
+user<%= n %>_pen_name1:
+  name: <%= "user#{n}_pen_name1 name" %>
+  description: <%= "user#{n}_pen_name1 description" %>
+  user: user<%= n %>
+user<%= n %>_pen_name2:
+  name: <%= "user#{n}_pen_name2 name" %>
+  description: <%= "user#{n}_pen_name2 description" %>
+  user: user<%= n %>
+<% end %>
   
-train:
-  name: train name
-  description: train description
-  user: michael
 
-plane:
-  name: plane name
-  description: plane description
-  user: michael

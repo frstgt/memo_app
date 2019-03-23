@@ -5,20 +5,18 @@ class Membership < ApplicationRecord
   validates :member_id, presence: true
   validates :group_id,  presence: true
 
-  MASTER = 0
-  VICE = 1
-  CHIEF = 2
-  COMMON = 3
-  VISITOR = 4
+  POS_LEADER = 0
+  POS_SUBLEADER = 1
+  POS_COMMON = 2
+  POS_VISITOR = 3
   INVALID = 100
   POSITIONS = [
-    ["Master", MASTER],
-    ["Vice", VICE],
-    ["Chief", CHIEF],
-    ["Common", COMMON],
-    ["Visitor", VISITOR],
+    ["Leader", POS_LEADER],
+    ["Subleader", POS_SUBLEADER],
+    ["Common", POS_COMMON],
+    ["Visitor", POS_VISITOR],
   ]
   validates :position, presence: true,
-                        inclusion: { in: [MASTER, VICE, CHIEF, COMMON, VISITOR] }
+                        inclusion: { in: [POS_LEADER, POS_SUBLEADER, POS_COMMON, POS_VISITOR] }
 
 end

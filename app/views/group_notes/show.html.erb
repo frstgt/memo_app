@@ -31,9 +31,9 @@
         </span>
         <span class="command">
           <% if @note.is_open? %>
-            <%= link_to "[to_close]", to_close_group_group_note_path(@note) %>
+            <%= link_to "[to_close]", to_close_group_group_note_path(@group, @note) %>
           <% else %>
-            <%= link_to "[to_open]", to_open_group_group_note_path(@note) %>
+            <%= link_to "[to_open]", to_open_group_group_note_path(@group, @note) %>
           <% end %>
           <%= link_to "[to_book]", to_book_group_group_note_path(@group, @note),
                                 data: { confirm: "You sure?" } %>

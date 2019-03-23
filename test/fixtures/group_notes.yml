@@ -1,0 +1,24 @@
+group1_note1:
+  type: GroupNote
+  title: "group1_note1 title"
+  updated_at: <%= 10.minutes.ago %>
+  group: group1
+  status: 1
+
+group1_note2:
+  type: GroupNote
+  title: "group1_note2 title"
+  updated_at: <%= 3.years.ago %>
+  group: group1
+
+group1_note3:
+  type: GroupNote
+  title: "group1_note3 title"
+  updated_at: <%= 2.hours.ago %>
+  group: group1
+
+group1_note_most_recent:
+  type: GroupNote
+  title: "group1_note_most_reset title"
+  updated_at: <%= Time.zone.now %>
+  group: group1

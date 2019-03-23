@@ -43,7 +43,7 @@ Rails.application.routes.draw do
     get :members, on: :member
     get :join, on: :member
     get :unjoin, on: :member
-    get :change_master, on: :member
+    get :change_leader, on: :member
     get :position, on: :member
   end
   resources :groups

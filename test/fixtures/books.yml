@@ -5,8 +5,6 @@ one:
   description: MyText
   author: MyString
   picture: MyString
-  protection: 1
-  user: one
   pen_name: one
 
 two:
@@ -14,6 +12,4 @@ two:
   description: MyText
   author: MyString
   picture: MyString
-  protection: 1
-  user: two
   pen_name: two

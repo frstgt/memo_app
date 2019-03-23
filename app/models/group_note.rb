@@ -5,14 +5,16 @@ class GroupNote < Note
   validates :group_id, presence: true
   validates :status,  presence: true
 
+  ST_OPEN = 1
+  ST_CLOSE = 0
   def to_open
-    self.update_attributes({status: 1})
+    self.update_attributes({status: ST_OPEN})
   end
   def to_close
-    self.update_attributes({status: 0})
+    self.update_attributes({status: ST_CLOSE})
   end
   def is_open?
-    self.status == 1
+    self.status == ST_OPEN
   end
 
   def to_book

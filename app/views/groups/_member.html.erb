@@ -23,19 +23,19 @@
       <% do_pos_id = @group.get_position_id(@user_member) %>
       <% from_pos_id = @group.get_position_id(member) %>
 
-      <% if do_pos_id == Membership::MASTER and do_pos_id == from_pos_id %>
-        <%= link_to "[change master]",
-                    change_master_group_path(@group), data: { confirm: "You sure?" } %>
+      <% if do_pos_id == Membership::POS_LEADER and do_pos_id == from_pos_id %>
+        <%= link_to "[change leader]",
+                    change_leader_group_path(@group), data: { confirm: "You sure?" } %>
       <% end %>
 
-      <% if do_pos_id <= Membership::CHIEF and do_pos_id < from_pos_id %>
+      <% if do_pos_id <= Membership::POS_SUBLEADER and do_pos_id < from_pos_id %>
 
         <span class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             [position] <b class="caret"></b>
           </a>
           <ul class="dropdown-menu dropdown-menu-right">
-            <% Membership::POSITIONS[(do_pos_id+1)..4].each do |to_pos_name, to_pos_id| %>
+            <% Membership::POSITIONS[(do_pos_id+1)..3].each do |to_pos_name, to_pos_id| %>
 
               <% if from_pos_id != to_pos_id %>
                 <li><%= link_to to_pos_name,

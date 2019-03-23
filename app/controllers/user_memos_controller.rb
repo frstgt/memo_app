@@ -53,13 +53,11 @@ class UserMemosController < MemosController
 
     def correct_note
       @note = current_user.user_notes.find_by(id: params[:user_note_id])
-      p @note
       redirect_to root_url if @note.nil?
     end
 
     def correct_memo
       @memo = @note.user_memos.find_by(id: params[:id])
-      p @memo
       redirect_to root_url if @memo.nil?
     end
 

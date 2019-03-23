@@ -1,0 +1,20 @@
+group1_memo1:
+  type: GroupMemo
+  number: 3
+  content: "group1_memo1 content"
+  picture: "group1_memo1 picture"
+  group_note: group1_note1
+
+group1_memo2:
+  type: GroupMemo
+  number: 2
+  content: "group1_memo2 content"
+  picture: "group1_memo2 picture"
+  group_note: group1_note1
+
+group1_memo_top_number:
+  type: GroupMemo
+  number: 1
+  content: "group1_top_number content"
+  picture: "group1_top_number picture"
+  group_note: group1_note1

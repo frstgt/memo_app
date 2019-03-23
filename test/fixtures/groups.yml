@@ -1,0 +1,8 @@
+group1:
+  name: "group1 name"
+  description: "group1 description"
+  status: 1
+group2:
+  name: "group2 name"
+  description: "group2 description"
+  status: 0

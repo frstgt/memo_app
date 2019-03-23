@@ -1,19 +1,18 @@
 require 'test_helper'
 
-class NoteTest < ActiveSupport::TestCase
+class GroupNoteTest < ActiveSupport::TestCase
 
   def setup
-    @user = users(:michael)
-    @note = @user.notes.build(title: "Lorem ipsum",
-                              description: "This is test.")
+    @group = groups(:group1)
+    @note = @group.group_notes.build(title: "Test note", description: "This is a test.")
   end
 
   test "should be valid" do
     assert @note.valid?
   end
 
-  test "user id should be present" do
-    @note.user_id = nil
+  test "group id should be present" do
+    @note.group_id = nil
     assert_not @note.valid?
   end
 
@@ -33,7 +32,7 @@ class NoteTest < ActiveSupport::TestCase
   end
 
   test "order should be most recent first" do
-    assert_equal notes(:most_recent), Note.first
+    assert_equal group_notes(:group1_note_most_recent), GroupNote.first
   end
 
 end

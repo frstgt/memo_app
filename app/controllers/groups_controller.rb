@@ -6,20 +6,19 @@ class GroupsController < ApplicationController
   before_action :allowed_user,                 only: [:show, :join]
 
   before_action :user_have_general_member,     only: [:unjoin]
-  before_action :user_have_leading_member,     only: [:position]
-  before_action :user_have_core_member,        only: [:edit, :update, :destroy,
-                                                      :to_open, :to_close]
-  before_action :user_have_master,             only: [:change_master]
+  before_action :user_have_leading_member,     only: [:edit, :update, :destroy,
+                                                      :to_open, :to_close, :position]
+  before_action :user_have_leader,             only: [:change_leader]
 
   before_action :user_pen_name,                only: [:create, :join, :unjoin]
   before_action :group_member,                 only: [:position]
-  before_action :position_check1,              only: [:position]
-  before_action :position_check2,              only: [:position]
+  before_action :not_group_member,             only: [:join]
+  before_action :position_check,               only: [:position]
 
   before_action :user_have_only_member,        only: [:destroy]
 
   def index
-    @all_groups = Group.where(status: 1)
+    @all_groups = Group.where(status: Group::ST_OPEN)
     @page_groups = @all_groups.paginate(page: params[:page])
     @sample_groups = @all_groups.sample(3)
   end
@@ -41,10 +40,10 @@ class GroupsController < ApplicationController
     @group = Group.new(group_params)
     if @group.save
 
-      @group.first_master(@user_pen_name)
+      @group.first_leader(@user_pen_name)
 
       flash[:success] = "Group created"
-      redirect_to groups_path
+      redirect_to current_user
     else
       render 'new'
     end
@@ -67,6 +66,8 @@ class GroupsController < ApplicationController
     redirect_to current_user
   end
 
+  #
+
   def to_open
     @group.to_open
     redirect_to @group
@@ -80,7 +81,6 @@ class GroupsController < ApplicationController
   end
 
   def join
-    p params
     @group.join(@user_pen_name)
     redirect_to groups_path
   end
@@ -89,8 +89,8 @@ class GroupsController < ApplicationController
     redirect_to groups_path
   end
 
-  def change_master
-    @group.change_master
+  def change_leader
+    @group.change_leader
     redirect_to members_group_path(@group)
   end
   def position
@@ -123,31 +123,27 @@ class GroupsController < ApplicationController
       @group_member = @group.members.find_by(id: params[:group][:pen_name_id])
       redirect_to root_url unless @group_member
     end
+    def not_group_member
+      @group_member = @group.members.find_by(id: params[:group][:pen_name_id])
+      redirect_to root_url if @group_member
+    end
     def user_pen_name
       @user_pen_name = current_user.pen_names.find_by(id: params[:group][:pen_name_id])
       redirect_to root_url unless @user_pen_name
     end
-    def position_check1
+    def position_check
       @do_pos = @group.get_position_id(@user_member)
       @from_pos = @group.get_position_id(@group_member)
       @to_pos = params[:group][:position].to_i
-      @to_pos = Membership::MASTER if @to_pos < Membership::MASTER
-      @to_pos = Membership::VISITOR if @to_pos > Membership::VISITOR
-      unless @do_pos <= Membership::CHIEF and @do_pos < @from_pos and @do_pos < @to_pos and @from_pos != @to_pos
+      @to_pos = Membership::POS_LEADER if @to_pos < Membership::POS_LEADER
+      @to_pos = Membership::POS_VISITOR if @to_pos > Membership::POS_VISITOR
+      unless @do_pos <= Membership::POS_SUBLEADER and @do_pos < @from_pos and @do_pos < @to_pos and @from_pos != @to_pos
           redirect_to root_url
       end
     end
-    def position_check2
-      unless @to_pos == Membership::VICE and @group.core_members.count < 3
-        redirect_to members_group_path(@group)
-      end
-    end
 
-    def user_have_master
-      redirect_to root_url unless @group.is_master?(@user_member)
-    end
-    def user_have_core_member
-      redirect_to root_url unless @group.is_core_member?(@user_member)
+    def user_have_leader
+      redirect_to root_url unless @group.is_leader?(@user_member)
     end
     def user_have_leading_member
       redirect_to root_url unless @group.is_leading_member?(@user_member)
@@ -157,7 +153,7 @@ class GroupsController < ApplicationController
     end
 
     def user_have_only_member
-      redirect_to root_url unless @group.is_master?(@user_member) and @gourp.members.count == 1
+      redirect_to root_url unless @group.is_leader?(@user_member) and @group.members.count == 1
     end
 
 end

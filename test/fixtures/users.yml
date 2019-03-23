@@ -1,7 +1,6 @@
-michael:
-  name: Michael Example
+<% 10.times do |n| %>
+user<%= n %>:
+  name: <%= "user#{n} name" %>
   password_digest: <%= User.digest("z8aKm$@3rTEp#+bs") %>
+<% end %>
 
-archer:
-  name: Sterling Archer
-  password_digest: <%= User.digest("z8aKm$@3rTEp#+bs") %>

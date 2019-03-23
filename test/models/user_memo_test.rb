@@ -1,18 +1,18 @@
 require 'test_helper'
 
-class MemoTest < ActiveSupport::TestCase
+class UserMemoTest < ActiveSupport::TestCase
 
   def setup
-    @note = notes(:cat)
-    @memo = @note.memos.build(content: "Test Memo", number: '1')
+    @note = user_notes(:user1_note1)
+    @memo = @note.user_memos.build(content: "Test Memo", number: '1')
   end
 
   test "should be valid" do
     assert @memo.valid?
   end
 
-  test "note id should be present" do
-    @memo.note_id = nil
+  test "user_note id should be present" do
+    @memo.user_note_id = nil
     assert_not @memo.valid?
   end
 
@@ -27,7 +27,7 @@ class MemoTest < ActiveSupport::TestCase
   end
 
   test "order should be least number first" do
-    assert_equal memos(:top_number), Memo.first
+    assert_equal user_memos(:user1_memo_top_number), UserMemo.first
   end
 
 end

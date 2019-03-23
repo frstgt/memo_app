@@ -1,0 +1,23 @@
+user1_note1:
+  type: UserNote
+  title: "user1_note1 title"
+  updated_at: <%= 10.minutes.ago %>
+  user: user1
+
+user1_note2:
+  type: UserNote
+  title: "user1_note2 title"
+  updated_at: <%= 3.years.ago %>
+  user: user1
+
+user1_note3:
+  type: UserNote
+  title: "user1_note3 title"
+  updated_at: <%= 2.hours.ago %>
+  user: user1
+
+user1_note_most_recent:
+  type: UserNote
+  title: "user1_note_most_recent"
+  updated_at: <%= Time.zone.now %>
+  user: user1

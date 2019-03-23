@@ -1,11 +1,1 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  reader_id: 1
-  book_id: 1
-  evaluation: 1
-
-two:
-  reader_id: 1
-  book_id: 1
-  evaluation: 1
