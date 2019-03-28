@@ -1,15 +1,18 @@
-<% provide(:title, @user.name) %>
+<% provide(:title, @user.name + "Home") %>
 <div class="row">
 
   <aside class="col-md-4">
 
     <section class="info">
-      (user)<br>
+      (user home)<br>
+
       <span class="name"><b><%= @user.name %></b></span>
+
       <span class="timestamp">
-        created <%= time_ago_in_words(@user.created_at) %> ago.<br>
+        created <%= time_ago_in_words(@user.created_at) %> ago.
         updated <%= time_ago_in_words(@user.updated_at) %> ago.
       </span>
+
     </section>
 
     <hr>

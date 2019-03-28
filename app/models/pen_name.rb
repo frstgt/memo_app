@@ -19,6 +19,21 @@ class PenName < ApplicationRecord
   validate  :picture_size
   validates :status,  presence: true
 
+  def positive_count
+    count = 0
+    self.books.each do |book|
+      count += book.positive_count
+    end
+    count
+  end
+  def negative_count
+    count = 0
+    self.books.each do |book|
+      count += book.negative_count
+    end
+    count
+  end
+
   def to_open
     self.update_attributes({status: 1})
   end

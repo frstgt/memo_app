@@ -19,6 +19,21 @@ class Group < ApplicationRecord
 
   attr_accessor  :pen_name_id
 
+  def positive_count
+    count = 0
+    self.books.each do |book|
+      count += book.positive_count
+    end
+    count
+  end
+  def negative_count
+    count = 0
+    self.books.each do |book|
+      count += book.negative_count
+    end
+    count
+  end
+
   ST_OPEN = 1
   ST_CLOSE = 0
   def to_open

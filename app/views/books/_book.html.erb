@@ -19,7 +19,7 @@
       updated <%= time_ago_in_words(book.created_at) %> ago.
     </span>
     <span class="counter text-muted">
-      (positive: <%= book.positive_count %>, negative: <%= book.negative_count %>)
+      (<%= "evaluation: #{book.positive_count} / #{book.negative_count}" %>)
     </span>
 
     <span class="command">
