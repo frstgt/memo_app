@@ -19,6 +19,10 @@
       updated <%= time_ago_in_words(user_memo.updated_at) %> ago.
     </span>
 
+    <span class="number text-muted">
+      (<%= user_memo.number %>)
+    </span>
+
     <span class="command">
       <%= link_to "[edit]", edit_user_note_user_memo_path(@note, user_memo) %>
       <%= link_to "[delete]", user_note_user_memo_path(@note, user_memo),
