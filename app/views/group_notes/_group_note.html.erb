@@ -6,6 +6,7 @@
     <span class="title">
       <b><%= link_to group_note.title, group_group_note_path(@group, group_note) %></b>
     </span>
+
     <% if group_note.pen_name %>
       <span class="author">
         <i>by <%= group_note.pen_name.name %> @ <%= group_note.group.name %></i>
@@ -14,6 +15,7 @@
         <span class="badge badge-info">mine</span>
       <% end %>
     <% end %>
+
     <% if group_note.is_open? %>
       <span class="badge badge-primary">open</span>
     <% else %>

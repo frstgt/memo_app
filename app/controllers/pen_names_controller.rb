@@ -1,7 +1,8 @@
 class PenNamesController < ApplicationController
   before_action :logged_in_user
-  before_action :allowed_user,     only: [:show]
-  before_action :correct_user,     only: [:edit, :update, :destroy, :to_open, :to_close]
+  before_action :pen_name_is_exist, except: [:index, :new, :create]
+  before_action :allowed_user,        only: [:show]
+  before_action :correct_user,        only: [:edit, :update, :destroy, :to_open, :to_close]
 
   def index
     @all_pen_names = PenName.where(status: 1)
@@ -10,6 +11,11 @@ class PenNamesController < ApplicationController
   end
 
   def show
+    @all_notes = @pen_name.user_notes
+    @page_notes = @all_notes.paginate(page: params[:page])
+    @groups = @pen_name.groups
+  end
+  def books
     @all_books = @pen_name.books
     @page_books = @all_books.paginate(page: params[:page])
     @groups = @pen_name.groups
@@ -63,6 +69,11 @@ class PenNamesController < ApplicationController
 
     def pen_name_params
       params.require(:pen_name).permit(:name, :description, :picture)
+    end
+
+    def pen_name_is_exist
+      @pen_name = PenName.find_by(id: params[:id])
+      redirect_to root_url if @pen_name.nil?
     end
 
     def allowed_user

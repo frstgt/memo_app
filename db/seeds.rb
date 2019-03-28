@@ -37,11 +37,11 @@ for user in users do
   members.append(user.pen_names.first)
 end
 groups.each_with_index { |group, n|
-  Membership.create!(group: group, member: members[n*5+0], position: Membership::MASTER)
-  Membership.create!(group: group, member: members[n*5+1], position: Membership::VICE)
-  Membership.create!(group: group, member: members[n*5+2], position: Membership::CHIEF)
-  Membership.create!(group: group, member: members[n*5+3], position: Membership::COMMON)
-  Membership.create!(group: group, member: members[n*5+4], position: Membership::VISITOR)
+  Membership.create!(group: group, member: members[n*5+0], position: Membership::POS_LEADER)
+  Membership.create!(group: group, member: members[n*5+1], position: Membership::POS_SUBLEADER)
+  Membership.create!(group: group, member: members[n*5+2], position: Membership::POS_COMMON)
+  Membership.create!(group: group, member: members[n*5+3], position: Membership::POS_COMMON)
+  Membership.create!(group: group, member: members[n*5+4], position: Membership::POS_VISITOR)
 }
 
 # user_notes
@@ -99,7 +99,7 @@ users.each do |user|
     author = pen_name.name
     description = Faker::Lorem.sentence(20)
     book = Book.create!(title: title, author: author, description: description,
-                  pen_name_id: pen_name.id)
+                  pen_name_id: pen_name.id, group_id: nil)
     10.times do
       title = Faker::Book.title
       content = Faker::Lorem.sentence(20)
@@ -118,7 +118,7 @@ groups.each do |group|
     author = pen_name.name + " @ " + group.name
     description = Faker::Lorem.sentence(20)
     book = Book.create!(title: title, author: author, description: description,
-                         pen_name_id: pen_name.id)
+                         pen_name_id: pen_name.id, group_id: group.id)
 
     10.times do
       title = Faker::Book.title

@@ -1,10 +1,10 @@
-<% provide(:title, @pen_name.name + "Home") %>
+<% provide(:title, @pen_name.name + "Books") %>
 <div class="row">
 
   <aside class="col-md-4">
 
     <section class="info">
-      (pen_name home)<br>
+      (pen_name books)<br>
 
       <span class="header">
         <span class="name">
@@ -40,17 +40,6 @@
                 books_pen_name_path(@pen_name) %>
           )
         </span>
-
-        <span class="command">
-          <% if @pen_name.is_open? %>
-            <%= link_to "[to_close]", to_close_pen_name_path(@pen_name) %>
-          <% else %>
-            <%= link_to "[to_open]", to_open_pen_name_path(@pen_name) %>
-          <% end %>
-          <%= link_to "[edit]", edit_pen_name_path(@pen_name) %>
-          <%= link_to "[delete]", @pen_name,
-                              method: :delete, data: { confirm: "You sure?" } %>
-        </span>
       </span>
 
     </section>
@@ -76,16 +65,16 @@
 
     <span class="main_header">
       <span class="count">
-        notes (<%= @all_notes.count %>)
+        books (<%= @all_books.count %>)
       </span>
       <span class="command">
       </span>
     </span>
-    <% if @all_notes.any? %>
+    <% if @all_books.any? %>
       <ol class="note_list">
-        <%= render @page_notes %>
+        <%= render @page_books %>
       </ol>
-      <%= will_paginate @page_notes %>
+      <%= will_paginate @page_books %>
     <% end %>
 
   </div>

@@ -1,4 +1,4 @@
-<% provide(:title, @group.name + " Home") %>
+<% provide(:title, @group.name + " Books") %>
 
 <% pen_name = @group.get_user_member(current_user) %>
 
@@ -8,7 +8,7 @@
 
     <section class="group_info">
 
-      (group home)<br>
+      (group books)<br>
 
       <span class="header">
         <span class="name">
@@ -49,18 +49,6 @@
             <% end %>
           )
         </span>
-
-        <span class="command">
-
-          <% if @group.is_open? %>
-            <%= link_to "[to_close]", to_close_group_path(@group) %>
-          <% else %>
-            <%= link_to "[to_open]", to_open_group_path(@group) %>
-          <% end %>
-          <%= link_to "[edit]", edit_group_path(@group) %>
-          <%= link_to "[delete]", @group, method: :delete,
-                                     data: { confirm: "You sure?" } %>
-        </span>
       </span>
 
     </section>
@@ -71,18 +59,18 @@
 
     <span class="main_header">
       <span class="count">
-        group notes (<%= @all_notes.count %>)
+        group books (<%= @all_books.count %>)
       </span>
       <span class="command">
         <%= link_to "[books]", books_path %>
         <%= link_to "[new]", new_group_group_note_path(@group) %>
       </span>
     </span>
-    <% if @all_notes.any? %>
+    <% if @all_books.any? %>
       <ol class="note_list">
-        <%= render @page_notes %>
+        <%= render @page_books %>
       </ol>
-      <%= will_paginate @page_notes %>
+      <%= will_paginate @page_books %>
     <% end %>
 
   </div>

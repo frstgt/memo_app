@@ -1,9 +1,8 @@
 <span class="alert alert-info positions">
 
   <b>group positions</b><br>
-  - a group has only one master.<br>
-  - a group has two vices.<br>
-  - a group has some chiefs.<br>
+  - a group has only one leader.<br>
+  - a group has some subleaders.<br>
   - a group has some commons. <br>
   - a group has some visitors. <br>
 
@@ -12,9 +11,8 @@
       <tr>
         <th></th>
         <th>users</th>
-        <th>master</th>
-        <th>vice</th>
-        <th>chief</th>
+        <th>leader</th>
+        <th>subleader</th>
         <th>common</th>
         <th>visitor</th>
         <th>others</th>
@@ -29,7 +27,6 @@
         <td>-</td>
         <td>-</td>
         <td>-</td>
-        <td>-</td>
       </tr>
       <tr>
         <th>edit group</th>
@@ -39,13 +36,11 @@
         <td>×</td>
         <td>×</td>
         <td>×</td>
-        <td>×</td>
       </tr>
       <tr>
         <th>delete group</th>
         <td>-</td>
         <td>✔ *2</td>
-        <td>×</td>
         <td>×</td>
         <td>×</td>
         <td>×</td>
@@ -59,23 +54,37 @@
         <td>×</td>
         <td>×</td>
         <td>×</td>
-        <td>×</td>
       </tr>
       <tr>
-        <th>show group</th>
+        <th>show group works</th>
         <td>-</td>
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
-        <td>✔ *3</td>
+      </tr>
+        <th>show group members</th>
+        <td>-</td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>×</td>
+      </tr>
+      <tr>
+        <th>show group home</th>
+        <td>-</td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>×</td>
       </tr>
 
       <tr>
         <th>create group note</th>
         <td>-</td>
-        <td>✔</td>
         <td>✔</td>
         <td>✔</td>
         <td>×</td>
@@ -88,14 +97,12 @@
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
-        <td>✔</td>
         <td>×</td>
         <td>×</td>
       </tr>
       <tr>
         <th>delete group note</th>
         <td>-</td>
-        <td>✔</td>
         <td>✔</td>
         <td>✔</td>
         <td>×</td>
@@ -105,7 +112,6 @@
       <tr>
         <th>open/close group note</th>
         <td>-</td>
-        <td>✔</td>
         <td>✔</td>
         <td>✔</td>
         <td>×</td>
@@ -119,14 +125,12 @@
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
-        <td>✔</td>
         <td>✔ *3</td>
       </tr>
 
       <tr>
         <th>create group memo</th>
         <td>-</td>
-        <td>✔</td>
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
@@ -139,14 +143,12 @@
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
-        <td>✔</td>
         <td>×</td>
         <td>×</td>
       </tr>
       <tr>
         <th>delete group memo</th>
         <td>-</td>
-        <td>✔</td>
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
@@ -161,13 +163,11 @@
         <td>×</td>
         <td>×</td>
         <td>×</td>
-        <td>×</td>
         <td>✔ *3 *4</td>
       </tr>
       <tr>
         <th>unjoin group</th>
         <td>-</td>
-        <td>×</td>
         <td>×</td>
         <td>×</td>
         <td>✔</td>
@@ -182,12 +182,10 @@
         <td>×</td>
         <td>×</td>
         <td>×</td>
-        <td>×</td>
       </tr>
       <tr>
         <th>change position</th>
         <td>-</td>
-        <td>✔</td>
         <td>✔</td>
         <td>✔</td>
         <td>×</td>
@@ -203,7 +201,6 @@
         <td>×</td>
         <td>×</td>
         <td>×</td>
-        <td>×</td>
       </tr>
 
     </tbody>
@@ -211,9 +208,8 @@
       <tr>
         <th></th>
         <td>*1 the user is the first master</td> <!-- user -->
-        <td>*2 when master is only member</td> <!-- master -->
-        <td></td> <!-- vice -->
-        <td></td> <!-- chief -->
+        <td>*2 when leader is only member</td> <!-- leader -->
+        <td></td> <!-- subleader -->
         <td></td> <!-- common -->
         <td></td> <!-- visitor -->
         <td>*3 when group is open, *4 as visitor</td> <!-- others -->

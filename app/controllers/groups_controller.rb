@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
   before_action :logged_in_user
-  before_action :group_is_exist,             except: [:new, :create, :index, :closed]
-  before_action :user_have_member,           except: [:new, :create, :show, :join, :index, :closed]
+  before_action :group_is_exist,             except: [:index, :new, :create]
+  before_action :user_have_member,           except: [:index, :new, :create, :show, :join]
 
   before_action :allowed_user,                 only: [:show, :join]
 
@@ -26,6 +26,10 @@ class GroupsController < ApplicationController
   def show
     @all_notes = @group.group_notes
     @page_notes = @all_notes.paginate(page: params[:page])
+  end
+  def books
+    @all_books = @group.books
+    @page_books = @all_books.paginate(page: params[:page])
   end
 
   def members

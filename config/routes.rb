@@ -14,8 +14,11 @@ Rails.application.routes.draw do
   delete '/logout',  to: 'sessions#destroy'
 
   resources :pen_names do
+    
     get :to_open, on: :member
     get :to_close, on: :member
+
+    get :books, on: :member
   end
   resources :pen_names
 
@@ -39,6 +42,8 @@ Rails.application.routes.draw do
 
     get :to_open, on: :member
     get :to_close, on: :member
+
+    get :books, on: :member
 
     get :members, on: :member
     get :join, on: :member

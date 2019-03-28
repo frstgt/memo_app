@@ -1,5 +1,7 @@
 class Book < ApplicationRecord
-  belongs_to :pen_name
+  belongs_to :pen_name, optional: true
+  belongs_to :group, optional: true
+
   has_many :pages, dependent: :destroy
   has_many :passive_readerships, class_name:  "Readership",
                                   foreign_key: "book_id",
@@ -8,7 +10,6 @@ class Book < ApplicationRecord
 
   mount_uploader :picture, PictureUploader
 
-  validates :pen_name_id, presence: true
   validates :title, presence: true, length: { maximum: 100 }
   validates :author, presence: true, length: { maximum: 100 }
   validates :description, length: { maximum: 1000 }

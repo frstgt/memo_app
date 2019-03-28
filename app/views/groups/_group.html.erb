@@ -4,11 +4,14 @@
   <%= icon_for(group, { name: group.name, size: 64 }) %>
     
   <span class="header">
-    <span class="name"><b><%= link_to group.name, group %></b></span>
-    <% if pen_name %>
-      <i>(<%= pen_name.name %> as <%= group.get_position_name(pen_name) %>)</i>
-      <span class="badge badge-secondary">our</span>
-    <% end %>
+    <span class="name">
+      <% if pen_name %>
+        <b><%= link_to group.name, group %></b>
+        <i>(<%= "#{pen_name.name} as #{group.get_position_name(pen_name)}" %>)</i>
+      <% else %>
+        <b><%= group.name %></b>
+      <% end %>
+    </span>
 
     <% if group.is_open? %>
       <span class="badge badge-primary">open</span>
@@ -25,8 +28,16 @@
     <span class="timestamp text-muted">
       updated <%= time_ago_in_words(group.updated_at) %> ago.
     </span>
+
     <span class="counter text-muted">
-      (members: <%= group.members.count %>)      
+      (
+        <%= link_to "books: #{group.books.count}", books_group_path(group) %>,
+        <% if pen_name %>
+          <%= link_to "members: #{group.members.count}", members_group_path(group) %>
+        <% else %>
+          <%= "members: #{group.members.count}" %>
+        <% end %>
+      )
     </span>
 
     <span class="command">

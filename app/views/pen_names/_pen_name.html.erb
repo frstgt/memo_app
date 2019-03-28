@@ -3,10 +3,14 @@
   <%= icon_for(pen_name, { name: pen_name.name, size: 64 }) %>
 
   <span class="header">
-    <span class="name"><b><%= link_to pen_name.name, pen_name %></b></span>
-    <% if pen_name.user == current_user %>
-      <span class="badge badge-secondary">me</span>
-    <% end %>
+    <span class="name">
+      <% if pen_name.user == current_user %>
+        <b><%= link_to pen_name.name, pen_name %></b>
+      <% else %>
+        <b><%= pen_name.name %></b>
+      <% end %>
+    </span>
+
     <% if pen_name.is_open? %>
       <span class="badge badge-primary">open</span>
     <% else %>
@@ -22,7 +26,12 @@
     <span class="timestamp text-muted">
       updated <%= time_ago_in_words(pen_name.updated_at) %> ago.
     </span>
+
     <span class="counter text-muted">
-      (books: <%= pen_name.books.count %>, groups: <%= pen_name.groups.count %>)
+      (
+        <%= link_to "books: #{pen_name.books.count}, groups: #{pen_name.groups.count}",
+            books_pen_name_path(pen_name) %>
+      )
+    </span>
   </span>
 </li>
