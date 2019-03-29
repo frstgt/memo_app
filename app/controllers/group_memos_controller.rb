@@ -12,15 +12,14 @@ class GroupMemosController < MemosController
     @memo = @note.group_memos.build
     @max = @value = @note.group_memos.count + 1
   end
-
   def create
     @memo = @note.group_memos.build(memo_params)
     if @memo.save
 
       update_number(@note.group_memos, @memo)
 
-      flash[:success] = "Memo created"
-      redirect_to @note
+      flash[:success] = "GroupMemo created"
+      redirect_to group_group_note_path(@group, @note)
     else
       render 'new'
     end
@@ -31,15 +30,14 @@ class GroupMemosController < MemosController
     @max = @note.group_memos.count + 1
     @value = @memo.number
   end
-
   def update
     @memo = @note.group_memos.find(params[:id])
     if @memo.update_attributes(memo_params)
 
       update_number(@note.group_memos, @memo)
 
-      flash[:success] = "Memo updated"
-      redirect_to @note
+      flash[:success] = "GroupMemo updated"
+      redirect_to group_group_note_path(@group, @note)
     else
       render 'edit'
     end
@@ -47,14 +45,14 @@ class GroupMemosController < MemosController
 
   def destroy
     @note.group_memos.find(params[:id]).destroy
-    flash[:success] = "Memo deleted"
-    redirect_to @note
+    flash[:success] = "GroupMemo deleted"
+    redirect_to group_group_note_path(@group, @note)
   end
 
   private
 
     def memo_params
-      params.require(:group_memo).permit(:title, :content, :picture, :number)
+      params.require(:group_memo).permit(:title, :content, :number)
     end
 
     def group_is_exist

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  get 'pen_names/new'
+  mathjax 'mathjax'
 
   root 'static_pages#home'
   get  '/help',    to: 'static_pages#help'
@@ -24,7 +24,8 @@ Rails.application.routes.draw do
 
   resources :user_notes, only: [:show, :new, :create, :edit, :update, :destroy]
   resources :user_notes do
-    resources :user_memos, only: [:new, :create, :edit, :update, :destroy]
+    resources :user_memos,    only: [:new, :create, :edit, :update, :destroy]
+    resources :user_pictures, only: [:new, :create, :edit, :update, :destroy]
 
     get :to_book, on: :member
   end
@@ -33,7 +34,8 @@ Rails.application.routes.draw do
 
     resources :group_notes, only: [:show, :new, :create, :edit, :update, :destroy]
     resources :group_notes do
-      resources :group_memos,  only: [:new, :create, :edit, :update, :destroy]
+      resources :group_memos,    only: [:new, :create, :edit, :update, :destroy]
+      resources :group_pictures, only: [:new, :create, :edit, :update, :destroy]
 
       get :to_open, on: :member
       get :to_close, on: :member

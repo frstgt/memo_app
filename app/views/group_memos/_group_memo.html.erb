@@ -7,11 +7,7 @@
   </span>
 
   <span class="body">
-    <span class="content"><%= group_memo.content %></span>
-
-    <% if group_memo.picture? %>
-      <%= image_tag group_memo.picture.url %>
-    <% end %>
+    <span class="content"><%= sanitize markdown(group_memo.content) %></span>
   </span>
 
   <span class="footer">

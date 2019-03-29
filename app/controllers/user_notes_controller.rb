@@ -1,9 +1,9 @@
 class UserNotesController < ApplicationController
   before_action :logged_in_user
-  before_action :correct_user,  only: [:show, :edit, :update, :destroy, :to_book]
+  before_action :note_is_exist,  only: [:show, :edit, :update, :destroy, :to_book]
 
   def show
-    @note = current_user.user_notes.find(params[:id])
+    @pictures = @note.user_pictures
     @all_memos = @note.user_memos
     @page_memos = @all_memos.paginate(page: params[:page])
   end
@@ -55,7 +55,7 @@ class UserNotesController < ApplicationController
       params.require(:user_note).permit(:title, :description, :pen_name_id, :picture)
     end
 
-    def correct_user
+    def note_is_exist
       @note = current_user.user_notes.find_by(id: params[:id])
       redirect_to root_url if @note.nil?
     end

@@ -10,6 +10,7 @@ class GroupNotesController < ApplicationController
   before_action :user_have_regular_member, only: [:edit, :update]
 
   def show
+    @pictures = @note.group_pictures
     @all_memos = @note.group_memos
     @page_memos = @all_memos.paginate(page: params[:page])
   end

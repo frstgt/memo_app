@@ -48,6 +48,22 @@
       </span>
 
     </section>
+
+    <hr>
+
+    <span class="side_header small">
+      <span class="count">
+        group_pictures (<%= @pictures.count %>)
+      </span>
+      <span class="command">
+        <%= link_to "[new]", new_group_group_note_group_picture_path(@group, @note) %>
+      </span>
+    </span>
+    <% if @pictures.any? %>
+      <ol class="picture_list small">
+        <%= render @pictures %>
+      </ol>
+    <% end %>
     
   </aside>
 
@@ -55,7 +71,7 @@
 
     <span class="main_header">
       <span class="count">
-        memos (<%= @all_memos.count %>)
+        group_memos (<%= @all_memos.count %>)
       </span>
       <span class="command">
         <%= link_to "[new]", new_group_group_note_group_memo_path(@group, @note) %>

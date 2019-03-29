@@ -1,5 +1,4 @@
 class MemosController < ApplicationController
-  before_action :logged_in_user
 
   private
 

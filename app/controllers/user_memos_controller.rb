@@ -1,6 +1,7 @@
 class UserMemosController < MemosController
-  before_action :correct_note
-  before_action :correct_memo,  only: [:edit, :update, :destroy]
+  before_action :logged_in_user
+  before_action :note_is_exist
+  before_action :memo_is_exist,  only: [:edit, :update, :destroy]
 
   def new
     @memo = @note.user_memos.build
@@ -13,7 +14,7 @@ class UserMemosController < MemosController
 
       update_number(@note.user_memos, @memo)
 
-      flash[:success] = "Memo created"
+      flash[:success] = "UserMemo created"
       redirect_to @note
     else
       render 'new'
@@ -32,7 +33,7 @@ class UserMemosController < MemosController
 
       update_number(@note.user_memos, @memo)
 
-      flash[:success] = "Memo updated"
+      flash[:success] = "UserMemo updated"
       redirect_to @note
     else
       render 'edit'
@@ -41,22 +42,22 @@ class UserMemosController < MemosController
 
   def destroy
     @note.user_memos.find(params[:id]).destroy
-    flash[:success] = "Memo deleted"
+    flash[:success] = "UserMemo deleted"
     redirect_to @note
   end
 
   private
 
     def memo_params
-      params.require(:user_memo).permit(:title, :content, :picture, :number)
+      params.require(:user_memo).permit(:title, :content, :number)
     end
 
-    def correct_note
+    def note_is_exist
       @note = current_user.user_notes.find_by(id: params[:user_note_id])
       redirect_to root_url if @note.nil?
     end
 
-    def correct_memo
+    def memo_is_exist
       @memo = @note.user_memos.find_by(id: params[:id])
       redirect_to root_url if @memo.nil?
     end

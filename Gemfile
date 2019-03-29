@@ -8,10 +8,11 @@ gem 'faker',                   '1.7.3'
 gem 'carrierwave',             '1.2.2'
 gem 'mini_magick',             '4.7.0'
 gem 'will_paginate',           '3.1.6'
-
-#gem 'bootstrap-will_paginate', '1.0.0'
-#gem "bootstrap-sass",          '3.4.1'
 gem "bootstrap",               '4.3.1'
+
+gem 'redcarpet',               '3.4.0'
+gem 'rouge',                   '3.3.0'
+gem 'mathjax-rails',           '2.6.1'
 
 gem 'puma',                    '3.9.1'
 gem 'sass-rails',              '5.0.6'

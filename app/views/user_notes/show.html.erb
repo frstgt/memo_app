@@ -1,4 +1,5 @@
 <% provide(:title, @note.title) %>
+
 <div class="row">
 
   <aside class="col-md-4">
@@ -35,6 +36,22 @@
       </span>
 
     </section>
+
+    <hr>
+
+    <span class="side_header small">
+      <span class="count">
+        user_pictures (<%= @pictures.count %>)
+      </span>
+      <span class="command">
+        <%= link_to "[new]", new_user_note_user_picture_path(@note) %>
+      </span>
+    </span>
+    <% if @pictures.any? %>
+      <ol class="picture_list small">
+        <%= render @pictures %>
+      </ol>
+    <% end %>
     
   </aside>
 
@@ -42,7 +59,7 @@
 
     <span class="main_header">
       <span class="count">
-        memos (<%= @all_memos.count %>)
+        user_memos (<%= @all_memos.count %>)
       </span>
       <span class="command">
         <%= link_to "[new]", new_user_note_user_memo_path(@note) %>

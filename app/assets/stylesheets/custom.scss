@@ -38,33 +38,6 @@ textarea {
   }
 }
 
-/* typography */
-
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1;
-}
-
-h1 {
-  font-size: 3em;
-  letter-spacing: -2px;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-h2 {
-  font-size: 1.2em;
-  letter-spacing: -1px;
-  margin-bottom: 30px;
-  text-align: center;
-  font-weight: normal;
-  color: $gray-light;
-}
-
-p {
-  font-size: 1.1em;
-  line-height: 1.7em;
-}
-
 /* header */
 
 header {
@@ -178,7 +151,7 @@ input {
   }
 }
 
-.requirements, .positions {
+.help {
   display: block;
   margin: 30px 0 0 0;
   
@@ -301,6 +274,33 @@ span.picture {
   .footer {
     display: block;
     margin-left: 74px;
+  }
+}
+
+.picture_list {
+  list-style: none;
+  padding: 0;
+  li {
+    padding: 10px 0px;
+    border-top: 1px solid #e8e8e8;
+  }
+  img {
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
+  }
+  .header {
+    margin-top: 5em;
+    padding-top: 0;
+  }
+  .body {
+    display: block;
+    margin-left: 60px;
+  }
+  .footer {
+    display: block;
+    margin-left: 60px;
+    margin-bottom: 0px;
   }
 }
 
