@@ -31,7 +31,11 @@ class GroupsController < ApplicationController
     @all_books = @group.books
     @page_books = @all_books.paginate(page: params[:page])
   end
-
+  def messages
+    @message = @group.messages.build
+    @all_messages = @group.messages
+    @page_messages = @all_messages.paginate(page: params[:page])
+  end
   def members
     @leading_members = @group.leading_members    
     @general_members = @group.general_members.paginate(page: params[:page])    

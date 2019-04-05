@@ -1,0 +1,20 @@
+<li id="message-<%= message.id %>">
+
+  <% pen_name = message.pen_name %>
+  <%= icon_for(pen_name, { name: pen_name.name, size: 64 }) %>
+
+  <span class="header">
+    <span class="name"><b><%= pen_name.name %></b></span>
+  </span>
+
+  <span class="body">
+    <span class="content"><%= message.content %></span>
+  </span>
+
+  <span class="footer">
+    <span class="timestamp text-muted">
+      updated <%= time_ago_in_words(message.updated_at) %> ago.
+    </span>
+  </span>
+
+</li>

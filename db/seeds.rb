@@ -44,6 +44,15 @@ groups.each_with_index { |group, n|
   Membership.create!(group: group, member: members[n*5+4], position: Membership::POS_VISITOR)
 }
 
+# messages
+groups.each do |group|
+  10.times do
+    member = group.members.sample
+    content = Faker::Lorem.sentence(10)
+    group.messages.create!(content: content, group_id: group.id, pen_name_id: member.id)
+  end
+end
+
 # user_notes
 users.each do |user|
   pen_names = user.pen_names

@@ -34,7 +34,8 @@
         <%= "evaluation: #{group.positive_count} / #{group.negative_count}" %>,
         <%= link_to "books: #{group.books.count}", books_group_path(group) %>,
         <% if pen_name %>
-          <%= link_to "members: #{group.members.count}", members_group_path(group) %>
+          <%= link_to "members: #{group.members.count}", members_group_path(group) %>,
+          <%= link_to "messages: #{group.messages.count}", messages_group_path(group) %>
         <% else %>
           <%= "members: #{group.members.count}" %>
         <% end %>

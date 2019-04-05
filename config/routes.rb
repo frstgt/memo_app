@@ -41,11 +41,13 @@ Rails.application.routes.draw do
       get :to_close, on: :member
       get :to_book, on: :member
     end
+    resources :messages,    only: [:create]
 
     get :to_open, on: :member
     get :to_close, on: :member
 
     get :books, on: :member
+    get :messages, on: :member
 
     get :members, on: :member
     get :join, on: :member

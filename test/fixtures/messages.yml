@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyText
+  group: one
+  pen_name: one
+
+two:
+  content: MyText
+  group: two
+  pen_name: two

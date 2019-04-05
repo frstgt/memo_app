@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190329095129) do
+ActiveRecord::Schema.define(version: 20190405085049) do
 
   create_table "books", force: :cascade do |t|
     t.string "title"
@@ -59,6 +59,16 @@ ActiveRecord::Schema.define(version: 20190329095129) do
     t.index ["group_note_id"], name: "index_memos_on_group_note_id"
     t.index ["user_note_id", "number"], name: "index_memos_on_user_note_id_and_number"
     t.index ["user_note_id"], name: "index_memos_on_user_note_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "content"
+    t.integer "group_id"
+    t.integer "pen_name_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_messages_on_group_id"
+    t.index ["pen_name_id"], name: "index_messages_on_pen_name_id"
   end
 
   create_table "notes", force: :cascade do |t|

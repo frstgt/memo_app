@@ -1,0 +1,12 @@
+<%= form_for([@group, @message]) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <% pen_name = @user_member %>
+  <%= icon_for(pen_name, { name: pen_name.name, size: 64 }) %>
+  <b><%= pen_name.name %></b>
+  <%= f.hidden_field :pen_name_id, value: pen_name.id, class: 'form-control' %>
+
+  <%= f.text_area :content, row: 2, class: 'form-control' %>
+
+  <%= f.submit "Create Message", class: "btn btn-primary" %>
+<% end %>
