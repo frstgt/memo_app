@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  type: BookMemo
   content: MyText
-  picture: MyString
   book: one
 
 two:
+  type: BookMemo
   content: MyText
-  picture: MyString
   book: two

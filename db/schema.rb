@@ -10,20 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190405085049) do
-
-  create_table "books", force: :cascade do |t|
-    t.string "title"
-    t.string "author"
-    t.text "description"
-    t.string "picture"
-    t.integer "pen_name_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "group_id"
-    t.index ["group_id"], name: "index_books_on_group_id"
-    t.index ["pen_name_id"], name: "index_books_on_pen_name_id"
-  end
+ActiveRecord::Schema.define(version: 20190406031729) do
 
   create_table "groups", force: :cascade do |t|
     t.string "name"
@@ -55,6 +42,8 @@ ActiveRecord::Schema.define(version: 20190405085049) do
     t.integer "group_note_id"
     t.integer "user_note_id"
     t.string "title"
+    t.integer "book_id"
+    t.index ["book_id"], name: "index_memos_on_book_id"
     t.index ["group_note_id", "number"], name: "index_memos_on_group_note_id_and_number"
     t.index ["group_note_id"], name: "index_memos_on_group_note_id"
     t.index ["user_note_id", "number"], name: "index_memos_on_user_note_id_and_number"
@@ -82,20 +71,11 @@ ActiveRecord::Schema.define(version: 20190405085049) do
     t.string "type"
     t.integer "group_id"
     t.integer "status", default: 0
+    t.string "author"
     t.index ["group_id"], name: "index_notes_on_group_id"
     t.index ["pen_name_id"], name: "index_notes_on_pen_name_id"
     t.index ["user_id", "updated_at"], name: "index_notes_on_user_id_and_updated_at"
     t.index ["user_id"], name: "index_notes_on_user_id"
-  end
-
-  create_table "pages", force: :cascade do |t|
-    t.text "content"
-    t.string "picture"
-    t.integer "book_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "title"
-    t.index ["book_id"], name: "index_pages_on_book_id"
   end
 
   create_table "pen_names", force: :cascade do |t|
@@ -118,6 +98,8 @@ ActiveRecord::Schema.define(version: 20190405085049) do
     t.string "type"
     t.integer "group_note_id"
     t.integer "user_note_id"
+    t.integer "book_id"
+    t.index ["book_id"], name: "index_pictures_on_book_id"
     t.index ["group_note_id"], name: "index_pictures_on_group_note_id"
     t.index ["user_note_id"], name: "index_pictures_on_user_note_id"
   end

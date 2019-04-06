@@ -1,4 +1,4 @@
-class UserMemosController < MemosController
+class UserMemosController < ApplicationController
   before_action :logged_in_user
   before_action :note_is_exist
   before_action :memo_is_exist,  only: [:edit, :update, :destroy]

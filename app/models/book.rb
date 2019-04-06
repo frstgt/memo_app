@@ -1,22 +1,15 @@
-class Book < ApplicationRecord
+class Book < Note
   belongs_to :pen_name, optional: true
   belongs_to :group, optional: true
+  has_many :book_memos, dependent: :destroy
+  has_many :book_pictures, dependent: :destroy
 
-  has_many :pages, dependent: :destroy
   has_many :passive_readerships, class_name:  "Readership",
                                   foreign_key: "book_id",
                                   dependent:   :destroy
   has_many :readers, through: :passive_readerships,  source: :reader
 
-  mount_uploader :picture, PictureUploader
-
-  validates :title, presence: true, length: { maximum: 100 }
-  validates :author, presence: true, length: { maximum: 100 }
-  validates :description, length: { maximum: 1000 }
-
-  validate  :picture_size
-
-  default_scope -> { order(created_at: :desc) }
+  validates :author, presence: true, length: { maximum: 200 }
 
   def count_evaluations(condition)
     reader_ids = "SELECT reader_id FROM readerships
@@ -46,13 +39,5 @@ class Book < ApplicationRecord
       0
     end
   end
-
-  private
-
-    def picture_size
-      if picture.size > 5.megabytes
-        errors.add(:picture, "should be less than 5MB")
-      end
-    end
 
 end

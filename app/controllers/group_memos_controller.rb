@@ -1,4 +1,4 @@
-class GroupMemosController < MemosController
+class GroupMemosController < ApplicationController
   before_action :logged_in_user
   before_action :group_is_exist
   before_action :note_is_exist

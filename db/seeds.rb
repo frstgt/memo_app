@@ -109,11 +109,13 @@ users.each do |user|
     description = Faker::Lorem.sentence(20)
     book = Book.create!(title: title, author: author, description: description,
                   pen_name_id: pen_name.id, group_id: nil)
+    number = 1
     10.times do
       title = Faker::Book.title
       content = Faker::Lorem.sentence(20)
-      book.pages.create!(title: title, content: content,
-                          book_id: book.id)
+      book.book_memos.create!(title: title, content: content,
+                              number: number)
+      number += 1
     end
   end
 end
@@ -129,11 +131,13 @@ groups.each do |group|
     book = Book.create!(title: title, author: author, description: description,
                          pen_name_id: pen_name.id, group_id: group.id)
 
+    number = 1
     10.times do
       title = Faker::Book.title
       content = Faker::Lorem.sentence(20)
-      book.pages.create!(title: title, content: content,
-                        book_id: book.id)
+      book.book_memos.create!(title: title, content: content,
+                               number: number)
+      number += 1
     end
   end
 end

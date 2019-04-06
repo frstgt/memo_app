@@ -11,4 +11,20 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def update_number(ones, new_one)
+      if new_one.number < 1 then
+        new_one.update_attributes({number: 1})
+      elsif new_one.number > ones.count then
+        new_one.update_attributes({number: ones.count })
+      end
+
+      new_number = new_one.number + 1
+      for one in ones do
+        if one != new_one and one.number >= new_one.number then
+          one.update_attributes({number: new_number})
+          new_number += 1
+        end
+      end
+    end
+
 end

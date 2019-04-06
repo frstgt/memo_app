@@ -4,6 +4,7 @@ class MessagesController < ApplicationController
   before_action :user_have_member
 
   def create
+    params[:message][:pen_name_id] = @user_member.id
     @message = @group.messages.build(message_params)
     if @message.save
       flash[:success] = "Message created"

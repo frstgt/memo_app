@@ -1,5 +1,4 @@
 class Note < ApplicationRecord
-  belongs_to :pen_name, optional: true
 
   default_scope -> { order(updated_at: :desc) }
 
