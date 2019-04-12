@@ -12,7 +12,7 @@ class UserNotesControllerTest < ActionDispatch::IntegrationTest
   test "show note" do
     log_in_as(@other_user)
     get user_note_path(@note)
-    assert_redirected_to root_path
+    assert_template 'user_notes/show'
 
     log_in_as(@user)
     get user_note_path(@note)
@@ -67,23 +67,19 @@ class UserNotesControllerTest < ActionDispatch::IntegrationTest
     get to_open_user_note_path(@note)
     assert_redirected_to root_path
 
-    skip "here"
-
     log_in_as(@user)
     get to_close_user_note_path(@note)
-    assert_redirected_to @note
+    assert_redirected_to user_note_path(@note)
     get to_open_user_note_path(@note)
     assert_redirected_to @note
 
-#    skip "here"
-
     log_in_as(@other_user)
     get user_note_path(@note)
-    assert_redirected_to user_note_path(@note)
+    assert_template 'user_notes/show'
 
     log_in_as(@user)
     get user_note_path(@note)
-    assert_redirected_to user_note_path(@note)
+    assert_template 'user_notes/show'
 
     log_in_as(@user)
     get to_close_user_note_path(@note)
@@ -95,7 +91,7 @@ class UserNotesControllerTest < ActionDispatch::IntegrationTest
 
     log_in_as(@user)
     get user_note_path(@note)
-    assert_redirected_to user_note_path(@note)
+    assert_template 'user_notes/show'
   end
 
 end

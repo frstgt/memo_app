@@ -33,7 +33,7 @@ class UserNotesController < ApplicationController
     @note = current_user.user_notes.find(params[:id])
     if @note.update_attributes(note_params)
       flash[:success] = "Note updated"
-      redirect_to @note
+      redirect_to user_note_path(@note)
     else
       render 'edit'
     end
@@ -49,11 +49,11 @@ class UserNotesController < ApplicationController
 
   def to_open
     @note.to_open
-    redirect_to @note
+    redirect_to user_note_path(@note)
   end
   def to_close
     @note.to_close
-    redirect_to @note
+    redirect_to user_note_path(@note)
   end
 
   private
