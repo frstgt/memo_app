@@ -6,7 +6,7 @@ class GroupMemosController < ApplicationController
 
   before_action :memo_is_exist,          except: [:new, :create]
 
-  before_action :user_have_regular_member, only: [:edit, :update, :destroy]
+  before_action :user_have_regular_member, only: [:new, :create, :edit, :update, :destroy]
 
   def new
     @memo = @note.group_memos.build
@@ -74,7 +74,7 @@ class GroupMemosController < ApplicationController
     end
 
     def user_have_regular_member
-      redirect_to root_url unless @group.user_is_regular_member?(@user_member)
+      redirect_to root_url unless @group.is_regular_member?(@user_member)
     end
 
 end

@@ -1,18 +1,18 @@
 class GroupsController < ApplicationController
   before_action :logged_in_user
   before_action :group_is_exist,             except: [:index, :new, :create]
-  before_action :user_have_member,           except: [:index, :new, :create, :show, :join]
+  before_action :user_have_member,           except: [:index, :new, :create, :books, :join]
 
-  before_action :allowed_user,                 only: [:show, :join]
+  before_action :group_is_open,                only: [:join, :to_close]
+  before_action :group_is_close,               only: [:to_open]
+  before_action :user_pen_name,                only: [:create, :join, :unjoin]
+  before_action :not_group_member,             only: [:join]
 
-  before_action :user_have_general_member,     only: [:unjoin]
+  before_action :user_have_leader,             only: [:change_leader]
+  before_action :user_have_no_leader,          only: [:unjoin]
   before_action :user_have_leading_member,     only: [:edit, :update, :destroy,
                                                       :to_open, :to_close, :position]
-  before_action :user_have_leader,             only: [:change_leader]
-
-  before_action :user_pen_name,                only: [:create, :join, :unjoin]
   before_action :group_member,                 only: [:position]
-  before_action :not_group_member,             only: [:join]
   before_action :position_check,               only: [:position]
 
   before_action :user_have_only_member,        only: [:destroy]
@@ -22,14 +22,14 @@ class GroupsController < ApplicationController
     @page_groups = @all_groups.paginate(page: params[:page])
     @sample_groups = @all_groups.sample(3)
   end
+  def books
+    @all_books = @group.books
+    @page_books = @all_books.paginate(page: params[:page])
+  end
 
   def show
     @all_notes = @group.group_notes
     @page_notes = @all_notes.paginate(page: params[:page])
-  end
-  def books
-    @all_books = @group.books
-    @page_books = @all_books.paginate(page: params[:page])
   end
   def messages
     @message = @group.messages.build
@@ -121,8 +121,13 @@ class GroupsController < ApplicationController
       redirect_to root_url unless @user_member
     end
 
-    def allowed_user
-      unless @group and (@group.get_user_member(current_user) or @group.is_open?)
+    def group_is_open
+      unless @group.is_open?
+        redirect_to root_url
+      end
+    end
+    def group_is_close
+      unless not @group.is_open?
         redirect_to root_url
       end
     end
@@ -153,13 +158,12 @@ class GroupsController < ApplicationController
     def user_have_leader
       redirect_to root_url unless @group.is_leader?(@user_member)
     end
+    def user_have_no_leader
+      redirect_to root_url if @group.is_leader?(@user_member)
+    end
     def user_have_leading_member
       redirect_to root_url unless @group.is_leading_member?(@user_member)
     end
-    def user_have_general_member
-      redirect_to root_url unless @group.is_general_member?(@user_member)
-    end
-
     def user_have_only_member
       redirect_to root_url unless @group.is_leader?(@user_member) and @group.members.count == 1
     end

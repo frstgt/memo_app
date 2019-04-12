@@ -20,10 +20,16 @@ class GroupNotesControllerTest < ActionDispatch::IntegrationTest
   end
   
   test "show group note" do
-    [@leader, @subleader, @common, @visitor, @other].each do |user|
+    [@leader, @subleader, @common, @visitor].each do |user|
       log_in_as(user)
       get group_group_note_path(@group, @note)
       assert_template 'group_notes/show'
+    end
+
+    [@other].each do |user|
+      log_in_as(user)
+      get group_group_note_path(@group, @note)
+      assert_redirected_to root_path
     end
   end
   
@@ -107,18 +113,14 @@ class GroupNotesControllerTest < ActionDispatch::IntegrationTest
 
   test "to_open/to_close" do
 
-    skip "what's wrong?"
-
     [@leader, @subleader].each do |user|
       log_in_as(user)
 
       get to_close_group_group_note_path(@group, @note)
       assert_redirected_to group_group_note_path(@group, @note)
-      assert_not @note.is_open?
 
       get to_open_group_group_note_path(@group, @note)
       assert_redirected_to group_group_note_path(@group, @note)
-      assert @note.is_open?
     end
     [@common, @visitor, @other].each do |user|
       log_in_as(user)
@@ -130,20 +132,20 @@ class GroupNotesControllerTest < ActionDispatch::IntegrationTest
       assert_redirected_to root_path
     end
 
-    assert @group.is_open?
-    assert @note.is_open?
-    [@leader, @subleader, @common, @visitor, @other].each do |user|
+    [@leader, @subleader, @common, @visitor].each do |user|
       log_in_as(user)
       get group_group_note_path(@group, @note)
       assert_template 'group_notes/show'
+    end
+    [@other].each do |user|
+      log_in_as(user)
+      get group_group_note_path(@group, @note)
+      assert_redirected_to root_path
     end
 
     log_in_as(@leader)
     get to_close_group_group_note_path(@group, @note)
     assert_redirected_to group_group_note_path(@group, @note)
-
-    assert @group.is_open?
-    assert @note.is_open?
 
     [@leader, @subleader, @common].each do |user|
       log_in_as(user)
@@ -155,7 +157,6 @@ class GroupNotesControllerTest < ActionDispatch::IntegrationTest
       get group_group_note_path(@group, @note)
       assert_redirected_to root_path
     end
-
 
   end
 

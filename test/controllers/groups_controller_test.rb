@@ -18,17 +18,53 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     @other_pname = pen_names(:user9_pen_name1)
   end
 
-  test "show open group" do
+  test "books" do
     [@leader, @subleader, @common, @visitor, @other].each do |user|
+      log_in_as(user)
+      get books_group_path(@group)
+      assert_template 'groups/books'
+    end
+  end
+
+  test "show open group" do # group home
+    [@leader, @subleader, @common, @visitor].each do |user|
       log_in_as(user)
       get group_path(@group)
       assert_template 'groups/show'
     end
 
-    [@leader, @subleader, @common, @visitor, @other].each do |user|
+    [@other].each do |user|
       log_in_as(user)
       get group_path(@group)
-      assert_template 'groups/show'
+      assert_redirected_to root_path
+    end
+  end
+
+  test "members" do
+    [@leader, @subleader, @common, @visitor].each do |user|
+      log_in_as(user)
+      get members_group_path(@group)
+      assert_template 'groups/members'
+    end
+
+    [@other].each do |user|
+      log_in_as(user)
+      get members_group_path(@group)
+      assert_redirected_to root_path
+    end
+  end
+
+  test "messages" do
+    [@leader, @subleader, @common, @visitor].each do |user|
+      log_in_as(user)
+      get messages_group_path(@group)
+      assert_template 'groups/messages'
+    end
+
+    [@other].each do |user|
+      log_in_as(user)
+      get messages_group_path(@group)
+      assert_redirected_to root_path
     end
   end
 
@@ -101,14 +137,14 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
       assert_redirected_to root_path
     end
 
-    [@leader, @subleader].each do |user|
+    [@leader].each do |user|
       log_in_as(user)
       pen_name = @group.get_user_member(user)
       get unjoin_group_path(@group), params: { group: { pen_name_id: pen_name.id } }
       assert_redirected_to root_path
     end
 
-    [@common, @visitor].each do |user|
+    [@subleader, @common, @visitor].each do |user|
       log_in_as(user)
       pen_name = @group.get_user_member(user)
       get unjoin_group_path(@group), params: { group: { pen_name_id: pen_name.id } }
@@ -143,7 +179,7 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
       assert_redirected_to group_path(@group)
       get to_open_group_path(@group)
       assert_redirected_to group_path(@group)
-    end
+    end # -> open
 
     log_in_as(@visitor)
     assert_not @group.is_member?(@visitor_pname)
@@ -156,24 +192,30 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
       assert_redirected_to root_path
       get to_open_group_path(@group)
       assert_redirected_to root_path
-    end
+    end # -> open
 
     log_in_as(@other)
     get to_close_group_path(@group)
     assert_redirected_to root_path
     get to_open_group_path(@group)
     assert_redirected_to root_path
+    # -> open
+
+    assert @group.is_open?
+    assert_not @group.is_member?(@other_pname)
 
     log_in_as(@other)
-    get group_path(@group)
-    assert_template 'groups/show'
+    get join_group_path(@group), params: { group: { pen_name_id: @other_pname.id } }
+    assert_redirected_to groups_path
+    get unjoin_group_path(@group), params: { group: { pen_name_id: @other_pname.id } }
+    assert_redirected_to groups_path
 
     log_in_as(@leader)
     get to_close_group_path(@group)
     assert_redirected_to group_path(@group)
 
     log_in_as(@other)
-    get group_path(@group)
+    get join_group_path(@group), params: { group: { pen_name_id: @other_pname.id } }
     assert_redirected_to root_path
   end
 
