@@ -73,7 +73,7 @@ class UserNotesControllerTest < ActionDispatch::IntegrationTest
     get to_close_user_note_path(@note)
     assert_redirected_to @note
     get to_open_user_note_path(@note)
-    assert_redirected_to user_note_path(@note)
+    assert_redirected_to @note
 
 #    skip "here"
 
