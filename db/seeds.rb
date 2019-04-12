@@ -11,25 +11,27 @@ User.create!(name:  "Example User",
 end
 users = User.order(:created_at)
 
-# groups
-2.times do |n|
-  name  = Faker::Team.name
-  description = Faker::Lorem.sentence(20)
-  Group.create!(name: name, description: description,
-                status: 1)
-end
-groups = Group.order(:created_at)
-
 # pen names
 users.each do |user|
 
   2.times do
     name = Faker::Name.name
     description = Faker::Lorem.sentence(20)
+    status = [PenName::ST_CLOSE, PenName::ST_OPEN].sample
     user.pen_names.create!(name: name, description: description,
-                          status: 1)
+                          status: status)
   end
 end
+
+# groups
+2.times do |n|
+  name  = Faker::Team.name
+  description = Faker::Lorem.sentence(20)
+  status = [Group::ST_CLOSE, Group::ST_OPEN].sample
+  Group.create!(name: name, description: description,
+                status: status)
+end
+groups = Group.order(:created_at)
 
 # memberships
 members = []
@@ -61,8 +63,9 @@ users.each do |user|
     2.times do
       title = Faker::Book.title
       description = Faker::Lorem.sentence(20)
+      status = [Note::ST_CLOSE, Note::ST_OPEN].sample
       note = user.user_notes.create!(title: title, description: description,
-                                    pen_name_id: pen_name.id)
+                                    pen_name_id: pen_name.id, status: status)
 
       number = 1
       10.times do
@@ -84,8 +87,9 @@ groups.each do |group|
     2.times do
       title = Faker::Book.title
       description = Faker::Lorem.sentence(20)
+      status = [Note::ST_CLOSE, Note::ST_OPEN].sample
       note = group.group_notes.create!(title: title, description: description,
-                                      pen_name_id: pen_name.id, status: 1)
+                                      pen_name_id: pen_name.id, status: status)
 
       number = 1
       10.times do
@@ -96,57 +100,5 @@ groups.each do |group|
         number += 1
       end
     end
-  end
-end
-
-# books by user
-users.each do |user|
-  pen_names = user.pen_names
-  pen_names.each do |pen_name|
-
-    title = Faker::Book.title
-    author = pen_name.name
-    description = Faker::Lorem.sentence(20)
-    book = Book.create!(title: title, author: author, description: description,
-                  pen_name_id: pen_name.id, group_id: nil)
-    number = 1
-    10.times do
-      title = Faker::Book.title
-      content = Faker::Lorem.sentence(20)
-      book.book_memos.create!(title: title, content: content,
-                              number: number)
-      number += 1
-    end
-  end
-end
-
-# books by group
-groups.each do |group|
-  pen_names = group.members
-  pen_names.each do |pen_name|
-
-    title = Faker::Book.title
-    author = pen_name.name + " @ " + group.name
-    description = Faker::Lorem.sentence(20)
-    book = Book.create!(title: title, author: author, description: description,
-                         pen_name_id: pen_name.id, group_id: group.id)
-
-    number = 1
-    10.times do
-      title = Faker::Book.title
-      content = Faker::Lorem.sentence(20)
-      book.book_memos.create!(title: title, content: content,
-                               number: number)
-      number += 1
-    end
-  end
-end
-
-# readerships
-users.each do |user|
-  books = Book.order(:created_at)
-  books.each do |book|
-    evaluation = [-5,-4,-3,-2,-1,0,1,2,3,4,5].sample
-    Readership.create!(reader_id: user.id, book_id: book.id, evaluation: evaluation)
   end
 end

@@ -20,21 +20,6 @@ class Group < ApplicationRecord
 
   attr_accessor  :pen_name_id
 
-  def positive_count
-    count = 0
-    self.books.each do |book|
-      count += book.positive_count
-    end
-    count
-  end
-  def negative_count
-    count = 0
-    self.books.each do |book|
-      count += book.negative_count
-    end
-    count
-  end
-
   ST_OPEN = 1
   ST_CLOSE = 0
   def to_open
@@ -45,6 +30,9 @@ class Group < ApplicationRecord
   end
   def is_open?
     self.status == ST_OPEN
+  end
+  def works
+    self.group_notes.where(status: Note::ST_OPEN)
   end
 
   def first_leader(pen_name)

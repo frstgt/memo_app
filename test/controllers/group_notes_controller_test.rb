@@ -20,16 +20,10 @@ class GroupNotesControllerTest < ActionDispatch::IntegrationTest
   end
   
   test "show group note" do
-    [@leader, @subleader, @common, @visitor].each do |user|
+    [@leader, @subleader, @common, @visitor, @other].each do |user|
       log_in_as(user)
       get group_group_note_path(@group, @note)
       assert_template 'group_notes/show'
-    end
-
-    [@other].each do |user|
-      log_in_as(user)
-      get group_group_note_path(@group, @note)
-      assert_redirected_to root_path
     end
   end
   
@@ -132,15 +126,10 @@ class GroupNotesControllerTest < ActionDispatch::IntegrationTest
       assert_redirected_to root_path
     end
 
-    [@leader, @subleader, @common, @visitor].each do |user|
+    [@leader, @subleader, @common, @visitor, @other].each do |user|
       log_in_as(user)
       get group_group_note_path(@group, @note)
       assert_template 'group_notes/show'
-    end
-    [@other].each do |user|
-      log_in_as(user)
-      get group_group_note_path(@group, @note)
-      assert_redirected_to root_path
     end
 
     log_in_as(@leader)

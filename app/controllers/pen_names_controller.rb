@@ -15,9 +15,9 @@ class PenNamesController < ApplicationController
     @page_notes = @all_notes.paginate(page: params[:page])
     @groups = @pen_name.groups
   end
-  def books
-    @all_books = @pen_name.books
-    @page_books = @all_books.paginate(page: params[:page])
+  def works
+    @all_works = @pen_name.works
+    @page_works = @all_works.paginate(page: params[:page])
     @groups = @pen_name.groups
   end
 

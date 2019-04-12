@@ -60,4 +60,42 @@ class UserNotesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to @user
   end
 
+  test "to_open/to_close" do
+    log_in_as(@other_user)
+    get to_close_user_note_path(@note)
+    assert_redirected_to root_path
+    get to_open_user_note_path(@note)
+    assert_redirected_to root_path
+
+    skip "here"
+
+    log_in_as(@user)
+    get to_close_user_note_path(@note)
+    assert_redirected_to @note
+    get to_open_user_note_path(@note)
+    assert_redirected_to user_note_path(@note)
+
+#    skip "here"
+
+    log_in_as(@other_user)
+    get user_note_path(@note)
+    assert_redirected_to user_note_path(@note)
+
+    log_in_as(@user)
+    get user_note_path(@note)
+    assert_redirected_to user_note_path(@note)
+
+    log_in_as(@user)
+    get to_close_user_note_path(@note)
+    assert_redirected_to user_note_path(@note)
+
+    log_in_as(@other_user)
+    get user_note_path(@note)
+    assert_redirected_to root_path
+
+    log_in_as(@user)
+    get user_note_path(@note)
+    assert_redirected_to user_note_path(@note)
+  end
+
 end

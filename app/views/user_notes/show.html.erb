@@ -12,6 +12,12 @@
         <% if @note.pen_name %>
           <span class="author"><i>by <%= @note.pen_name.name %></i></span>
         <% end %>
+
+        <% if @note.is_open? %>
+          <span class="badge badge-primary">open</span>
+        <% else %>
+          <span class="badge badge-dark">closed</span>
+        <% end %>
       </span>
 
       <span class="body">
@@ -27,8 +33,6 @@
         </span>
 
         <span class="command">
-          <%= link_to "[to_book]", to_book_user_note_path(@note),
-                                    data: { confirm: "You sure?" } %>
           <%= link_to "[edit]", edit_user_note_path(@note) %>
           <%= link_to "[delete]", user_note_path(@note), method: :delete,
                                   data: { confirm: "You sure?" } %>

@@ -1,6 +1,11 @@
 class UserNotesController < ApplicationController
   before_action :logged_in_user
-  before_action :note_is_exist,  only: [:show, :edit, :update, :destroy, :to_book]
+  before_action :note_is_exist,  except: [:new, :create]
+  before_action :correct_user,   except: [:show, :new, :create]
+
+  before_action :note_is_open,     only: [:to_close]
+  before_action :note_is_close,    only: [:to_open]
+  before_action :allowed_user,     only: [:show]
 
   def show
     @pictures = @note.user_pictures
@@ -42,10 +47,12 @@ class UserNotesController < ApplicationController
 
   #
 
-  def to_book
-    if @note.to_book
-      flash[:success] = "Book published"
-    end
+  def to_open
+    @note.to_open
+    redirect_to @note
+  end
+  def to_close
+    @note.to_close
     redirect_to @note
   end
 
@@ -56,8 +63,31 @@ class UserNotesController < ApplicationController
     end
 
     def note_is_exist
-      @note = current_user.user_notes.find_by(id: params[:id])
-      redirect_to root_url if @note.nil?
+      @note = UserNote.find_by(id: params[:id])
+      redirect_to root_url unless @note
+    end
+
+    def correct_user
+      unless @note.user == current_user
+        redirect_to root_url
+      end
+    end
+
+    def note_is_open
+      unless @note.is_open?
+        redirect_to root_url
+      end
+    end
+    def note_is_close
+      unless not @note.is_open?
+        redirect_to root_url
+      end
+    end
+
+    def allowed_user
+      unless (@note.user == current_user) or @note.is_open?
+        redirect_to root_url
+      end
     end
 
 end

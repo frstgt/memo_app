@@ -20,29 +20,19 @@ class PenName < ApplicationRecord
   validate  :picture_size
   validates :status,  presence: true
 
-  def positive_count
-    count = 0
-    self.books.each do |book|
-      count += book.positive_count
-    end
-    count
-  end
-  def negative_count
-    count = 0
-    self.books.each do |book|
-      count += book.negative_count
-    end
-    count
-  end
-
+  ST_OPEN = 1
+  ST_CLOSE = 0
   def to_open
-    self.update_attributes({status: 1})
+    self.update_attributes({status: ST_OPEN})
   end
   def to_close
-    self.update_attributes({status: 0})
+    self.update_attributes({status: ST_CLOSE})
   end
   def is_open?
-    self.status == 1
+    self.status == ST_OPEN
+  end
+  def works
+    self.user_notes.where(status: Note::ST_OPEN)
   end
 
   def join(group)

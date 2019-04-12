@@ -14,11 +14,9 @@ Rails.application.routes.draw do
   delete '/logout',  to: 'sessions#destroy'
 
   resources :pen_names do
-    
     get :to_open, on: :member
     get :to_close, on: :member
-
-    get :books, on: :member
+    get :works, on: :member
   end
   resources :pen_names
 
@@ -26,8 +24,8 @@ Rails.application.routes.draw do
   resources :user_notes do
     resources :user_memos,    only: [:new, :create, :edit, :update, :destroy]
     resources :user_pictures, only: [:new, :create, :edit, :update, :destroy]
-
-    get :to_book, on: :member
+    get :to_open, on: :member
+    get :to_close, on: :member
   end
 
   resources :groups do
@@ -36,17 +34,15 @@ Rails.application.routes.draw do
     resources :group_notes do
       resources :group_memos,    only: [:new, :create, :edit, :update, :destroy]
       resources :group_pictures, only: [:new, :create, :edit, :update, :destroy]
-
       get :to_open, on: :member
       get :to_close, on: :member
-      get :to_book, on: :member
     end
     resources :messages,    only: [:create]
 
     get :to_open, on: :member
     get :to_close, on: :member
 
-    get :books, on: :member
+    get :works, on: :member
     get :messages, on: :member
 
     get :members, on: :member
@@ -56,12 +52,5 @@ Rails.application.routes.draw do
     get :position, on: :member
   end
   resources :groups
-
-  resources :books, only: [:new, :create]
-  resources :books do
-    resources :pages, only: [:new, :create]
-
-    get :evaluate, on: :member
-  end
 
 end

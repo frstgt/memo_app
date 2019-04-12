@@ -18,11 +18,11 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     @other_pname = pen_names(:user9_pen_name1)
   end
 
-  test "books" do
+  test "works" do
     [@leader, @subleader, @common, @visitor, @other].each do |user|
       log_in_as(user)
-      get books_group_path(@group)
-      assert_template 'groups/books'
+      get works_group_path(@group)
+      assert_template 'groups/works'
     end
   end
 

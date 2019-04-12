@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
   before_action :logged_in_user
   before_action :group_is_exist,             except: [:index, :new, :create]
-  before_action :user_have_member,           except: [:index, :new, :create, :books, :join]
+  before_action :user_have_member,           except: [:index, :new, :create, :works, :join]
 
   before_action :group_is_open,                only: [:join, :to_close]
   before_action :group_is_close,               only: [:to_open]
@@ -22,11 +22,11 @@ class GroupsController < ApplicationController
     @page_groups = @all_groups.paginate(page: params[:page])
     @sample_groups = @all_groups.sample(3)
   end
-  def books
-    @all_books = @group.books
-    @page_books = @all_books.paginate(page: params[:page])
-  end
 
+  def works
+    @all_works = @group.works
+    @page_works = @all_works.paginate(page: params[:page])
+  end
   def show
     @all_notes = @group.group_notes
     @page_notes = @all_notes.paginate(page: params[:page])

@@ -9,6 +9,16 @@ class PenNamesControllerTest < ActionDispatch::IntegrationTest
     @other_user = users(:user2)
   end
 
+  test "works" do
+    log_in_as(@other_user)
+    get works_pen_name_path(@pen_name)
+    assert_template 'pen_names/works'
+
+    log_in_as(@user)
+    get works_pen_name_path(@pen_name)
+    assert_template 'pen_names/works'
+  end
+
   test "show pen_name" do
     log_in_as(@other_user)
     get pen_name_path(@pen_name)

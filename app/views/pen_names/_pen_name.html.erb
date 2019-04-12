@@ -29,9 +29,8 @@
 
     <span class="counter text-muted">
       (
-        <%= "evaluation: #{pen_name.positive_count} / #{pen_name.negative_count}" %>,
-        <%= link_to "books: #{pen_name.books.count}, groups: #{pen_name.groups.count}",
-            books_pen_name_path(pen_name) %>
+        <%= link_to "works: #{pen_name.works.count}, groups: #{pen_name.groups.count}",
+            works_pen_name_path(pen_name) %>
       )
     </span>
   </span>

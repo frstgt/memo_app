@@ -23,7 +23,7 @@
         <% if @group.is_open? %>
           <span class="badge badge-primary">open</span>
         <% else %>
-          <span class="badge badge-dark">close</span>
+          <span class="badge badge-dark">closed</span>
         <% end %>
       </span>
 
@@ -41,9 +41,7 @@
 
         <span class="counter text-muted">
           (
-            <%= "evaluation: #{@group.positive_count} / #{@group.negative_count}" %>,
-
-            <%= link_to "books: #{@group.books.count}", books_group_path(@group) %>,
+            <%= link_to "works: #{@group.works.count}", works_group_path(@group) %>,
             <% if pen_name %>
               <%= link_to "members: #{@group.members.count}", members_group_path(@group) %>,
               <%= link_to "messages: #{@group.messages.count}", messages_group_path(@group) %>
@@ -62,18 +60,14 @@
 
     <span class="main_header">
       <span class="count">
-        group books (<%= @all_books.count %>)
-      </span>
-      <span class="command">
-        <%= link_to "[books]", books_path %>
-        <%= link_to "[new]", new_group_group_note_path(@group) %>
+        group works (<%= @all_works.count %>)
       </span>
     </span>
-    <% if @all_books.any? %>
+    <% if @all_works.any? %>
       <ol class="note_list">
-        <%= render @page_books %>
+        <%= render @page_works %>
       </ol>
-      <%= will_paginate @page_books %>
+      <%= will_paginate @page_works %>
     <% end %>
 
   </div>
