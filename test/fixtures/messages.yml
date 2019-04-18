@@ -1,11 +1,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  content: MyText
-  group: one
-  pen_name: one
+group1_message1:
+  content: "first message"
+  group: group1
+  pen_name: user1_pen_name1
 
-two:
-  content: MyText
-  group: two
-  pen_name: two
+group1_message2:
+  content: "second message"
+  group: group1
+  pen_name: user2_pen_name1
+
+group1_last_message:
+  content: "last message"
+  group: group1
+  pen_name: user3_pen_name1

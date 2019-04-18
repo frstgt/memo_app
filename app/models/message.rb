@@ -6,6 +6,6 @@ class Message < ApplicationRecord
   
   validates :group_id,  presence: true
   validates :pen_name_id,  presence: true
-  validates :content, length: { maximum: 200 }
+  validates :content, presence: true, length: { maximum: 200 }
 
 end
