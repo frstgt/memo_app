@@ -1,0 +1,56 @@
+<% provide(:title, @note.title) %>
+
+<div class="row">
+
+  <aside class="col-md-4">
+
+    <section class="info">
+      (user_note home)<br>
+
+      <%= render 'user_notes/info_header_body', note: @note %>
+
+      <%= icon_for(@note, { name: @note.title, size: 256 }) %>
+
+      <%= render 'user_notes/info_footer',
+                  note: @note, index_command: false, home_command: true %>
+
+    </section>
+
+    <hr>
+
+    <span class="side_header small">
+      <span class="count">
+        user_pictures (<%= @pictures.count %>)
+      </span>
+      <span class="command">
+        <%= link_to "[new]", new_user_note_user_picture_path(@note) %>
+      </span>
+    </span>
+    <% if @pictures.any? %>
+      <ol class="picture_list small">
+        <%= render @pictures %>
+      </ol>
+    <% end %>
+    
+  </aside>
+
+  <div class="col-md-8">
+
+    <span class="main_header">
+      <span class="count">
+        user_memos (<%= @all_memos.count %>)
+      </span>
+      <span class="command">
+        <%= link_to "[new]", new_user_note_user_memo_path(@note) %>
+      </span>
+    </span>
+    <% if @all_memos.any? %>
+      <ol class="memo_list">
+        <%= render @page_memos, home_command: true %>
+      </ol>
+      <%= will_paginate @page_memos %>
+    <% end %>
+
+  </div>
+
+</div>

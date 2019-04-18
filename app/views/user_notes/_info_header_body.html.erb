@@ -1,0 +1,16 @@
+<span class="header">
+  <span class="title"><b><%= link_to note.title, note %></b></span>
+  <% if note.pen_name %>
+    <span class="author"><i>by <%= note.pen_name.name %></i></span>
+  <% end %>
+
+  <% if note.is_open? %>
+    <span class="badge badge-primary">open</span>
+  <% else %>
+    <span class="badge badge-dark">closed</span>
+  <% end %>
+</span>
+
+<span class="body">
+  <span class="description"><%= note.description %></span>
+</span>

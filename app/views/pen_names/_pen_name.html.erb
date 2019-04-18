@@ -2,36 +2,9 @@
 
   <%= icon_for(pen_name, { name: pen_name.name, size: 64 }) %>
 
-  <span class="header">
-    <span class="name">
-      <% if pen_name.user == current_user %>
-        <b><%= link_to pen_name.name, pen_name %></b>
-      <% else %>
-        <b><%= pen_name.name %></b>
-      <% end %>
-    </span>
+  <%= render 'pen_names/info_header_body',
+              pen_name: pen_name %>
 
-    <% if pen_name.is_open? %>
-      <span class="badge badge-primary">open</span>
-    <% else %>
-      <span class="badge badge-dark">closed</span>
-    <% end %>
-  </span>
-
-  <span class="body">
-    <span class="description"><%= pen_name.description %></span>
-  </span>
-
-  <span class="footer">
-    <span class="timestamp text-muted">
-      updated <%= time_ago_in_words(pen_name.updated_at) %> ago.
-    </span>
-
-    <span class="counter text-muted">
-      (
-        <%= link_to "works: #{pen_name.works.count}, groups: #{pen_name.groups.count}",
-            works_pen_name_path(pen_name) %>
-      )
-    </span>
-  </span>
+  <%= render 'pen_names/info_footer',
+              pen_name: pen_name, index_command: true, home_command: false %>
 </li>

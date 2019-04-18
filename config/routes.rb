@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   resources :pen_names do
     get :to_open, on: :member
     get :to_close, on: :member
-    get :works, on: :member
+    get :home, on: :member
   end
   resources :pen_names
 
@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     resources :user_pictures, only: [:new, :create, :edit, :update, :destroy]
     get :to_open, on: :member
     get :to_close, on: :member
+    get :home, on: :member
   end
 
   resources :groups do
@@ -36,13 +37,14 @@ Rails.application.routes.draw do
       resources :group_pictures, only: [:new, :create, :edit, :update, :destroy]
       get :to_open, on: :member
       get :to_close, on: :member
+      get :home, on: :member
     end
     resources :messages,    only: [:create]
 
     get :to_open, on: :member
     get :to_close, on: :member
 
-    get :works, on: :member
+    get :home, on: :member
     get :messages, on: :member
 
     get :members, on: :member

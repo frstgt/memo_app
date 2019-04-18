@@ -136,12 +136,12 @@ class GroupNotesControllerTest < ActionDispatch::IntegrationTest
     get to_close_group_group_note_path(@group, @note)
     assert_redirected_to group_group_note_path(@group, @note)
 
-    [@leader, @subleader, @common].each do |user|
+    [@leader, @subleader, @common, @visitor].each do |user|
       log_in_as(user)
       get group_group_note_path(@group, @note)
       assert_template 'group_notes/show'
     end
-    [@visitor, @other].each do |user|
+    [@other].each do |user|
       log_in_as(user)
       get group_group_note_path(@group, @note)
       assert_redirected_to root_path

@@ -4,15 +4,20 @@ class GroupNotesController < ApplicationController
   before_action :user_have_member,       except: [:show]
   before_action :note_is_exist,          except: [:new, :create]
 
+  before_action :allowed_user,             only: [:show]
+
   before_action :note_is_open,             only: [:to_close]
   before_action :note_is_close,            only: [:to_open]
-  before_action :allowed_user,             only: [:show]
 
   before_action :user_have_leading_member, only: [:new, :create, :destroy,
                                                   :to_open, :to_close]
   before_action :user_have_regular_member, only: [:edit, :update]
 
-  def show
+  def show # for all
+    @all_memos = @note.group_memos
+    @page_memos = @all_memos.paginate(page: params[:page])
+  end
+  def home # for members
     @pictures = @note.group_pictures
     @all_memos = @note.group_memos
     @page_memos = @all_memos.paginate(page: params[:page])
@@ -95,7 +100,7 @@ class GroupNotesController < ApplicationController
 
     def allowed_user
       @user_member = @group.get_user_member(current_user)
-      unless (@user_member and @group.is_regular_member?(@user_member)) or @note.is_open?
+      unless @user_member or @note.is_open?
         redirect_to root_url
       end
     end

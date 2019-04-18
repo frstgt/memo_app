@@ -31,9 +31,6 @@ class PenName < ApplicationRecord
   def is_open?
     self.status == ST_OPEN
   end
-  def works
-    self.user_notes.where(status: Note::ST_OPEN)
-  end
 
   def join(group)
     passive_memberships.create(group_id: group.id, position: Membership::VISITOR)

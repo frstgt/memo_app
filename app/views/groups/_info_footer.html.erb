@@ -1,0 +1,65 @@
+<span class="footer">
+  <span class="timestamp text-muted">
+    <%= timestamp(group) %>
+  </span>
+
+  <span class="counter text-muted">
+    (
+      <%= "group_notes: #{group.group_notes.where(status: Note::ST_OPEN).count}" %>,
+      <% if pen_name %>
+        <%= link_to "members: #{group.members.count}", members_group_path(group) %>,
+        <%= link_to "messages: #{group.messages.count}", messages_group_path(group) %>
+      <% else %>
+        <%= "members: #{group.members.count}" %>
+      <% end %>
+    )
+  </span>
+
+  <span class="command">
+
+    <% if index_command %>
+      <% if pen_name %>
+        <% if group.is_general_member?(pen_name) %>
+          <span class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              [unjoin] <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li><%= link_to pen_name.name,
+                      unjoin_group_path(group, { group: {pen_name_id: pen_name.id} }),
+                      data: { confirm: "You sure?" } %></li>
+            </ul>
+          </span>
+        <% end %>
+
+        <%= link_to "[home]", home_group_path(group) %>
+      <% else %>
+        <span class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            [join] <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <% current_user.pen_names.each do |pen_name| %>
+              <li><%= link_to pen_name.name,
+                              join_group_path(group, { group: {pen_name_id: pen_name.id} }),
+                              data: { confirm: "You sure?" } %></li>
+            <% end %>
+          </ul>
+        </span>
+      <% end %>
+
+    <% end %>
+    
+    <% if home_command %>
+      <% if group.is_open? %>
+        <%= link_to "[to_close]", to_close_group_path(group) %>
+      <% else %>
+        <%= link_to "[to_open]", to_open_group_path(group) %>
+      <% end %>
+      <%= link_to "[edit]", edit_group_path(group) %>
+      <%= link_to "[delete]", group, method: :delete,
+                               data: { confirm: "You sure?" } %>
+    <% end %>
+
+  </span>
+</span>

@@ -2,33 +2,9 @@
 
   <%= icon_for(group_note, { name: group_note.title, size: 64 }) %>
 
-  <span class="header">
-    <span class="title">
-      <b><%= link_to group_note.title, group_group_note_path(@group, group_note) %></b>
-    </span>
+  <%= render 'group_notes/info_header_body', note: group_note %>
 
-    <% if group_note.pen_name %>
-      <span class="author">
-        <i>by <%= group_note.pen_name.name %> @ <%= group_note.group.name %></i>
-      </span>
-      <% if group_note.pen_name.user == current_user %>
-        <span class="badge badge-info">mine</span>
-      <% end %>
-    <% end %>
-
-    <% if group_note.is_open? %>
-      <span class="badge badge-primary">open</span>
-    <% else %>
-      <span class="badge badge-dark">closed</span>
-    <% end %>
-  </span>
-
-  <span class="body">
-    <span class="description"><%= group_note.description %></span>
-  </span>
-
-  <span class="footer">
-    <span class="timestamp text-muted">updated <%= time_ago_in_words(group_note.updated_at) %> ago.</span>
-  </span>
+  <%= render 'group_notes/info_footer',
+              note: group_note, index_command: true, home_command: false %>
 
 </li>

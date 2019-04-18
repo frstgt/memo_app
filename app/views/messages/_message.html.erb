@@ -16,7 +16,7 @@
 
   <span class="footer">
     <span class="timestamp text-muted">
-      updated <%= time_ago_in_words(message.updated_at) %> ago.
+      <%= timestamp(message, created=true, updated=false) %>
     </span>
   </span>
 

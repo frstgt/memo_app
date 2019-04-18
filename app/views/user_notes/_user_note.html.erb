@@ -2,25 +2,9 @@
 
     <%= icon_for(user_note, { name: user_note.title, size: 64 }) %>
 
-    <span class="header">
-      <span class="title"><b><%= link_to user_note.title, user_note_path(user_note) %></b></span>
-      <% if user_note.pen_name %>
-        <span class="author"><i>by <%= user_note.pen_name.name %></i></span>
-      <% end %>
+    <%= render 'user_notes/info_header_body', note: user_note %>
 
-      <% if user_note.is_open? %>
-        <span class="badge badge-primary">open</span>
-      <% else %>
-        <span class="badge badge-dark">closed</span>
-      <% end %>
-    </span>
-
-    <span class="body">
-      <span class="description"><%= user_note.description %></span>
-    </span>
-
-    <span class="footer">
-      <span class="timestamp text-muted">updated <%= time_ago_in_words(user_note.updated_at) %> ago.</span>
-    </span>
+    <%= render 'user_notes/info_footer',
+                note: user_note, index_command: true, home_command: false %>
 
 </li>

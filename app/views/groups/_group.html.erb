@@ -2,75 +2,10 @@
   <% pen_name = group.get_user_member(current_user) %>
 
   <%= icon_for(group, { name: group.name, size: 64 }) %>
-    
-  <span class="header">
-    <span class="name">
-      <% if pen_name %>
-        <b><%= link_to group.name, group %></b>
-        <i>(<%= "#{pen_name.name} as #{group.get_position_name(pen_name)}" %>)</i>
-      <% else %>
-        <b><%= group.name %></b>
-      <% end %>
-    </span>
 
-    <% if group.is_open? %>
-      <span class="badge badge-primary">open</span>
-    <% else %>
-      <span class="badge badge-dark">closed</span>
-    <% end %>
-  </span>
+  <%= render 'groups/info_header_body', group: group, pen_name: pen_name %>
 
-  <span class="body">
-    <span class="description"><%= group.description %></span>
-  </span>
-
-  <span class="footer">
-    <span class="timestamp text-muted">
-      updated <%= time_ago_in_words(group.updated_at) %> ago.
-    </span>
-
-    <span class="counter text-muted">
-      (
-        <%= link_to "works: #{group.works.count}", works_group_path(group) %>,
-        <% if pen_name %>
-          <%= link_to "members: #{group.members.count}", members_group_path(group) %>,
-          <%= link_to "messages: #{group.messages.count}", messages_group_path(group) %>
-        <% else %>
-          <%= "members: #{group.members.count}" %>
-        <% end %>
-      )
-    </span>
-
-    <span class="command">
-      <% if pen_name %>
-        <% if group.is_general_member?(pen_name) %>
-          <span class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              [unjoin] <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-right">
-              <li><%= link_to pen_name.name,
-                      unjoin_group_path(group, { group: {pen_name_id: pen_name.id} }),
-                      data: { confirm: "You sure?" } %></li>
-            </ul>
-          </span>
-        <% end %>
-      <% else %>
-        <span class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            [join] <b class="caret"></b>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-right">
-            <% current_user.pen_names.each do |pen_name| %>
-              <li><%= link_to pen_name.name,
-                              join_group_path(group, { group: {pen_name_id: pen_name.id} }),
-                              data: { confirm: "You sure?" } %></li>
-            <% end %>
-          </ul>
-        </span>
-      <% end %>
-    </span>
-
-  </span>
-
+  <%= render 'groups/info_footer',
+              group: group, pen_name: pen_name,
+              index_command: true, home_command: false %>
 </li>

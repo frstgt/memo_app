@@ -1,10 +1,10 @@
-<% provide(:title, @pen_name.name + " notes") %>
+<% provide(:title, @pen_name.name + " Home") %>
 <div class="row">
 
   <aside class="col-md-4">
 
     <section class="info">
-      (user_notes)<br>
+      (user_notes/home)<br>
 
       <%= render 'pen_names/info_header_body',
                   pen_name: @pen_name %>
@@ -12,7 +12,7 @@
       <%= icon_for(@pen_name, { name: @pen_name.name, size: 256 }) %>
 
       <%= render 'pen_names/info_footer',
-                  pen_name: @pen_name, index_command: false, home_command: false %>
+                  pen_name: @pen_name, index_command: false, home_command: true %>
     </section>
 
     <hr>
@@ -39,6 +39,7 @@
         user_notes (<%= @all_notes.count %>)
       </span>
       <span class="command">
+        <%= link_to "[new]", new_user_note_path %>
       </span>
     </span>
     <% if @all_notes.any? %>

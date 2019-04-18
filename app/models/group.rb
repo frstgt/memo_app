@@ -31,9 +31,6 @@ class Group < ApplicationRecord
   def is_open?
     self.status == ST_OPEN
   end
-  def works
-    self.group_notes.where(status: Note::ST_OPEN)
-  end
 
   def first_leader(pen_name)
     if self.members.count == 0

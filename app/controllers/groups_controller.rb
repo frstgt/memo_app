@@ -1,7 +1,9 @@
 class GroupsController < ApplicationController
   before_action :logged_in_user
   before_action :group_is_exist,             except: [:index, :new, :create]
-  before_action :user_have_member,           except: [:index, :new, :create, :works, :join]
+  before_action :user_have_member,           except: [:index, :new, :create, :show, :join]
+
+  before_action :allowed_user,                 only: [:show]
 
   before_action :group_is_open,                only: [:join, :to_close]
   before_action :group_is_close,               only: [:to_open]
@@ -23,11 +25,11 @@ class GroupsController < ApplicationController
     @sample_groups = @all_groups.sample(3)
   end
 
-  def works
-    @all_works = @group.works
-    @page_works = @all_works.paginate(page: params[:page])
+  def show # for all
+    @all_notes = @group.group_notes.where(status: Note::ST_OPEN)
+    @page_notes = @all_notes.paginate(page: params[:page])
   end
-  def show
+  def home # for members
     @all_notes = @group.group_notes
     @page_notes = @all_notes.paginate(page: params[:page])
   end
@@ -119,6 +121,13 @@ class GroupsController < ApplicationController
     def user_have_member
       @user_member = @group.get_user_member(current_user)
       redirect_to root_url unless @user_member
+    end
+
+    def allowed_user
+      @user_member = @group.get_user_member(current_user)
+      unless @user_member or @group.is_open?
+        redirect_to root_url
+      end  
     end
 
     def group_is_open

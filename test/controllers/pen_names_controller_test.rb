@@ -9,20 +9,20 @@ class PenNamesControllerTest < ActionDispatch::IntegrationTest
     @other_user = users(:user2)
   end
 
-  test "works" do
+  test "home" do
     log_in_as(@other_user)
-    get works_pen_name_path(@pen_name)
-    assert_template 'pen_names/works'
+    get home_pen_name_path(@pen_name)
+    assert_redirected_to root_path
 
     log_in_as(@user)
-    get works_pen_name_path(@pen_name)
-    assert_template 'pen_names/works'
+    get home_pen_name_path(@pen_name)
+    assert_template 'pen_names/home'
   end
 
   test "show pen_name" do
     log_in_as(@other_user)
     get pen_name_path(@pen_name)
-    assert_redirected_to root_path
+    assert_template 'pen_names/show'
 
     log_in_as(@user)
     get pen_name_path(@pen_name)
@@ -68,6 +68,28 @@ class PenNamesControllerTest < ActionDispatch::IntegrationTest
       delete pen_name_path(@pen_name)
     end
     assert_redirected_to @user
+  end
+
+  test "to_open/to_close" do
+    log_in_as(@other_user)
+    get pen_name_path(@pen_name)
+    assert_template 'pen_names/show'
+
+    log_in_as(@user)
+    get pen_name_path(@pen_name)
+    assert_template 'pen_names/show'
+
+    log_in_as(@user)
+    get to_close_pen_name_path(@pen_name)
+    assert_redirected_to pen_name_path(@pen_name)
+
+    log_in_as(@other_user)
+    get pen_name_path(@pen_name)
+    assert_redirected_to root_path
+
+    log_in_as(@user)
+    get pen_name_path(@pen_name)
+    assert_template 'pen_names/show'
   end
 
 end

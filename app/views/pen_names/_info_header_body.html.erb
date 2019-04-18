@@ -1,0 +1,15 @@
+<span class="header">
+  <span class="name">
+    <b><%= link_to pen_name.name, pen_name %></b>
+  </span>
+
+  <% if pen_name.is_open? %>
+    <span class="badge badge-primary">open</span>
+  <% else %>
+    <span class="badge badge-dark">closed</span>
+  <% end %>
+</span>
+
+<span class="body">
+  <span class="description"><%= pen_name.description %></span>
+</span>

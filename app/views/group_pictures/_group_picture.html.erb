@@ -14,7 +14,7 @@
 
   <span class="footer">
     <span class="timestamp text-muted">
-      updated <%= time_ago_in_words(group_picture.updated_at) %> ago.
+      <%= timestamp(group_picture) %>
     </span>
     <span class="command">
       <%= link_to "[edit]", edit_group_group_note_group_picture_path(@group, @note, group_picture) %>

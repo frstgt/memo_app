@@ -9,6 +9,7 @@
 
   <span class="picture">
     <%= f.label :picture %>
+    <%= image_tag @group.picture.url(:thumb) if @group.picture? %>
     <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
   </span>
 

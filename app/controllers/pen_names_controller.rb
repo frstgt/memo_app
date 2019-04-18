@@ -1,23 +1,24 @@
 class PenNamesController < ApplicationController
   before_action :logged_in_user
   before_action :pen_name_is_exist, except: [:index, :new, :create]
+  before_action :correct_user,      except: [:index, :new, :create, :show]
+
   before_action :allowed_user,        only: [:show]
-  before_action :correct_user,        only: [:edit, :update, :destroy, :to_open, :to_close]
 
   def index
-    @all_pen_names = PenName.where(status: 1)
+    @all_pen_names = PenName.where(status: PenName::ST_OPEN)
     @page_pen_names = @all_pen_names.paginate(page: params[:page])
     @sample_pen_names = @all_pen_names.sample(3)
   end
 
-  def show
-    @all_notes = @pen_name.user_notes
+  def show # for all
+    @all_notes = @pen_name.user_notes.where(status: PenName::ST_OPEN)
     @page_notes = @all_notes.paginate(page: params[:page])
     @groups = @pen_name.groups
   end
-  def works
-    @all_works = @pen_name.works
-    @page_works = @all_works.paginate(page: params[:page])
+  def home # for user
+    @all_notes = @pen_name.user_notes
+    @page_notes = @all_notes.paginate(page: params[:page])
     @groups = @pen_name.groups
   end
 
@@ -58,7 +59,7 @@ class PenNamesController < ApplicationController
   def to_close
     @pen_name.to_close
     @pen_name.groups.each do |group|
-      if group.is_visitor(@pen_name)
+      if group.is_regular_member?(@pen_name)
         group.unjoin(@pen_name)
       end
     end

@@ -9,8 +9,7 @@
       <span class="name"><b><%= @user.name %></b></span>
 
       <span class="timestamp">
-        created <%= time_ago_in_words(@user.created_at) %> ago.
-        updated <%= time_ago_in_words(@user.updated_at) %> ago.
+        <%= timestamp(@user) %>
       </span>
 
     </section>
@@ -19,7 +18,7 @@
 
     <span class="side_header">
       <span class="count">
-        pen names (<%= @user.pen_names.count %>)
+        pen_names (<%= @user.pen_names.count %>)
       </span>
       <span class="command">
         <%= link_to "[pen names]", pen_names_path %>
@@ -55,7 +54,7 @@
 
     <span class="main_header">
       <span class="count">
-        user notes (<%= @all_notes.count %>)
+        user_notes (<%= @all_notes.count %>)
       </span>
       <span class="command">
         <%= link_to "[new]", new_user_note_path %>

@@ -12,7 +12,7 @@
 
   <span class="footer">
     <span class="timestamp text-muted">
-      updated <%= time_ago_in_words(user_memo.updated_at) %> ago.
+      <%= timestamp(user_memo) %>
     </span>
 
     <span class="number text-muted">
@@ -20,9 +20,11 @@
     </span>
 
     <span class="command">
-      <%= link_to "[edit]", edit_user_note_user_memo_path(@note, user_memo) %>
-      <%= link_to "[delete]", user_note_user_memo_path(@note, user_memo),
-                              method: :delete, data: { confirm: "You sure?" } %>
+      <% if home_command and @note.user == current_user %>
+        <%= link_to "[edit]", edit_user_note_user_memo_path(@note, user_memo) %>
+        <%= link_to "[delete]", user_note_user_memo_path(@note, user_memo),
+                                method: :delete, data: { confirm: "You sure?" } %>
+      <% end %>
     </span>
   </span>
 

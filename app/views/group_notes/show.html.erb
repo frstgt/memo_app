@@ -1,67 +1,20 @@
 <% provide(:title, @note.title) %>
+
 <div class="row">
 
   <aside class="col-md-4">
 
     <section class="info">
-      (group note)<br>
+      (group_note)<br>
 
-      <span class="header">
-        <span class="title"><b><%= @note.title %></b></span><br>
-
-        <% if @note.pen_name %>
-          <span class="author"><i>by <%= @note.pen_name.name %></i></span>
-        <% end %>
-
-        <% if @note.is_open? %>
-          <span class="badge badge-primary">open</span>
-        <% else %>
-          <span class="badge badge-dark">closed</span>
-        <% end %>
-      </span>
-
-      <span class="body">
-        <span class="description"><%= @note.description %></span>
-      </span>
+      <%= render 'group_notes/info_header_body', note: @note %>
 
       <%= icon_for(@note, { name: @note.title, size: 256 }) %>
 
-      <span class="footer">
-        <span class="timestamp">
-          created <%= time_ago_in_words(@note.created_at) %> ago.<br>
-          updated <%= time_ago_in_words(@note.updated_at) %> ago.
-        </span>
-
-        <span class="command">
-          <% if @note.is_open? %>
-            <%= link_to "[to_close]", to_close_group_group_note_path(@group, @note) %>
-          <% else %>
-            <%= link_to "[to_open]", to_open_group_group_note_path(@group, @note) %>
-          <% end %>
-
-          <%= link_to "[edit]", edit_group_group_note_path(@group, @note) %>
-          <%= link_to "[delete]", group_group_note_path(@group, @note), method: :delete,
-                              data: { confirm: "You sure?" } %>
-        </span>
-      </span>
-
+      <%= render 'group_notes/info_footer',
+                  note: @note, index_command: false, home_command: false %>
+  
     </section>
-
-    <hr>
-
-    <span class="side_header small">
-      <span class="count">
-        group_pictures (<%= @pictures.count %>)
-      </span>
-      <span class="command">
-        <%= link_to "[new]", new_group_group_note_group_picture_path(@group, @note) %>
-      </span>
-    </span>
-    <% if @pictures.any? %>
-      <ol class="picture_list small">
-        <%= render @pictures %>
-      </ol>
-    <% end %>
     
   </aside>
 
@@ -71,13 +24,10 @@
       <span class="count">
         group_memos (<%= @all_memos.count %>)
       </span>
-      <span class="command">
-        <%= link_to "[new]", new_group_group_note_group_memo_path(@group, @note) %>
-      </span>
     </span>
     <% if @all_memos.any? %>
       <ol class="memo_list">
-        <%= render @page_memos %>
+        <%= render @page_memos, home_command: false %>
       </ol>
       <%= will_paginate @page_memos %>
     <% end %>

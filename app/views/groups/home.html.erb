@@ -1,4 +1,4 @@
-<% provide(:title, @group.name + " Messages") %>
+<% provide(:title, @group.name + " Home") %>
 
 <% pen_name = @group.get_user_member(current_user) %>
 
@@ -8,7 +8,7 @@
 
     <section class="group_info">
 
-      (group_messages)<br>
+      (group_notes/home)<br>
 
       <%= render 'groups/info_header_body',
                   group: @group, pen_name: pen_name %>
@@ -17,7 +17,7 @@
 
       <%= render 'groups/info_footer',
                   group: @group, pen_name: pen_name,
-                  index_command: false, home_command: false %>
+                  index_command: false, home_command: true %>
 
     </section>
 
@@ -25,22 +25,19 @@
 
   <div class="col-md-8">
 
-    <span class="message_form">
-      <%= render 'messages/form' %>
-    </span>
-
-    <hr>
-
     <span class="main_header">
       <span class="count">
-        messages (<%= @all_messages.count %>)
+        group_notes (<%= @all_notes.count %>)
+      </span>
+      <span class="command">
+        <%= link_to "[new]", new_group_group_note_path(@group) %>
       </span>
     </span>
-    <% if @all_messages.any? %>
+    <% if @all_notes.any? %>
       <ol class="note_list">
-        <%= render @page_messages %>
+        <%= render @page_notes %>
       </ol>
-      <%= will_paginate @page_messages %>
+      <%= will_paginate @page_notes %>
     <% end %>
 
   </div>

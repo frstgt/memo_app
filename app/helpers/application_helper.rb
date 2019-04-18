@@ -21,5 +21,13 @@ module ApplicationHelper
 
     image_tag(icon, alt: name, width: size, height: size, class: "icon")
   end
+  
+  def timestamp(object, created=true, updated=true)
+    timestamp = ""
+    timestamp += "created #{time_ago_in_words(object.created_at)} ago." if created
+    timestamp += " " if timestamp != ""
+    timestamp += "updated #{time_ago_in_words(object.updated_at)} ago." if updated
+    timestamp
+  end
 
 end

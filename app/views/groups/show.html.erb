@@ -1,4 +1,4 @@
-<% provide(:title, @group.name + " Home") %>
+<% provide(:title, @group.name + " Notes") %>
 
 <% pen_name = @group.get_user_member(current_user) %>
 
@@ -8,62 +8,16 @@
 
     <section class="group_info">
 
-      (group home)<br>
+      (group_notes)<br>
 
-      <span class="header">
-        <span class="name">
-          <% if pen_name %>
-            <b><%= link_to @group.name, @group %></b>
-            <i>(<%= "#{pen_name.name} as #{@group.get_position_name(pen_name)}" %>)</i>
-          <% else %>
-            <b><%= @group.name %></b>
-          <% end %>
-        </span>
-
-        <% if @group.is_open? %>
-          <span class="badge badge-primary">open</span>
-        <% else %>
-          <span class="badge badge-dark">closed</span>
-        <% end %>
-      </span>
-
-      <span class="body">
-        <span class="description"><%= @group.description %></span>
-      </span>
+      <%= render 'groups/info_header_body',
+                  group: @group, pen_name: pen_name %>
 
       <%= icon_for(@group, { name: @group.name, size: 256 }) %>
 
-      <span class="footer">
-        <span class="timestamp">
-          created <%= time_ago_in_words(@group.created_at) %> ago.
-          updated <%= time_ago_in_words(@group.updated_at) %> ago.
-        </span>
-
-        <span class="counter text-muted">
-          (
-            <%= link_to "works: #{@group.works.count}", works_group_path(@group) %>,
-            <% if pen_name %>
-              <%= link_to "members: #{@group.members.count}", members_group_path(@group) %>,
-              <%= link_to "messages: #{@group.messages.count}", messages_group_path(@group) %>
-            <% else %>
-              <%= "members: #{@group.members.count}" %>
-            <% end %>
-          )
-        </span>
-
-        <span class="command">
-
-          <% if @group.is_open? %>
-            <%= link_to "[to_close]", to_close_group_path(@group) %>
-          <% else %>
-            <%= link_to "[to_open]", to_open_group_path(@group) %>
-          <% end %>
-          <%= link_to "[edit]", edit_group_path(@group) %>
-          <%= link_to "[delete]", @group, method: :delete,
-                                     data: { confirm: "You sure?" } %>
-        </span>
-      </span>
-
+      <%= render 'groups/info_footer',
+                  group: @group, pen_name: pen_name,
+                  index_command: false, home_command: false %>
     </section>
 
   </aside>
@@ -73,9 +27,6 @@
     <span class="main_header">
       <span class="count">
         group_notes (<%= @all_notes.count %>)
-      </span>
-      <span class="command">
-        <%= link_to "[new]", new_group_group_note_path(@group) %>
       </span>
     </span>
     <% if @all_notes.any? %>
