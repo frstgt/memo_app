@@ -3,7 +3,7 @@ class CreateMemberships < ActiveRecord::Migration[5.1]
     create_table :memberships do |t|
       t.integer :group_id
       t.integer :member_id
-      t.string :position
+      t.integer :position
 
       t.timestamps
     end
