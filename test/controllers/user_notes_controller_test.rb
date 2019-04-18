@@ -4,6 +4,7 @@ class UserNotesControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     @user = users(:user1)
+    @user_pname = pen_names(:user1_pen_name1)
     @note = user_notes(:user1_note1)
 
     @other_user = users(:user2)
@@ -25,7 +26,9 @@ class UserNotesControllerTest < ActionDispatch::IntegrationTest
     assert_template 'user_notes/new'
 
     assert_difference '@user.user_notes.count', 1 do
-      post user_notes_path, params: { user_note: {title: "Test Note", description: "This is a test."} }
+      post user_notes_path,
+            params: { user_note: {title: "Test Note", description: "This is a test.",
+                      pen_name_id: @user_pname.id} }
     end
     assert_redirected_to @user
   end

@@ -1,8 +1,7 @@
 class PenName < ApplicationRecord
   belongs_to :user
-  has_many :books
-  has_many :messages
-  has_many :user_notes
+  has_many :messages, dependent: :destroy
+  has_many :user_notes, dependent: :destroy
   has_many :passive_memberships, class_name:  "Membership",
                                   foreign_key: "member_id",
                                   dependent:   :destroy

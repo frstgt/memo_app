@@ -4,8 +4,9 @@ class UserNoteTest < ActiveSupport::TestCase
 
   def setup
     @user = users(:user1)
+    @user_pname = pen_names(:user1_pen_name1)
     @note = @user.user_notes.build(title: "Lorem ipsum",
-                                   description: "This is test.")
+                                   description: "This is test.", pen_name_id: @user_pname.id)
   end
 
   test "should be valid" do
@@ -14,6 +15,11 @@ class UserNoteTest < ActiveSupport::TestCase
 
   test "user id should be present" do
     @note.user_id = nil
+    assert_not @note.valid?
+  end
+
+  test "pen_name id should be present" do
+    @note.pen_name_id = nil
     assert_not @note.valid?
   end
 

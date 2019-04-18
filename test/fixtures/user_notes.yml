@@ -3,6 +3,7 @@ user1_note1:
   title: "user1_note1 title"
   updated_at: <%= 10.minutes.ago %>
   user: user1
+  pen_name: user1_pen_name1
   status: 1
 
 user1_note2:
@@ -10,6 +11,7 @@ user1_note2:
   title: "user1_note2 title"
   updated_at: <%= 3.years.ago %>
   user: user1
+  pen_name: user1_pen_name1
   status: 0
 
 user1_note3:
@@ -17,6 +19,7 @@ user1_note3:
   title: "user1_note3 title"
   updated_at: <%= 2.hours.ago %>
   user: user1
+  pen_name: user1_pen_name1
   status: 0
 
 user1_note_most_recent:
@@ -24,4 +27,5 @@ user1_note_most_recent:
   title: "user1_note_most_recent"
   updated_at: <%= Time.zone.now %>
   user: user1
+  pen_name: user1_pen_name1
   status: 0

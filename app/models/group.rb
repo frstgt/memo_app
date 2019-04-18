@@ -4,8 +4,7 @@ class Group < ApplicationRecord
                                 dependent:   :destroy
   has_many :members, through: :active_memberships, source: :member
   has_many :group_notes, dependent: :destroy
-  has_many :books
-  has_many :messages
+  has_many :messages, dependent: :destroy
 
   default_scope -> { order(updated_at: :desc) }
 
