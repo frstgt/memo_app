@@ -17,6 +17,6 @@ class Membership < ApplicationRecord
     ["Visitor", POS_VISITOR],
   ]
   validates :position, presence: true,
-                        inclusion: { in: [POS_LEADER, POS_SUBLEADER, POS_COMMON, POS_VISITOR] }
+                        inclusion: { in: [0,1,2,3] }
 
 end
