@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190406013447) do
+ActiveRecord::Schema.define(version: 20190405085049) do
 
   create_table "groups", force: :cascade do |t|
     t.string "name"
@@ -97,6 +97,17 @@ ActiveRecord::Schema.define(version: 20190406013447) do
     t.integer "user_note_id"
     t.index ["group_note_id"], name: "index_pictures_on_group_note_id"
     t.index ["user_note_id"], name: "index_pictures_on_user_note_id"
+  end
+
+  create_table "readerships", force: :cascade do |t|
+    t.integer "reader_id"
+    t.integer "note_id"
+    t.integer "evaluation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["note_id"], name: "index_readerships_on_note_id"
+    t.index ["reader_id", "note_id"], name: "index_readerships_on_reader_id_and_note_id", unique: true
+    t.index ["reader_id"], name: "index_readerships_on_reader_id"
   end
 
   create_table "users", force: :cascade do |t|
