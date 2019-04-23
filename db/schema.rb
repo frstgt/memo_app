@@ -40,13 +40,13 @@ ActiveRecord::Schema.define(version: 20190423074720) do
 
   create_table "memos", force: :cascade do |t|
     t.integer "number"
+    t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "content"
     t.string "type"
     t.integer "group_note_id"
     t.integer "user_note_id"
-    t.string "title"
     t.index ["group_note_id", "number"], name: "index_memos_on_group_note_id_and_number"
     t.index ["group_note_id"], name: "index_memos_on_group_note_id"
     t.index ["user_note_id", "number"], name: "index_memos_on_user_note_id_and_number"

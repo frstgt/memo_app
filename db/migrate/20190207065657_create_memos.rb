@@ -4,6 +4,7 @@ class CreateMemos < ActiveRecord::Migration[5.1]
 
       # common
       t.integer :number
+      t.string :title
       t.references :note, foreign_key: true
       t.timestamps
 
