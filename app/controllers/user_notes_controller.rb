@@ -21,11 +21,15 @@ class UserNotesController < ApplicationController
 
   def new
     @note = current_user.user_notes.build
+    @note.init_tag_list
   end
   def create
     @note = current_user.user_notes.build(note_params)
     if @note.save
       flash[:success] = "Note created"
+
+      @note.save_tag_list
+
       redirect_to current_user
     else
       render 'new'
@@ -34,11 +38,15 @@ class UserNotesController < ApplicationController
 
   def edit
     @note = current_user.user_notes.find(params[:id])
+    @note.load_tag_list
   end
   def update
     @note = current_user.user_notes.find(params[:id])
     if @note.update_attributes(note_params)
       flash[:success] = "Note updated"
+
+      @note.save_tag_list
+
       redirect_to user_note_path(@note)
     else
       render 'edit'
@@ -65,7 +73,7 @@ class UserNotesController < ApplicationController
   private
 
     def note_params
-      params.require(:user_note).permit(:title, :description, :pen_name_id, :picture)
+      params.require(:user_note).permit(:title, :description, :pen_name_id, :picture, :tag_list)
     end
 
     def note_is_exist

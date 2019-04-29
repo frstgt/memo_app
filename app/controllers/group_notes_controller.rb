@@ -23,12 +23,15 @@ class GroupNotesController < GroupBaseController
 
   def new
     @note = @group.group_notes.build
+    @note.init_tag_list
   end
-
   def create
     @note = @group.group_notes.build(note_params)
     if @note.save
       flash[:success] = "Note created"
+
+      @note.save_tag_list
+
       redirect_to @group
     else
       render 'new'
@@ -37,12 +40,15 @@ class GroupNotesController < GroupBaseController
 
   def edit
     @note = @group.group_notes.find(params[:id])
+    @note.load_tag_list
   end
-
   def update
     @note = @group.group_notes.find(params[:id])
     if @note.update_attributes(note_params)
       flash[:success] = "Note updated"
+
+      @note.save_tag_list
+
       redirect_to @group
     else
       render 'edit'
@@ -69,7 +75,7 @@ class GroupNotesController < GroupBaseController
   private
 
     def note_params
-      params.require(:group_note).permit(:title, :description, :pen_name_id, :picture)
+      params.require(:group_note).permit(:title, :description, :pen_name_id, :picture, :tag_list)
     end
 
     def note_is_exist

@@ -1,5 +1,8 @@
 <li id="group_picture-<%= group_picture.id %>">
 
+  <% note = group_picture.note %>
+  <% group = note.group %>
+
   <span class="header">
     <% if group_picture.picture? %>
       <%= image_tag group_picture.picture.url(:thumb) %>
@@ -17,8 +20,8 @@
       <%= timestamp(group_picture) %>
     </span>
     <span class="command">
-      <%= link_to "[edit]", edit_group_group_note_group_picture_path(@group, @note, group_picture) %>
-      <%= link_to "[delete]", group_group_note_group_picture_path(@group, @note, group_picture),
+      <%= link_to "[edit]", edit_group_group_note_group_picture_path(group, note, group_picture) %>
+      <%= link_to "[delete]", group_group_note_group_picture_path(group, note, group_picture),
                               method: :delete, data: { confirm: "You sure?" } %>
     </span>
   </span>

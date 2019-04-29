@@ -1,21 +1,26 @@
 <%= form_for([@group, @note]) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
-  <%= f.label :title %>
-  <%= f.text_field :title, class: 'form-control' %>
+  <span class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: 'form-control' %>
 
-  <%= f.label :author %>
-  <%= f.select :pen_name_id,
-               @group.members.collect { |pen_name| [pen_name.name, pen_name.id] },
-                { include_blank: "" } %>
+    <%= f.label :pen_name %>
+    <%= f.select :pen_name_id,
+                 @group.members.collect { |pen_name| [pen_name.name, pen_name.id] },
+                  { include_blank: "" }, class: 'form-control' %>
 
-  <%= f.label :description %>
-  <%= f.text_area :description, rows: '10', class: 'form-control' %>
+    <%= f.label :tag_list %>
+    <%= f.text_field :tag_list, class: 'form-control' %>
+
+    <%= f.label :description %>
+    <%= f.text_area :description, rows: '10', class: 'form-control' %>
+  </span>
 
   <span class="picture">
     <%= f.label :picture %>
     <%= image_tag @note.picture.url(:thumb) if @note.picture? %>
-    <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
+    <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'form-control' %>
   </span>
 
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>

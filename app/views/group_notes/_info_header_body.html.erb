@@ -1,7 +1,10 @@
 <span class="header">
-  <span class="title"><b><%= link_to note.title, group_group_note_path(@group, note) %></b></span>
+  <span class="title"><b><%= link_to note.title, group_group_note_path(note.group, note) %></b></span>
   <% if note.pen_name %>
-    <span class="author"><i>by <%= note.pen_name.name %></i></span>
+    <span class="pen_name"><i>by <%= note.pen_name.name %></i></span>
+  <% end %>
+  <% if note.group %>
+    <span class="pen_name"><i>@ <%= note.group.name %></i></span>
   <% end %>
 
   <% if note.is_open? %>
@@ -9,6 +12,14 @@
   <% else %>
     <span class="badge badge-dark">closed</span>
   <% end %>
+
+  <br>
+  
+  <span class="tags small">
+    <% note.tags.each do |tag| %>
+      <%= link_to tag.name, tag %>
+    <% end %>
+  </span>
 </span>
 
 <span class="body">

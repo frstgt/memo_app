@@ -9,6 +9,14 @@
   <% else %>
     <span class="badge badge-dark">closed</span>
   <% end %>
+  
+  <br>
+  
+  <span class="tags small">
+    <% note.tags.each do |tag| %>
+      <%= link_to tag.name, tag %>
+    <% end %>
+  </span>
 </span>
 
 <span class="body">

@@ -55,4 +55,6 @@ Rails.application.routes.draw do
   end
   resources :groups
 
+  resources :tags, only: [:show]
+
 end

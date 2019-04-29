@@ -55,50 +55,74 @@ groups.each do |group|
   end
 end
 
+# tags
+["tag1", "tag2", "tag3", "tag4", "tag5"].each do |name|
+  Tag.create(name: name)
+end
+tag_ids = []
+Tag.order(:created_at).each do |tag|
+  tag_ids.append(tag.id)
+end
+tag_ids.append(nil)
+
 # user_notes
 users.each do |user|
-  pen_names = user.pen_names
-  pen_names.each do |pen_name|
+  pen_name_ids = []
+  user.pen_names.each do |pen_name|
+    pen_name_ids.append(pen_name.id)
+  end
+  pen_name_ids.append(nil)  
 
-    2.times do
+  3.times do
+    pen_name_id = pen_name_ids.sample
+      
+    title = Faker::Book.title
+    description = Faker::Lorem.sentence(20)
+    status = [Note::ST_CLOSE, Note::ST_OPEN].sample
+    note = user.user_notes.create!(title: title, description: description,
+                                  pen_name_id: pen_name_id, status: status)
+
+    number = 1
+    10.times do
       title = Faker::Book.title
-      description = Faker::Lorem.sentence(20)
-      status = [Note::ST_CLOSE, Note::ST_OPEN].sample
-      note = user.user_notes.create!(title: title, description: description,
-                                    pen_name_id: pen_name.id, status: status)
-
-      number = 1
-      10.times do
-        title = Faker::Book.title
-        content = Faker::Lorem.sentence(20)
-        note.user_memos.create!(title: title, content: content,
-                                number: number)
-        number += 1
-      end
+      content = Faker::Lorem.sentence(20)
+      note.user_memos.create!(title: title, content: content,
+                              number: number)
+      number += 1
     end
+
+    tag_id = tag_ids.sample
+    Tagship.create(note_id: note.id, tag_id: tag_id)
   end
 end
 
 # group_notes
 groups.each do |group|
-  pen_names = group.members
-  pen_names.each do |pen_name|
+  pen_name_ids = []
+  group.members.each do |pen_name|
+    pen_name_ids.append(pen_name.id)
+  end
+  pen_name_ids.append(nil)  
 
-    2.times do
+  15.times do
+    pen_name_id = pen_name_ids.sample
+
+    title = Faker::Book.title
+    description = Faker::Lorem.sentence(20)
+    status = [Note::ST_CLOSE, Note::ST_OPEN].sample
+    note = group.group_notes.create!(title: title, description: description,
+                                    pen_name_id: pen_name_id, status: status)
+
+    number = 1
+    10.times do
       title = Faker::Book.title
-      description = Faker::Lorem.sentence(20)
-      status = [Note::ST_CLOSE, Note::ST_OPEN].sample
-      note = group.group_notes.create!(title: title, description: description,
-                                      pen_name_id: pen_name.id, status: status)
-
-      number = 1
-      10.times do
-        title = Faker::Book.title
-        content = Faker::Lorem.sentence(20)
-        note.group_memos.create!(title: title, content: content,
-                                number: number)
-        number += 1
-      end
+      content = Faker::Lorem.sentence(20)
+      note.group_memos.create!(title: title, content: content,
+                              number: number)
+      number += 1
     end
+
+    tag_id = tag_ids.sample
+    Tagship.create(note_id: note.id, tag_id: tag_id)
   end
 end

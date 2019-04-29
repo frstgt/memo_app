@@ -1,0 +1,25 @@
+<% provide(:title, @tag.name) %>
+<div class="row">
+
+  <aside class="col-md-4">
+  </aside>
+
+  <div class="col-md-8">
+
+    <span class="main_header">
+      <span class="count">
+        tagged notes (<%= @all_notes.count %>)
+      </span>
+      <span class="command">
+      </span>
+    </span>
+    <% if @all_notes.any? %>
+      <ol class="note_list">
+        <%= render @page_notes %>
+      </ol>
+      <%= will_paginate @page_notes %>
+    <% end %>
+
+  </div>
+
+</div>

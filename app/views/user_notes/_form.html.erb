@@ -5,10 +5,13 @@
     <%= f.label :title %>
     <%= f.text_field :title, class: 'form-control' %>
 
-    <%= f.label :author %>
+    <%= f.label :pen_name %>
     <%= f.select :pen_name_id,
                  current_user.pen_names.collect { |pen_name| [pen_name.name, pen_name.id] },
-                 { include_blank: "" } %>
+                 { include_blank: "" }, class: 'form-control' %>
+
+    <%= f.label :tag_list %>
+    <%= f.text_field :tag_list, class: 'form-control' %>
 
     <%= f.label :description %>
     <%= f.text_area :description, rows: '10', class: 'form-control' %>

@@ -1,5 +1,8 @@
 <li id="group_memo-<%= group_memo.id %>">
 
+  <% note = group_picture.note %>
+  <% group = note.group %>
+
   <span class="header">
     <% if group_memo.title %>
       <span class="title"><b><%= group_memo.title %></b></span>
@@ -21,8 +24,8 @@
 
     <span class="command">
       <% if home_command %>
-        <%= link_to "[edit]", edit_group_group_note_group_memo_path(@group, @note, group_memo) %>
-        <%= link_to "[delete]", group_group_note_group_memo_path(@group, @note, group_memo),
+        <%= link_to "[edit]", edit_group_group_note_group_memo_path(group, note, group_memo) %>
+        <%= link_to "[delete]", group_group_note_group_memo_path(group, note, group_memo),
                                 method: :delete, data: { confirm: "You sure?" } %>
       <% end %>
     </span>

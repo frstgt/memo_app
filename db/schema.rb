@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190423074720) do
+ActiveRecord::Schema.define(version: 20190429045212) do
 
   create_table "group_notes", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -113,6 +113,23 @@ ActiveRecord::Schema.define(version: 20190423074720) do
     t.index ["note_id"], name: "index_readerships_on_note_id"
     t.index ["reader_id", "note_id"], name: "index_readerships_on_reader_id_and_note_id", unique: true
     t.index ["reader_id"], name: "index_readerships_on_reader_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
+  create_table "tagships", force: :cascade do |t|
+    t.integer "note_id"
+    t.integer "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["note_id", "tag_id"], name: "index_tagships_on_note_id_and_tag_id", unique: true
+    t.index ["note_id"], name: "index_tagships_on_note_id"
+    t.index ["tag_id"], name: "index_tagships_on_tag_id"
   end
 
   create_table "user_notes", force: :cascade do |t|

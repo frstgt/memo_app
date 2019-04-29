@@ -5,6 +5,5 @@ class UserNote < Note
   has_many :user_pictures, dependent: :destroy
 
   validates :user_id, presence: true
-  validates :pen_name_id, presence: true
 
 end
