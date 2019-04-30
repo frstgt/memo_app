@@ -13,7 +13,6 @@ class UserNotesController < ApplicationController
 
   def new
     @note = current_user.user_notes.build
-    @note.init_tag_list
   end
   def create
     @note = current_user.user_notes.build(note_params)

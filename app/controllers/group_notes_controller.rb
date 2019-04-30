@@ -16,7 +16,6 @@ class GroupNotesController < GroupBaseController
 
   def new
     @note = @group.group_notes.build
-    @note.init_tag_list
   end
   def create
     @note = @group.group_notes.build(note_params)

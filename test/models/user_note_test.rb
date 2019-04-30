@@ -18,11 +18,6 @@ class UserNoteTest < ActiveSupport::TestCase
     assert_not @note.valid?
   end
 
-  test "pen_name id should be present" do
-    @note.pen_name_id = nil
-    assert_not @note.valid?
-  end
-
   test "title should be present" do
     @note.title = "   "
     assert_not @note.valid?

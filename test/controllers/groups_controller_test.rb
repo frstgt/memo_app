@@ -18,19 +18,6 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     @other_pname = pen_names(:user9_pen_name1)
   end
 
-  test "home" do
-    [@leader, @subleader, @common, @visitor].each do |user|
-      log_in_as(user)
-      get home_group_path(@group)
-      assert_template 'groups/home'
-    end
-    [@other].each do |user|
-      log_in_as(user)
-      get home_group_path(@group)
-      assert_redirected_to root_path
-    end
-  end
-
   test "show open group" do # group home
     [@leader, @subleader, @common, @visitor, @other].each do |user|
       log_in_as(user)

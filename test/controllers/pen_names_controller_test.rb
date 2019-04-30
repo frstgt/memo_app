@@ -9,16 +9,6 @@ class PenNamesControllerTest < ActionDispatch::IntegrationTest
     @other_user = users(:user2)
   end
 
-  test "home" do
-    log_in_as(@other_user)
-    get home_pen_name_path(@pen_name)
-    assert_redirected_to root_path
-
-    log_in_as(@user)
-    get home_pen_name_path(@pen_name)
-    assert_template 'pen_names/home'
-  end
-
   test "show pen_name" do
     log_in_as(@other_user)
     get pen_name_path(@pen_name)

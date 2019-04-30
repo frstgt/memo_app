@@ -19,7 +19,7 @@
 
     <hr>
 
-    <% @note.group.is_regular_member?(pen_name) %>
+    <% if pen_name and @note.group.is_regular_member?(pen_name) %>
       <span class="side_header small">
         <span class="count">
           group_pictures (<%= @pictures.count %>)
@@ -44,7 +44,7 @@
         group_memos (<%= @all_memos.count %>)
       </span>
       <span class="command">
-        <% @note.group.is_leading_member?(pen_name) %>
+        <% if pen_name and @note.group.is_leading_member?(pen_name) %>
           <%= link_to "[new]", new_group_group_note_group_memo_path(@group, @note) %>
         <% end %>
       </span>

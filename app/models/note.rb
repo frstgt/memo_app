@@ -1,5 +1,9 @@
 class Note < ApplicationRecord
 
+  before_create do
+    self.tag_list = ""
+  end
+
   has_many :active_tagships, class_name:  "Tagship",
                               foreign_key: "note_id",
                               dependent:   :destroy
@@ -29,9 +33,6 @@ class Note < ApplicationRecord
     self.status == ST_OPEN
   end
 
-  def init_tag_list
-    self.tag_list = ""
-  end
   def load_tag_list
     tag_names = []
     self.tags.each do |tag|
@@ -49,13 +50,15 @@ class Note < ApplicationRecord
       end
     end
 
-    tag_names = self.tag_list.split(",")
-    tag_names.each do |tag_name|
-      tag = Tag.find_by(name: tag_name)
-      unless tag
-        tag = Tag.create(name: tag_name)
+    if self.tag_list
+      tag_names = self.tag_list.split(",")
+      tag_names.each do |tag_name|
+        tag = Tag.find_by(name: tag_name)
+        unless tag
+          tag = Tag.create(name: tag_name)
+        end
+        Tagship.create(note_id: self.id, tag_id: tag.id)
       end
-      Tagship.create(note_id: self.id, tag_id: tag.id)
     end
   end
 
