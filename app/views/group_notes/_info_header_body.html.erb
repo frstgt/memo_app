@@ -13,6 +13,10 @@
     <span class="badge badge-dark">closed</span>
   <% end %>
 
+  <% if note.group.get_user_member(current_user) %>
+    <span class="badge badge-info">ours</span>
+  <% end %>
+
   <br>
   
   <span class="tags small">

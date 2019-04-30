@@ -2,9 +2,8 @@
 
   <%= icon_for(pen_name, { name: pen_name.name, size: 64 }) %>
 
-  <%= render 'pen_names/info_header_body',
-              pen_name: pen_name %>
+  <%= render 'pen_names/info_header_body', pen_name: pen_name %>
 
-  <%= render 'pen_names/info_footer',
-              pen_name: pen_name, index_command: true, home_command: false %>
+  <%= render 'pen_names/info_footer', pen_name: pen_name, kind: "_pen_name" %>
+
 </li>

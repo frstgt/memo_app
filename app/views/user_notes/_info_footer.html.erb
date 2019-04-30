@@ -4,10 +4,11 @@
   </span>
 
   <span class="command">
-    <% if index_command and note.user == current_user %>
-      <%= link_to "[home]", home_user_note_path(note) %>
-    <% end %>    
-    <% if home_command %>
+    <% if kind == "show" and note.user == current_user %>
+
+      <%= link_to "[delete]", user_note_path(note), method: :delete,
+                              data: { confirm: "You sure?" } %>
+
       <% if note.is_open? %>
         <%= link_to "[to_close]", to_close_user_note_path(note) %>
       <% else %>
@@ -15,8 +16,6 @@
       <% end %>
 
       <%= link_to "[edit]", edit_user_note_path(note) %>
-      <%= link_to "[delete]", user_note_path(note), method: :delete,
-                              data: { confirm: "You sure?" } %>
     <% end %>
   </span>
 </span>

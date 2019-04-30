@@ -21,7 +21,7 @@
         pen_names (<%= @user.pen_names.count %>)
       </span>
       <span class="command">
-        <%= link_to "[pen names]", pen_names_path %>
+        <%= link_to "[pen_names]", pen_names_path %>
         <%= link_to "[new]", new_pen_name_path %>
       </span>
     </span>
@@ -57,6 +57,7 @@
         user_notes (<%= @all_notes.count %>)
       </span>
       <span class="command">
+        <%= link_to "[notes]", notes_path %>
         <%= link_to "[new]", new_user_note_path %>
       </span>
     </span>
@@ -64,7 +65,7 @@
       <ol class="note_list">
         <%= render @page_notes %>
       </ol>
-      <%= will_paginate @page_notes %>
+      <%= will_paginate @page_notes, renderer: will_pagenate_renderer %>
     <% end %>
 
   </div>

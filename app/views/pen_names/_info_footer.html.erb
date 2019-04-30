@@ -5,24 +5,27 @@
 
   <span class="counter text-muted">
     (
-      <%= "user_notes: #{pen_name.user_notes.where(status: Note::ST_OPEN).count}" %>,
+      <% if pen_name.user == current_user %>
+        <%= "user_notes: #{pen_name.user_notes.count}" %>,
+      <% else %>
+        <%= "user_notes: #{pen_name.user_notes.where(status: Note::ST_OPEN).count}" %>,
+      <% end %>
       <%= "groups: #{pen_name.groups.count}" %>
     )
   </span>
 
   <span class="command">
-    <% if index_command and pen_name.user == current_user %>
-      <%= link_to "[home]", home_pen_name_path(pen_name) %>
-    <% end %>
-    <% if home_command %>
+    <% if kind == "show" and pen_name.user == current_user %>
+      <%= link_to "[delete]", pen_name,
+                  method: :delete, data: { confirm: "You sure?" } %>  
+
       <% if pen_name.is_open? %>
         <%= link_to "[to_close]", to_close_pen_name_path(pen_name) %>
       <% else %>
         <%= link_to "[to_open]", to_open_pen_name_path(pen_name) %>
       <% end %>
+
       <%= link_to "[edit]", edit_pen_name_path(pen_name) %>
-      <%= link_to "[delete]", pen_name,
-                  method: :delete, data: { confirm: "You sure?" } %>    
     <% end %>
   </span>
 </span>

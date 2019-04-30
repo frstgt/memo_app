@@ -11,13 +11,12 @@ class PenNamesController < ApplicationController
     @sample_pen_names = @all_pen_names.sample(3)
   end
 
-  def show # for all
-    @all_notes = @pen_name.user_notes.where(status: PenName::ST_OPEN)
-    @page_notes = @all_notes.paginate(page: params[:page])
-    @groups = @pen_name.groups
-  end
-  def home # for user
-    @all_notes = @pen_name.user_notes
+  def show
+    if @pen_name.user == current_user
+      @all_notes = @pen_name.user_notes
+    else
+      @all_notes = @pen_name.user_notes.where(status: Note::ST_OPEN)
+    end
     @page_notes = @all_notes.paginate(page: params[:page])
     @groups = @pen_name.groups
   end

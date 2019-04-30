@@ -31,7 +31,7 @@
       <ol class="note_list">
         <%= render @page_pen_names %>
       </ol>
-      <%= will_paginate @page_pen_names %>
+      <%= will_paginate @page_pen_names, renderer: will_pagenate_renderer %>
     <% end %>
 
   </div>

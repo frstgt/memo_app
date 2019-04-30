@@ -4,22 +4,21 @@
   </span>
 
   <span class="command">
-    <% pen_name = note.group.get_user_member(current_user) %>
+    <% if kind == "show" and pen_name %>
+      <% if note.group.is_leading_member?(pen_name) %>
+        <%= link_to "[delete]", group_group_note_path(note.group, note), method: :delete,
+                                data: { confirm: "You sure?" } %>
 
-    <% if index_command and pen_name %>
-      <%= link_to "[home]", home_group_group_note_path(note.group, note) %>
-    <% end %>
-
-    <% if home_command %>
-      <% if note.is_open? %>
-        <%= link_to "[to_close]", to_close_group_group_note_path(note.group, note) %>
-      <% else %>
-        <%= link_to "[to_open]", to_open_group_group_note_path(note.group, note) %>
+        <% if note.is_open? %>
+          <%= link_to "[to_close]", to_close_group_group_note_path(note.group, note) %>
+        <% else %>
+          <%= link_to "[to_open]", to_open_group_group_note_path(note.group, note) %>
+        <% end %>
       <% end %>
 
-      <%= link_to "[edit]", edit_group_group_note_path(note.group, note) %>
-      <%= link_to "[delete]", group_group_note_path(note.group, note), method: :delete,
-                              data: { confirm: "You sure?" } %>
+      <% if note.group.is_regular_member?(pen_name) %>
+        <%= link_to "[edit]", edit_group_group_note_path(note.group, note) %>
+      <% end %>
     <% end %>
   </span>
 </span>

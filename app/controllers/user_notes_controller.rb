@@ -5,15 +5,7 @@ class UserNotesController < ApplicationController
 
   before_action :allowed_user,     only: [:show]
 
-  before_action :note_is_open,     only: [:to_close]
-  before_action :note_is_close,    only: [:to_open]
-  before_action :allowed_user,     only: [:show]
-
-  def show # for all
-    @all_memos = @note.user_memos
-    @page_memos = @all_memos.paginate(page: params[:page])
-  end
-  def home # for user
+  def show
     @pictures = @note.user_pictures
     @all_memos = @note.user_memos
     @page_memos = @all_memos.paginate(page: params[:page])
@@ -83,23 +75,6 @@ class UserNotesController < ApplicationController
 
     def correct_user
       unless @note.user == current_user
-        redirect_to root_url
-      end
-    end
-
-    def allowed_user
-      unless @pen_name and (@note.user == current_user or @note.is_open?)
-        redirect_to root_url
-      end
-    end
-
-    def note_is_open
-      unless @note.is_open?
-        redirect_to root_url
-      end
-    end
-    def note_is_close
-      unless not @note.is_open?
         redirect_to root_url
       end
     end

@@ -17,7 +17,7 @@
       <ol class="note_list">
         <%= render @page_notes %>
       </ol>
-      <%= will_paginate @page_notes %>
+      <%= will_paginate @page_notes, renderer: will_pagenate_renderer %>
     <% end %>
 
   </div>

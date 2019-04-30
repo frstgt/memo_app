@@ -1,20 +1,39 @@
 <% provide(:title, @note.title) %>
 
+<% pen_name = @note.group.get_user_member(current_user) %>
+
 <div class="row">
 
   <aside class="col-md-4">
 
     <section class="info">
-      (group_note)<br>
+      (group_note home)<br>
 
       <%= render 'group_notes/info_header_body', note: @note %>
 
       <%= icon_for(@note, { name: @note.title, size: 256 }) %>
 
       <%= render 'group_notes/info_footer',
-                  note: @note, index_command: false, home_command: false %>
-  
+                  note: @note, pen_name: pen_name, kind: "show" %>
     </section>
+
+    <hr>
+
+    <% @note.group.is_regular_member?(pen_name) %>
+      <span class="side_header small">
+        <span class="count">
+          group_pictures (<%= @pictures.count %>)
+        </span>
+        <span class="command">
+          <%= link_to "[new]", new_group_group_note_group_picture_path(@group, @note) %>
+        </span>
+      </span>
+      <% if @pictures.any? %>
+        <ol class="picture_list small">
+          <%= render @pictures %>
+        </ol>
+      <% end %>
+    <% end %>
     
   </aside>
 
@@ -24,12 +43,17 @@
       <span class="count">
         group_memos (<%= @all_memos.count %>)
       </span>
+      <span class="command">
+        <% @note.group.is_leading_member?(pen_name) %>
+          <%= link_to "[new]", new_group_group_note_group_memo_path(@group, @note) %>
+        <% end %>
+      </span>
     </span>
     <% if @all_memos.any? %>
       <ol class="memo_list">
-        <%= render @page_memos, home_command: false %>
+        <%= render @page_memos, home_command: true %>
       </ol>
-      <%= will_paginate @page_memos %>
+      <%= will_paginate @page_memos, renderer: will_pagenate_renderer %>
     <% end %>
 
   </div>

@@ -8,6 +8,10 @@
   <% else %>
     <span class="badge badge-dark">closed</span>
   <% end %>
+
+  <% if pen_name.user == current_user %>
+    <span class="badge badge-info">me</span>
+  <% end %>
 </span>
 
 <span class="body">

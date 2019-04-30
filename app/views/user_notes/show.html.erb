@@ -11,10 +11,27 @@
 
       <%= icon_for(@note, { name: @note.title, size: 256 }) %>
 
-      <%= render 'user_notes/info_footer',
-                  note: @note, index_command: false, home_command: false %>
+      <%= render 'user_notes/info_footer', note: @note, kind: "show" %>
 
     </section>
+
+    <hr>
+
+    <% if @note.user == current_user %>
+      <span class="side_header small">
+        <span class="count">
+          user_pictures (<%= @pictures.count %>)
+        </span>
+        <span class="command">
+          <%= link_to "[new]", new_user_note_user_picture_path(@note) %>
+        </span>
+      </span>
+      <% if @pictures.any? %>
+        <ol class="picture_list small">
+          <%= render @pictures %>
+        </ol>
+      <% end %>
+    <% end %>
     
   </aside>
 
@@ -24,12 +41,17 @@
       <span class="count">
         user_memos (<%= @all_memos.count %>)
       </span>
+      <span class="command">
+        <% if @note.user == current_user %>
+          <%= link_to "[new]", new_user_note_user_memo_path(@note) %>
+        <% end %>
+      </span>
     </span>
     <% if @all_memos.any? %>
       <ol class="memo_list">
-        <%= render @page_memos, home_command: false %>
+        <%= render @page_memos, home_command: true %>
       </ol>
-      <%= will_paginate @page_memos %>
+      <%= will_paginate @page_memos, renderer: will_pagenate_renderer %>
     <% end %>
 
   </div>

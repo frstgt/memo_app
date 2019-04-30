@@ -1,4 +1,4 @@
-<% provide(:title, @group.name + " Notes") %>
+<% provide(:title, @group.name + " Home") %>
 
 <% pen_name = @group.get_user_member(current_user) %>
 
@@ -10,14 +10,13 @@
 
       (group_notes)<br>
 
-      <%= render 'groups/info_header_body',
-                  group: @group, pen_name: pen_name %>
+      <%= render 'groups/info_header_body', group: @group, pen_name: pen_name %>
 
       <%= icon_for(@group, { name: @group.name, size: 256 }) %>
 
       <%= render 'groups/info_footer',
-                  group: @group, pen_name: pen_name,
-                  index_command: false, home_command: false %>
+                  group: @group, pen_name: pen_name, kind: "show" %>
+
     </section>
 
   </aside>
@@ -28,12 +27,18 @@
       <span class="count">
         group_notes (<%= @all_notes.count %>)
       </span>
+      <span class="command">
+        <%= link_to "[notes]", notes_path %>
+        <% if pen_name and @group.is_leading_member?(pen_name) %>
+          <%= link_to "[new]", new_group_group_note_path(@group) %>
+        <% end %>
+      </span>
     </span>
     <% if @all_notes.any? %>
       <ol class="note_list">
         <%= render @page_notes %>
       </ol>
-      <%= will_paginate @page_notes %>
+      <%= will_paginate @page_notes, renderer: will_pagenate_renderer %>
     <% end %>
 
   </div>

@@ -16,8 +16,7 @@
       <%= icon_for(@group, { name: @group.name, size: 256 }) %>
 
       <%= render 'groups/info_footer',
-                  group: @group, pen_name: pen_name,
-                  index_command: false, home_command: false %>
+                  group: @group, pen_name: pen_name, kind: "messages" %>
 
     </section>
 
@@ -40,7 +39,7 @@
       <ol class="note_list">
         <%= render @page_messages %>
       </ol>
-      <%= will_paginate @page_messages %>
+      <%= will_paginate @page_messages, renderer: will_pagenate_renderer %>
     <% end %>
 
   </div>

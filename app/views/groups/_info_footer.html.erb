@@ -17,7 +17,7 @@
 
   <span class="command">
 
-    <% if index_command %>
+    <% if kind == "_group" %>
       <% if pen_name %>
         <% if group.is_general_member?(pen_name) %>
           <span class="dropdown">
@@ -32,7 +32,6 @@
           </span>
         <% end %>
 
-        <%= link_to "[home]", home_group_path(group) %>
       <% else %>
         <span class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -47,18 +46,24 @@
           </ul>
         </span>
       <% end %>
-
     <% end %>
     
-    <% if home_command %>
-      <% if group.is_open? %>
-        <%= link_to "[to_close]", to_close_group_path(group) %>
-      <% else %>
-        <%= link_to "[to_open]", to_open_group_path(group) %>
+    <% if kind == "show" and pen_name %>
+      <% if group.is_leading_member?(pen_name) %>
+
+        <%= link_to "[delete]", group, method: :delete,
+                                 data: { confirm: "You sure?" } %>
+
+        <% if group.is_open? %>
+          <%= link_to "[to_close]", to_close_group_path(group) %>
+        <% else %>
+          <%= link_to "[to_open]", to_open_group_path(group) %>
+        <% end %>
       <% end %>
-      <%= link_to "[edit]", edit_group_path(group) %>
-      <%= link_to "[delete]", group, method: :delete,
-                               data: { confirm: "You sure?" } %>
+
+      <% if group.is_regular_member?(pen_name) %>
+        <%= link_to "[edit]", edit_group_path(group) %>
+      <% end %>
     <% end %>
 
   </span>

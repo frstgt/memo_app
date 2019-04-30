@@ -15,24 +15,8 @@
       <%= icon_for(@group, { name: @group.name, size: 256 }) %>
 
       <%= render 'groups/info_footer',
-                  group: @group, pen_name: pen_name,
-                  index_command: false, home_command: false, members_command: true %>
+                  group: @group, pen_name: pen_name, kind: "members" %>
     </section>
-
-    <hr>
-
-    <span class="side_header">
-      <span class="count">
-        leading members (<%= @leading_members.count %>)
-      </span>
-      <span class="new_command">
-      </span>
-    </span>
-    <% if @leading_members.any? %>
-      <ol class="side_list">
-        <%= render :partial => "member", :collection => @leading_members %>
-      </ol>
-    <% end %>
 
   </aside>
 
@@ -40,17 +24,17 @@
 
     <span class="main_header">
       <span class="count">
-        general members (<%= @group.general_members.count %>)
+        members (<%= @all_members.count %>)
       </span>
       <span class="new_command">
       </span>
     </span>
 
-    <% if @group.general_members.any? %>
+    <% if @all_members.any? %>
       <ol class="note_list">
-        <%= render :partial => "member", :collection => @general_members %>
+        <%= render :partial => "member", :collection => @page_members %>
       </ol>
-      <%= will_paginate @general_members %>
+      <%= will_paginate @page_members, renderer: will_pagenate_renderer %>
     <% end %>
   </div>
 

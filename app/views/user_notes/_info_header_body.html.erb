@@ -9,7 +9,11 @@
   <% else %>
     <span class="badge badge-dark">closed</span>
   <% end %>
-  
+
+  <% if note.user == current_user %>
+    <span class="badge badge-info">mine</span>
+  <% end %>
+
   <br>
   
   <span class="tags small">

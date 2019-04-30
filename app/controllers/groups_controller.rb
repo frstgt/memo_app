@@ -5,8 +5,7 @@ class GroupsController < ApplicationController
 
   before_action :allowed_user,                 only: [:show]
 
-  before_action :group_is_open,                only: [:join, :to_close]
-  before_action :group_is_close,               only: [:to_open]
+  before_action :group_is_open,                only: [:join]
   before_action :user_pen_name,                only: [:create, :join, :unjoin]
   before_action :not_group_member,             only: [:join]
 
@@ -25,12 +24,13 @@ class GroupsController < ApplicationController
     @sample_groups = @all_groups.sample(3)
   end
 
-  def show # for all
-    @all_notes = @group.group_notes.where(status: Note::ST_OPEN)
-    @page_notes = @all_notes.paginate(page: params[:page])
-  end
-  def home # for members
-    @all_notes = @group.group_notes
+  def show
+    pen_name = @group.get_user_member(current_user)
+    if pen_name and @group.is_regular_member?(pen_name)
+      @all_notes = @group.group_notes
+    else
+      @all_notes = @group.group_notes.where(status: Note::ST_OPEN)
+    end
     @page_notes = @all_notes.paginate(page: params[:page])
   end
   def messages
@@ -39,8 +39,8 @@ class GroupsController < ApplicationController
     @page_messages = @all_messages.paginate(page: params[:page])
   end
   def members
-    @leading_members = @group.leading_members    
-    @general_members = @group.general_members.paginate(page: params[:page])    
+    @all_members = @group.members    
+    @page_members = @all_members.paginate(page: params[:page])    
   end
 
   def new
@@ -132,11 +132,6 @@ class GroupsController < ApplicationController
 
     def group_is_open
       unless @group.is_open?
-        redirect_to root_url
-      end
-    end
-    def group_is_close
-      unless not @group.is_open?
         redirect_to root_url
       end
     end

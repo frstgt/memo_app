@@ -30,4 +30,8 @@ module ApplicationHelper
     timestamp
   end
 
+  def will_pagenate_renderer
+    WillPaginate::ActionView::BootstrapLinkRenderer
+  end
+
 end
