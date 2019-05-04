@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(version: 20190429045212) do
   create_table "readerships", force: :cascade do |t|
     t.integer "reader_id"
     t.integer "note_id"
-    t.integer "evaluation"
+    t.integer "point"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["note_id"], name: "index_readerships_on_note_id"

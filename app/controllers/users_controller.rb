@@ -3,17 +3,13 @@ class UsersController < ApplicationController
   before_action :correct_user,   only: [:show, :edit, :update, :destroy]
 
   def show
+    store_location
+
     @user = User.find(params[:id])
     @all_notes = @user.user_notes
     @page_notes = @all_notes.paginate(page: params[:page])
     @pen_names = @user.pen_names
     @groups = @user.groups
-  end
-
-  def books
-    @user = User.find(params[:id])
-    @private_books = @user.books.where(protection: Book::PRIVATE)
-    @books = @private_books.paginate(page: params[:page])
   end
 
   def new

@@ -25,6 +25,8 @@ class GroupsController < ApplicationController
   end
 
   def show
+    store_location
+
     pen_name = @group.get_user_member(current_user)
     if pen_name and @group.is_regular_member?(pen_name)
       @all_notes = @group.group_notes

@@ -1,0 +1,11 @@
+<span class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    [point: <%= note.get_point(current_user) %>] <b class="caret"></b>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-right">
+    <% (-5..5).each do |point| %>
+      <li><%= link_to point,
+                      set_point_note_path(note, { note: {point: point} }) %></li>
+    <% end %>
+  </ul>
+</span>

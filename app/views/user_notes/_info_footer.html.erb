@@ -17,5 +17,9 @@
 
       <%= link_to "[edit]", edit_user_note_path(note) %>
     <% end %>
+    
+    <% if kind == "_user_note" %>
+      <%= render 'notes/note_command', note: note %>
+    <% end %>
   </span>
 </span>

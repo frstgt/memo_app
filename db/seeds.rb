@@ -126,3 +126,13 @@ groups.each do |group|
     Tagship.create(note_id: note.id, tag_id: tag_id)
   end
 end
+
+# readerships
+users.each do |user|
+  Note.order(:updated_at).each do |note|
+    point = Array(-5..5).sample
+    note.passive_readerships.create(reader_id: user.id, point: point)
+  end
+end
+
+# end of file

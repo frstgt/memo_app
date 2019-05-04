@@ -20,6 +20,9 @@ Rails.application.routes.draw do
   resources :pen_names
 
   resources :notes, only: [:index]
+  resources :notes do
+    get :set_point, on: :member
+  end
 
   resources :user_notes, only: [:show, :new, :create, :edit, :update, :destroy]
   resources :user_notes do

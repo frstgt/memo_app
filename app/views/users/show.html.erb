@@ -57,7 +57,9 @@
         user_notes (<%= @all_notes.count %>)
       </span>
       <span class="command">
-        <%= link_to "[notes]", notes_path %>
+        <%= link_to "[notes,", notes_path %>
+        <%= link_to "(pos,", notes_path({mode: "pos"}) %>
+        <%= link_to "neg)]", notes_path({mode: "neg"}) %>
         <%= link_to "[new]", new_user_note_path %>
       </span>
     </span>

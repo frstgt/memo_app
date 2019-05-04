@@ -20,5 +20,9 @@
         <%= link_to "[edit]", edit_group_group_note_path(note.group, note) %>
       <% end %>
     <% end %>
+
+    <% if kind == "_group_note" %>
+      <%= render 'notes/note_command', note: note %>
+    <% end %>
   </span>
 </span>

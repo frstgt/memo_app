@@ -3,7 +3,7 @@ class CreateReaderships < ActiveRecord::Migration[5.1]
     create_table :readerships do |t|
       t.integer :reader_id
       t.integer :note_id
-      t.integer :evaluation
+      t.integer :point
 
       t.timestamps
     end
