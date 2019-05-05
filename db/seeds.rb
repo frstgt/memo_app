@@ -86,8 +86,7 @@ users.each do |user|
     10.times do
       title = Faker::Book.title
       content = Faker::Lorem.sentence(20)
-      note.user_memos.create!(title: title, content: content,
-                              number: number)
+      note.memos.create!(title: title, content: content, number: number)
       number += 1
     end
 
@@ -117,8 +116,7 @@ groups.each do |group|
     10.times do
       title = Faker::Book.title
       content = Faker::Lorem.sentence(20)
-      note.group_memos.create!(title: title, content: content,
-                              number: number)
+      note.memos.create!(title: title, content: content, number: number)
       number += 1
     end
 

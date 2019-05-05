@@ -21,23 +21,21 @@ Rails.application.routes.draw do
 
   resources :notes, only: [:index]
   resources :notes do
+    resources :memos,    only: [:new, :create, :edit, :update, :destroy]
+    resources :pictures, only: [:new, :create, :edit, :update, :destroy]
+
     get :set_point, on: :member
   end
 
   resources :user_notes, only: [:show, :new, :create, :edit, :update, :destroy]
   resources :user_notes do
-    resources :user_memos,    only: [:new, :create, :edit, :update, :destroy]
-    resources :user_pictures, only: [:new, :create, :edit, :update, :destroy]
     get :to_open, on: :member
     get :to_close, on: :member
   end
 
   resources :groups do
-
     resources :group_notes, only: [:show, :new, :create, :edit, :update, :destroy]
     resources :group_notes do
-      resources :group_memos,    only: [:new, :create, :edit, :update, :destroy]
-      resources :group_pictures, only: [:new, :create, :edit, :update, :destroy]
       get :to_open, on: :member
       get :to_close, on: :member
     end

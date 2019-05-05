@@ -41,16 +41,12 @@ ActiveRecord::Schema.define(version: 20190429045212) do
   create_table "memos", force: :cascade do |t|
     t.integer "number"
     t.string "title"
+    t.integer "note_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "content"
-    t.string "type"
-    t.integer "group_note_id"
-    t.integer "user_note_id"
-    t.index ["group_note_id", "number"], name: "index_memos_on_group_note_id_and_number"
-    t.index ["group_note_id"], name: "index_memos_on_group_note_id"
-    t.index ["user_note_id", "number"], name: "index_memos_on_user_note_id_and_number"
-    t.index ["user_note_id"], name: "index_memos_on_user_note_id"
+    t.index ["note_id", "number"], name: "index_memos_on_note_id_and_number"
+    t.index ["note_id"], name: "index_memos_on_note_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -95,13 +91,10 @@ ActiveRecord::Schema.define(version: 20190429045212) do
 
   create_table "pictures", force: :cascade do |t|
     t.string "picture"
+    t.integer "note_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "type"
-    t.integer "group_note_id"
-    t.integer "user_note_id"
-    t.index ["group_note_id"], name: "index_pictures_on_group_note_id"
-    t.index ["user_note_id"], name: "index_pictures_on_user_note_id"
+    t.index ["note_id"], name: "index_pictures_on_note_id"
   end
 
   create_table "readerships", force: :cascade do |t|

@@ -1,4 +1,4 @@
-<%= form_for([@note, @memo]) do |f| %>
+<%= form_for([@note.becomes(Note), @memo]) do |f| %>
 
   <%= render 'shared/error_messages', object: f.object %>
 

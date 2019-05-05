@@ -7,7 +7,7 @@
   <aside class="col-md-4">
 
     <section class="info">
-      (group_note home)<br>
+      (group_note)<br>
 
       <%= render 'group_notes/info_header_body', note: @note %>
 
@@ -19,13 +19,13 @@
 
     <hr>
 
-    <% if pen_name and @note.group.is_regular_member?(pen_name) %>
+    <% if @note.can_update?(current_user) %>
       <span class="side_header small">
         <span class="count">
-          group_pictures (<%= @pictures.count %>)
+          pictures (<%= @pictures.count %>)
         </span>
         <span class="command">
-          <%= link_to "[new]", new_group_group_note_group_picture_path(@group, @note) %>
+          <%= link_to "[new]", new_note_picture_path(@note) %>
         </span>
       </span>
       <% if @pictures.any? %>
@@ -41,17 +41,17 @@
 
     <span class="main_header">
       <span class="count">
-        group_memos (<%= @all_memos.count %>)
+        memos (<%= @all_memos.count %>)
       </span>
       <span class="command">
-        <% if pen_name and @note.group.is_leading_member?(pen_name) %>
-          <%= link_to "[new]", new_group_group_note_group_memo_path(@group, @note) %>
+        <% if @note.can_update?(current_user) %>
+          <%= link_to "[new]", new_note_memo_path(@note) %>
         <% end %>
       </span>
     </span>
     <% if @all_memos.any? %>
       <ol class="memo_list">
-        <%= render @page_memos, home_command: true %>
+        <%= render @page_memos %>
       </ol>
       <%= will_paginate @page_memos, renderer: will_pagenate_renderer %>
     <% end %>

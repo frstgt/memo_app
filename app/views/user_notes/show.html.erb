@@ -17,13 +17,13 @@
 
     <hr>
 
-    <% if @note.user == current_user %>
+    <% if @note.can_update?(current_user) %>
       <span class="side_header small">
         <span class="count">
-          user_pictures (<%= @pictures.count %>)
+          pictures (<%= @pictures.count %>)
         </span>
         <span class="command">
-          <%= link_to "[new]", new_user_note_user_picture_path(@note) %>
+          <%= link_to "[new]", new_note_picture_path(@note) %>
         </span>
       </span>
       <% if @pictures.any? %>
@@ -39,17 +39,17 @@
 
     <span class="main_header">
       <span class="count">
-        user_memos (<%= @all_memos.count %>)
+        memos (<%= @all_memos.count %>)
       </span>
       <span class="command">
-        <% if @note.user == current_user %>
-          <%= link_to "[new]", new_user_note_user_memo_path(@note) %>
+        <% if @note.can_update?(current_user) %>
+          <%= link_to "[new]", new_note_memo_path(@note) %>
         <% end %>
       </span>
     </span>
     <% if @all_memos.any? %>
       <ol class="memo_list">
-        <%= render @page_memos, home_command: true %>
+        <%= render @page_memos %>
       </ol>
       <%= will_paginate @page_memos, renderer: will_pagenate_renderer %>
     <% end %>

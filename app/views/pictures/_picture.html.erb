@@ -1,0 +1,26 @@
+<li id="picture-<%= picture.id %>">
+
+  <span class="header">
+    <% if picture.picture? %>
+      <%= image_tag picture.picture.url(:thumb) %>
+    <% end %>
+  </span>
+
+  <span class="body">
+    <% if picture.picture? %>
+      <%= link_to "#{picture.picture.url}", picture.picture.url %>
+    <% end %>
+  </span>
+
+  <span class="footer">
+    <span class="timestamp text-muted">
+      <%= timestamp(picture) %>
+    </span>
+    <span class="command">
+      <%= link_to "[edit]", edit_note_picture_path(@note, picture) %>
+      <%= link_to "[delete]", note_picture_path(@note, picture),
+                              method: :delete, data: { confirm: "You sure?" } %>
+    </span>
+  </span>
+
+</li>

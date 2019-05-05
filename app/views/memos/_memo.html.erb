@@ -1,0 +1,31 @@
+<li id="memo-<%= memo.id %>">
+
+  <span class="header">
+    <% if memo.title %>
+      <span class="title"><b><%= memo.title %></b></span>
+    <% end %>
+  </span>
+
+  <span class="body">
+    <span class="content"><%= sanitize markdown(memo.content) %></span>
+  </span>
+
+  <span class="footer">
+    <span class="timestamp text-muted">
+      <%= timestamp(memo) %>
+    </span>
+
+    <span class="number text-muted">
+      (<%= memo.number %>)
+    </span>
+
+    <span class="command">
+      <% if @note.can_update?(current_user) %>
+        <%= link_to "[edit]", edit_note_memo_path(@note, memo) %>
+        <%= link_to "[delete]", note_memo_path(@note, memo),
+                                method: :delete, data: { confirm: "You sure?" } %>
+      <% end %>
+    </span>
+  </span>
+
+</li>

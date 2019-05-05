@@ -6,9 +6,9 @@ class UserNotesController < ApplicationController
   before_action :allowed_user,     only: [:show]
 
   def show
-    @pictures = @note.user_pictures
-    @all_memos = @note.user_memos
+    @all_memos = @note.memos
     @page_memos = @all_memos.paginate(page: params[:page])
+    @pictures = @note.pictures
   end
 
   def new

@@ -15,5 +15,6 @@ class CreateMemos < ActiveRecord::Migration[5.1]
       t.string :picture
 
     end
+    add_index :memos, [:note_id, :number]
   end
 end

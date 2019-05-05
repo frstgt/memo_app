@@ -1,4 +1,6 @@
 class Memo < ApplicationRecord
+  belongs_to :note, touch: true
+  validates :note_id, presence: true
 
   default_scope -> { order(number: :asc) }
 

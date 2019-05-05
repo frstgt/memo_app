@@ -1,8 +1,9 @@
-<%= form_for([@group, @note, @picture]) do |f| %>
+<%= form_for([@note.becomes(Note), @picture]) do |f| %>
+
   <%= render 'shared/error_messages', object: f.object %>
 
   <span class="picture">
-    <%= f.label :picture %>
+    <%= f.label :picture %><br>
     <% if @picture.picture? %>
       <%= image_tag @picture.picture.url(:thumb) %>
       <%= @picture.picture.url %>
