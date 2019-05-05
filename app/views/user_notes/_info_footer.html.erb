@@ -4,22 +4,21 @@
   </span>
 
   <span class="command">
-    <% if kind == "show" and note.user == current_user %>
-
-      <%= link_to "[delete]", user_note_path(note), method: :delete,
-                              data: { confirm: "You sure?" } %>
-
-      <% if note.is_open? %>
-        <%= link_to "[to_close]", to_close_user_note_path(note) %>
-      <% else %>
-        <%= link_to "[to_open]", to_open_user_note_path(note) %>
+    <% if kind == "show" %>
+      <% if note.can_setup?(current_user) %>
+        <%= render 'notes/open_close_command', note: note %>
       <% end %>
-
-      <%= link_to "[edit]", edit_user_note_path(note) %>
+      <% if note.can_update?(current_user) %>
+        <%= link_to "[edit]", edit_user_note_path(note) %>
+      <% end %>
+      <% if note.can_destroy?(current_user) %>
+        <%= link_to "[delete]", user_note_path(note), method: :delete,
+                                data: { confirm: "You sure?" } %>
+      <% end %>
     <% end %>
     
     <% if kind == "_user_note" %>
-      <%= render 'notes/note_command', note: note %>
+      <%= render 'notes/point_command', note: note %>
     <% end %>
   </span>
 </span>

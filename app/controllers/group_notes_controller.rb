@@ -1,15 +1,12 @@
 class GroupNotesController < ApplicationController
   before_action :logged_in_user
   before_action :group_is_exist
+  before_action :note_is_exist,     except: [:new, :create]
 
-  before_action :user_have_member,       except: [:show]
-  before_action :note_is_exist,          except: [:new, :create]
-
-  before_action :allowed_user,             only: [:show]
-
-  before_action :user_have_leading_member, only: [:new, :create, :destroy,
-                                                  :to_open, :to_close]
-  before_action :user_have_regular_member, only: [:edit, :update]
+  before_action :user_can_show,       only: [:show]
+  before_action :user_can_create,     only: [:new, :create]
+  before_action :user_can_update,     only: [:edit, :update]
+  before_action :user_can_destroy,    only: [:destroy]
 
   def show
     @all_memos = @note.memos
@@ -34,37 +31,24 @@ class GroupNotesController < ApplicationController
   end
 
   def edit
-    @note = @group.group_notes.find(params[:id])
     @note.load_tag_list
   end
   def update
-    @note = @group.group_notes.find(params[:id])
     if @note.update_attributes(note_params)
       flash[:success] = "Note updated"
 
       @note.save_tag_list
 
-      redirect_to @group
+      redirect_to @note.redirect_path
     else
       render 'edit'
     end
   end
 
   def destroy
-    @group.group_notes.find(params[:id]).destroy
+    @note.destroy
     flash[:success] = "Note deleted"
     redirect_to @group
-  end
-
-  #
-
-  def to_open
-    @note.to_open
-    redirect_to group_group_note_path(@group, @note)
-  end
-  def to_close
-    @note.to_close
-    redirect_to group_group_note_path(@group, @note)
   end
 
   private
@@ -77,28 +61,23 @@ class GroupNotesController < ApplicationController
       @group = Group.find_by(id: params[:group_id])
       redirect_to root_url unless @group
     end
-
     def note_is_exist
       @note = @group.group_notes.find_by(id: params[:id])
       redirect_to root_url unless @note
     end
 
-    def allowed_user
-      @user_member = @group.get_user_member(current_user)
-      unless @user_member or @note.is_open?
-        redirect_to root_url
-      end
+    def user_can_show
+      redirect_to root_url unless @note.can_show?(current_user)
     end
-
-    def user_have_member
-      @user_member = @group.get_user_member(current_user)
-      redirect_to root_url unless @user_member
+    def user_can_create
+      member = @group.get_user_member(current_user)
+      redirect_to root_url unless @group.is_leading_member?(member)
     end
-    def user_have_leading_member
-      redirect_to root_url unless @group.is_leading_member?(@user_member)
+    def user_can_update
+      redirect_to root_url unless @note.can_update?(current_user)
     end
-    def user_have_regular_member
-      redirect_to root_url unless @group.is_regular_member?(@user_member)
+    def user_can_destroy
+      redirect_to root_url unless @note.can_destroy?(current_user)
     end
 
 end

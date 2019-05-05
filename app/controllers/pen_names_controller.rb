@@ -12,6 +12,8 @@ class PenNamesController < ApplicationController
   end
 
   def show
+    store_location
+
     if @pen_name.user == current_user
       @all_notes = @pen_name.user_notes
     else

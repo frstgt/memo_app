@@ -13,8 +13,7 @@
 
       <%= icon_for(@note, { name: @note.title, size: 256 }) %>
 
-      <%= render 'group_notes/info_footer',
-                  note: @note, pen_name: pen_name, kind: "show" %>
+      <%= render 'group_notes/info_footer', note: @note, kind: "show" %>
     </section>
 
     <hr>

@@ -1,9 +1,10 @@
 class UserNotesController < ApplicationController
   before_action :logged_in_user
-  before_action :note_is_exist,  except: [:new, :create]
-  before_action :correct_user,   except: [:show, :new, :create]
+  before_action :note_is_exist,   except: [:new, :create]
 
-  before_action :allowed_user,     only: [:show]
+  before_action :user_can_show,     only: [:show]
+  before_action :user_can_update,   only: [:edit, :update]
+  before_action :user_can_destroy,  only: [:destroy]
 
   def show
     @all_memos = @note.memos
@@ -21,44 +22,32 @@ class UserNotesController < ApplicationController
 
       @note.save_tag_list
 
-      redirect_to current_user
+      redirect_back_or(current_user)
     else
       render 'new'
     end
   end
 
   def edit
-    @note = current_user.user_notes.find(params[:id])
     @note.load_tag_list
   end
   def update
-    @note = current_user.user_notes.find(params[:id])
     if @note.update_attributes(note_params)
       flash[:success] = "Note updated"
 
       @note.save_tag_list
 
-      redirect_to user_note_path(@note)
+      redirect_to @note.redirect_path
     else
       render 'edit'
     end
   end
 
   def destroy
-    current_user.user_notes.find(params[:id]).destroy
+    @note.destroy
     flash[:success] = "Note deleted"
-    redirect_to current_user
-  end
 
-  #
-
-  def to_open
-    @note.to_open
-    redirect_to user_note_path(@note)
-  end
-  def to_close
-    @note.to_close
-    redirect_to user_note_path(@note)
+    redirect_back_or(current_user)
   end
 
   private
@@ -68,20 +57,18 @@ class UserNotesController < ApplicationController
     end
 
     def note_is_exist
-      @note = UserNote.find_by(id: params[:id])
+      @note = current_user.user_notes.find_by(id: params[:id])
       redirect_to root_url unless @note
     end
 
-    def correct_user
-      unless @note.user == current_user
-        redirect_to root_url
-      end
+    def user_can_show
+      redirect_to root_url unless @note.can_show?(current_user)
     end
-
-    def allowed_user
-      unless (@note.user == current_user) or @note.is_open?
-        redirect_to root_url
-      end
+    def user_can_update
+      redirect_to root_url unless @note.can_update?(current_user)
+    end
+    def user_can_destroy
+      redirect_to root_url unless @note.can_create?(current_user)
     end
 
 end
