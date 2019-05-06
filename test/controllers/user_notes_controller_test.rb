@@ -65,15 +65,15 @@ class UserNotesControllerTest < ActionDispatch::IntegrationTest
 
   test "to_open/to_close" do
     log_in_as(@other_user)
-    get to_close_user_note_path(@note)
+    get to_close_note_path(@note)
     assert_redirected_to root_path
-    get to_open_user_note_path(@note)
+    get to_open_note_path(@note)
     assert_redirected_to root_path
 
     log_in_as(@user)
-    get to_close_user_note_path(@note)
+    get to_close_note_path(@note)
     assert_redirected_to user_note_path(@note)
-    get to_open_user_note_path(@note)
+    get to_open_note_path(@note)
     assert_redirected_to @note
 
     log_in_as(@other_user)
@@ -85,7 +85,7 @@ class UserNotesControllerTest < ActionDispatch::IntegrationTest
     assert_template 'user_notes/show'
 
     log_in_as(@user)
-    get to_close_user_note_path(@note)
+    get to_close_note_path(@note)
     assert_redirected_to user_note_path(@note)
 
     log_in_as(@other_user)

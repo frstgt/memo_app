@@ -5,7 +5,7 @@ class GroupMemosControllerTest < ActionDispatch::IntegrationTest
   def setup
     @group = groups(:group1)
     @note = group_notes(:group1_note1)
-    @memo = group_memos(:group1_memo1)
+    @memo = memos(:group1_memo1)
 
     @leader    = users(:user1)
     @leader_pname = pen_names(:user1_pen_name1)
@@ -23,28 +23,28 @@ class GroupMemosControllerTest < ActionDispatch::IntegrationTest
   test "new/create memo" do
     [@leader, @subleader, @common].each do |user|
       log_in_as(user)
-      get new_group_group_note_group_memo_path(@group, @note, @memo)
-      assert_template 'group_memos/new'
+      get new_note_memo_path(@note)
+      assert_template 'memos/new'
     end
     [@visitor, @other].each do |user|
       log_in_as(user)
-      get new_group_group_note_group_memo_path(@group, @note, @memo)
+      get new_note_memo_path(@note)
       assert_redirected_to root_path
     end
 
     [@leader, @subleader, @common].each do |user|
       log_in_as(user)
-      assert_difference '@note.group_memos.count', 1 do
-        post group_group_note_group_memos_path(@group, @note, @memo),
-              params: { group_memo: {content: "This is a test.", number: 1} }
+      assert_difference '@note.memos.count', 1 do
+        post note_memos_path(@note, @memo),
+              params: { memo: {content: "This is a test.", number: 1} }
       end
       assert_redirected_to group_group_note_path(@group, @note)
     end
     [@visitor, @other].each do |user|
       log_in_as(user)
-      assert_difference '@note.group_memos.count', 0 do
-        post group_group_note_group_memos_path(@group, @note, @memo),
-              params: { group_memo: {content: "This is a test as a wrong user.", number: 1} }
+      assert_difference '@note.memos.count', 0 do
+        post note_memos_path(@note, @memo),
+              params: { memo: {content: "This is a test as a wrong user.", number: 1} }
       end
       assert_redirected_to root_path
     end
@@ -53,25 +53,25 @@ class GroupMemosControllerTest < ActionDispatch::IntegrationTest
   test "edit/update memo" do
     [@leader, @subleader, @common].each do |user|
       log_in_as(user)
-      get edit_group_group_note_group_memo_path(@group, @note, @memo)
-      assert_template 'group_memos/edit'
+      get edit_note_memo_path(@note, @memo)
+      assert_template 'memos/edit'
     end
     [@visitor, @other].each do |user|
       log_in_as(user)
-      get edit_group_group_note_group_memo_path(@group, @note, @memo)
+      get edit_note_memo_path(@note, @memo)
       assert_redirected_to root_path
     end
 
     [@leader, @subleader, @common].each do |user|
       log_in_as(user)
-      patch group_group_note_group_memo_path(@group, @note, @memo),
-            params: { group_memo: { content: "This is a edit test.", number: @memo.number } }
+      patch note_memo_path(@note, @memo),
+            params: { memo: { content: "This is a edit test.", number: @memo.number } }
       assert_redirected_to group_group_note_path(@group, @note)
     end
     [@visitor, @other].each do |user|
       log_in_as(user)
-      patch group_group_note_group_memo_path(@group, @note, @memo),
-            params: { group_memo: { content: "This is a edit test as a wrong user.", number: @memo.number } }
+      patch note_memo_path(@note, @memo),
+            params: { memo: { content: "This is a edit test as a wrong user.", number: @memo.number } }
       assert_redirected_to root_path
     end
   end
@@ -80,20 +80,20 @@ class GroupMemosControllerTest < ActionDispatch::IntegrationTest
     [@leader, @subleader, @common].each do |user|
       log_in_as(user)
 
-      assert_difference '@note.group_memos.count', 1 do
-        post group_group_note_group_memos_path(@group, @note, @memo),
-              params: { group_memo: {content: "This is a test.", number: 1} }
+      assert_difference '@note.memos.count', 1 do
+        post note_memos_path(@note, @memo),
+              params: { memo: {content: "This is a test.", number: 1} }
       end
 
-      assert_difference '@note.group_memos.count', -1 do
-        delete group_group_note_group_memo_path(@group, @note, @note.group_memos.last)
+      assert_difference '@note.memos.count', -1 do
+        delete note_memo_path(@note, @note.memos.last)
       end
       assert_redirected_to group_group_note_path(@group, @note)
     end
     [@visitor, @other].each do |user|
       log_in_as(user)
-      assert_difference '@note.group_memos.count', 0 do
-        delete group_group_note_group_memo_path(@group, @note, @memo)
+      assert_difference '@note.memos.count', 0 do
+        delete note_memo_path(@note, @memo)
       end
       assert_redirected_to root_path
     end

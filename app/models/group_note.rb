@@ -4,18 +4,18 @@ class GroupNote < Note
 
   def can_setup?(user)
     member = self.group.get_user_member(user)
-    self.group.is_leading_member?(member)
+    member and self.group.is_leading_member?(member)
   end  
   def can_show?(user)
     self.group.get_user_member(user) or self.is_open?
   end
   def can_update?(user)
     member = self.group.get_user_member(user)
-    self.group.is_regular_member?(member)
+    member and self.group.is_regular_member?(member)
   end
   def can_destroy?(user)
     member = self.group.get_user_member(user)
-    self.group.is_leading_member?(member)
+    member and self.group.is_leading_member?(member)
   end
 
   include Rails.application.routes.url_helpers

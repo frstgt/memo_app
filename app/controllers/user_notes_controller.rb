@@ -57,7 +57,7 @@ class UserNotesController < ApplicationController
     end
 
     def note_is_exist
-      @note = current_user.user_notes.find_by(id: params[:id])
+      @note = Note.find_by(id: params[:id])
       redirect_to root_url unless @note
     end
 
@@ -68,7 +68,7 @@ class UserNotesController < ApplicationController
       redirect_to root_url unless @note.can_update?(current_user)
     end
     def user_can_destroy
-      redirect_to root_url unless @note.can_create?(current_user)
+      redirect_to root_url unless @note.can_destroy?(current_user)
     end
 
 end

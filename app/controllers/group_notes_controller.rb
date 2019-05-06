@@ -62,7 +62,7 @@ class GroupNotesController < ApplicationController
       redirect_to root_url unless @group
     end
     def note_is_exist
-      @note = @group.group_notes.find_by(id: params[:id])
+      @note = Note.find_by(id: params[:id])
       redirect_to root_url unless @note
     end
 
@@ -71,7 +71,7 @@ class GroupNotesController < ApplicationController
     end
     def user_can_create
       member = @group.get_user_member(current_user)
-      redirect_to root_url unless @group.is_leading_member?(member)
+      redirect_to root_url unless member and @group.is_leading_member?(member)
     end
     def user_can_update
       redirect_to root_url unless @note.can_update?(current_user)

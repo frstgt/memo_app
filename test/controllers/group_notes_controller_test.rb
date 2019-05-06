@@ -64,7 +64,7 @@ class GroupNotesControllerTest < ActionDispatch::IntegrationTest
 
       patch group_group_note_path(@group, @note),
             params: { group_note: {title: "Test Note", description: "This is a edit test."} }
-      assert_redirected_to @group
+      assert_redirected_to group_group_note_path(@group, @note)
     end
 
     [@visitor, @other].each do |user|
@@ -110,19 +110,19 @@ class GroupNotesControllerTest < ActionDispatch::IntegrationTest
     [@leader, @subleader].each do |user|
       log_in_as(user)
 
-      get to_close_group_group_note_path(@group, @note)
+      get to_close_note_path(@note)
       assert_redirected_to group_group_note_path(@group, @note)
 
-      get to_open_group_group_note_path(@group, @note)
+      get to_open_note_path(@note)
       assert_redirected_to group_group_note_path(@group, @note)
     end
     [@common, @visitor, @other].each do |user|
       log_in_as(user)
 
-      get to_close_group_group_note_path(@group, @note)
+      get to_close_note_path(@note)
       assert_redirected_to root_path
 
-      get to_open_group_group_note_path(@group, @note)
+      get to_open_note_path(@note)
       assert_redirected_to root_path
     end
 
@@ -133,7 +133,7 @@ class GroupNotesControllerTest < ActionDispatch::IntegrationTest
     end
 
     log_in_as(@leader)
-    get to_close_group_group_note_path(@group, @note)
+    get to_close_note_path(@note)
     assert_redirected_to group_group_note_path(@group, @note)
 
     [@leader, @subleader, @common, @visitor].each do |user|

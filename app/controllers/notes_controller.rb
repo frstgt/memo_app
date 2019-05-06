@@ -48,8 +48,5 @@ class NotesController < ApplicationController
     def user_can_setup
       redirect_to root_url unless @note.can_setup?(current_user)
     end
-    def user_can_show
-      redirect_to root_url unless @note.can_show?(current_user)
-    end
   
 end
