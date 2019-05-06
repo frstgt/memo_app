@@ -1,0 +1,30 @@
+<%= form_for([@group, @room]) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <span class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: 'form-control' %>
+
+    <%= f.label :outline %>
+    <%= f.text_area :outline, rows: '10', class: 'form-control' %>
+  </span>
+
+  <span class="picture">
+    <%= f.label :picture %><br>
+    <%= image_tag @room.picture.url(:thumb) if @room.picture? %>
+    <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
+  </span>
+
+  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+<% end %>
+
+<%= render 'static_pages/help_picture_requirements' %>
+
+<script type="text/javascript">
+  $('#room_picture').bind('change', function() {
+    var size_in_megabytes = this.files[0].size/1024/1024;
+    if (size_in_megabytes > 5) {
+      alert('Maximum file size is 5MB. Please choose a smaller file.');
+    }
+  });
+</script>

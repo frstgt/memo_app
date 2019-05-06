@@ -30,15 +30,13 @@ class GroupsController < ApplicationController
     pen_name = @group.get_user_member(current_user)
     if pen_name and @group.is_regular_member?(pen_name)
       @all_notes = @group.group_notes
+      @all_rooms = @group.rooms
     else
       @all_notes = @group.group_notes.where(status: Note::ST_OPEN)
+      @all_rooms = @group.rooms.where(status: Note::ST_OPEN)
     end
     @page_notes = @all_notes.paginate(page: params[:page])
-  end
-  def messages
-    @message = @group.messages.build
-    @all_messages = @group.messages
-    @page_messages = @all_messages.paginate(page: params[:page])
+    @page_rooms = @all_rooms.paginate(page: params[:page])
   end
   def members
     @all_members = @group.members    

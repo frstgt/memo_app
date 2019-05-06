@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190429045212) do
+ActiveRecord::Schema.define(version: 20190506042102) do
 
   create_table "group_notes", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -51,12 +51,12 @@ ActiveRecord::Schema.define(version: 20190429045212) do
 
   create_table "messages", force: :cascade do |t|
     t.text "content"
-    t.integer "group_id"
+    t.integer "room_id"
     t.integer "pen_name_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["group_id"], name: "index_messages_on_group_id"
     t.index ["pen_name_id"], name: "index_messages_on_pen_name_id"
+    t.index ["room_id"], name: "index_messages_on_room_id"
   end
 
   create_table "notes", force: :cascade do |t|
@@ -106,6 +106,17 @@ ActiveRecord::Schema.define(version: 20190429045212) do
     t.index ["note_id"], name: "index_readerships_on_note_id"
     t.index ["reader_id", "note_id"], name: "index_readerships_on_reader_id_and_note_id", unique: true
     t.index ["reader_id"], name: "index_readerships_on_reader_id"
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.string "title"
+    t.text "outline"
+    t.integer "group_id"
+    t.string "picture"
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_rooms_on_group_id"
   end
 
   create_table "tags", force: :cascade do |t|

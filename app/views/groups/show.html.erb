@@ -19,6 +19,25 @@
 
     </section>
 
+    <hr>
+
+    <span class="main_header">
+      <span class="count">
+        rooms (<%= @all_rooms.count %>)
+      </span>
+      <span class="command">
+        <% if pen_name and @group.is_leading_member?(pen_name) %>
+          <%= link_to "[new]", new_group_room_path(@group) %>
+        <% end %>
+      </span>
+    </span>
+    <% if @all_rooms.any? %>
+      <ol class="note_list">
+        <%= render @page_rooms %>
+      </ol>
+      <%= will_paginate @page_rooms, renderer: will_pagenate_renderer %>
+    <% end %>
+
   </aside>
 
   <div class="col-md-8">

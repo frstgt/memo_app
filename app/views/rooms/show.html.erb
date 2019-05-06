@@ -1,25 +1,20 @@
-<% provide(:title, @group.name + " Messages") %>
-
-<% pen_name = @group.get_user_member(current_user) %>
+<% provide(:title, @room.title) %>
 
 <div class="row">
 
   <aside class="col-md-4">
 
-    <section class="group_info">
+    <section class="info">
+      (group room)<br>
 
-      (group_messages)<br>
+      <%= render 'rooms/info_header_body', room: @room %><br>
 
-      <%= render 'groups/info_header_body',
-                  group: @group, pen_name: pen_name %>
+      <%= icon_for(@room, { name: @room.title, size: 256 }) %><br>
 
-      <%= icon_for(@group, { name: @group.name, size: 256 }) %>
-
-      <%= render 'groups/info_footer',
-                  group: @group, pen_name: pen_name, kind: "messages" %>
+      <%= render 'rooms/info_footer', room: @room, kind: "show" %>
 
     </section>
-
+    
   </aside>
 
   <div class="col-md-8">
@@ -27,8 +22,6 @@
     <span class="message_form">
       <%= render 'messages/form' %>
     </span>
-
-    <hr>
 
     <span class="main_header">
       <span class="count">

@@ -30,17 +30,21 @@ Rails.application.routes.draw do
     get :set_point, on: :member
   end
 
-  resources :user_notes, only: [:show, :new, :create, :edit, :update, :destroy]
-
-  resources :groups do
-    resources :group_notes, only: [:show, :new, :create, :edit, :update, :destroy]
-
+  resources :rooms do
     resources :messages,    only: [:create]
 
     get :to_open, on: :member
     get :to_close, on: :member
+  end
 
-    get :messages, on: :member
+  resources :user_notes, only: [:show, :new, :create, :edit, :update, :destroy]
+
+  resources :groups do
+    resources :group_notes, only: [:show, :new, :create, :edit, :update, :destroy]
+    resources :rooms,       only: [:show, :new, :create, :edit, :update, :destroy]
+
+    get :to_open, on: :member
+    get :to_close, on: :member
 
     get :members, on: :member
     get :join, on: :member

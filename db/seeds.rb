@@ -46,12 +46,18 @@ groups.each_with_index { |group, n|
   Membership.create!(group: group, member: members[n*5+4], position: Membership::POS_VISITOR)
 }
 
-# messages
+# rooms/messages
 groups.each do |group|
+
+  title = Faker::Book.title
+  outline = Faker::Lorem.sentence(20)
+  status = [Note::ST_CLOSE, Note::ST_OPEN].sample
+  room = group.rooms.create(title: title, outline: outline, status: status)
+
   10.times do
     member = group.members.sample
     content = Faker::Lorem.sentence(10)
-    group.messages.create!(content: content, group_id: group.id, pen_name_id: member.id)
+    room.messages.create!(content: content, pen_name_id: member.id)
   end
 end
 
@@ -65,7 +71,7 @@ Tag.order(:created_at).each do |tag|
 end
 tag_ids.append(nil)
 
-# user_notes
+# user_notes/memos
 users.each do |user|
   pen_name_ids = []
   user.pen_names.each do |pen_name|
@@ -95,7 +101,7 @@ users.each do |user|
   end
 end
 
-# group_notes
+# group_notes/memos
 groups.each do |group|
   pen_name_ids = []
   group.members.each do |pen_name|

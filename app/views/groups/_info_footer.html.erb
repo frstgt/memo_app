@@ -5,11 +5,13 @@
 
   <span class="counter text-muted">
     (
-      <%= "group_notes: #{group.group_notes.where(status: Note::ST_OPEN).count}" %>,
       <% if pen_name %>
-        <%= link_to "members: #{group.members.count}", members_group_path(group) %>,
-        <%= link_to "messages: #{group.messages.count}", messages_group_path(group) %>
+        <%= "group_notes: #{group.group_notes.count}" %>,
+        <%= "rooms: #{group.rooms.count}" %>,
+        <%= link_to "members: #{group.members.count}", members_group_path(group) %>
       <% else %>
+        <%= "group_notes: #{group.group_notes.where(status: Note::ST_OPEN).count}" %>,
+        <%= "rooms: #{group.rooms.where(status: Room::ST_OPEN).count}" %>,
         <%= "members: #{group.members.count}" %>
       <% end %>
     )
@@ -50,10 +52,6 @@
     
     <% if kind == "show" and pen_name %>
       <% if group.is_leading_member?(pen_name) %>
-
-        <%= link_to "[delete]", group, method: :delete,
-                                 data: { confirm: "You sure?" } %>
-
         <% if group.is_open? %>
           <%= link_to "[to_close]", to_close_group_path(group) %>
         <% else %>
@@ -64,6 +62,10 @@
       <% if group.is_regular_member?(pen_name) %>
         <%= link_to "[edit]", edit_group_path(group) %>
       <% end %>
+
+      <% if group.is_leading_member?(pen_name) %>
+        <%= link_to "[delete]", group, method: :delete,
+                                 data: { confirm: "You sure?" } %>      <% end %>
     <% end %>
 
   </span>

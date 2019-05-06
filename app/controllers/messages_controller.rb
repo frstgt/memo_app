@@ -1,7 +1,6 @@
 class MessagesController < ApplicationController
   before_action :logged_in_user
-  before_action :group_is_exist
-  before_action :user_have_member
+  before_action :room_is_exist
 
   def create
     params[:message][:pen_name_id] = @user_member.id
@@ -20,9 +19,9 @@ class MessagesController < ApplicationController
       params.require(:message).permit(:content, :pen_name_id)
     end
 
-    def group_is_exist
-      @group = Group.find_by(id: params[:group_id])
-      redirect_to root_url unless @group
+    def room_is_exist
+      @room = Room.find_by(id: params[:room_id])
+      redirect_to root_url unless @room
     end
 
     def user_have_member
