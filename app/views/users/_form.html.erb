@@ -1,22 +1,25 @@
 <%= form_for(@user) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
-  <span class="form-group">
+  <div class="form-group">
     <%= f.label :name %>
     <%= f.text_field :name, type: "text", class: 'form-control' %>
-  </span>
+  </div>
 
-  <span class="form-group">
+  <div class="form-group">
     <%= f.label :password %>
     <%= f.password_field :password, class: 'form-control' %>
-  </span>
+  </div>
 
-  <span class="form-group">
+  <div class="form-group">
     <%= f.label :password_confirmation %>
     <%= f.password_field :password_confirmation, class: 'form-control' %>
-  </span>
+  </div>
 
-  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+  <div class="form-group text-right">
+    <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+  </div>
+
 <% end %>
 
 

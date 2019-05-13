@@ -27,7 +27,7 @@
       </span>
       <span class="command">
         <% if pen_name and @group.is_leading_member?(pen_name) %>
-          <%= link_to "[new]", new_group_room_path(@group) %>
+          <%= link_to "[new]", new_group_group_room_path(@group) %>
         <% end %>
       </span>
     </span>

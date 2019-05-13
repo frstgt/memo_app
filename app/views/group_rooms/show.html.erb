@@ -1,0 +1,40 @@
+<% provide(:title, @room.title) %>
+
+<div class="row">
+
+  <aside class="col-md-4">
+
+    <section class="info">
+      (group room)<br>
+
+      <%= render 'group_rooms/info_header_body', room: @room %><br>
+
+      <%= icon_for(@room, { name: @room.title, size: 256 }) %><br>
+
+      <%= render 'group_rooms/info_footer', room: @room, kind: "show" %>
+
+    </section>
+    
+  </aside>
+
+  <div class="col-md-8">
+
+    <span class="message_form">
+      <%= render 'messages/form' %>
+    </span>
+
+    <span class="main_header">
+      <span class="count">
+        messages (<%= @all_messages.count %>)
+      </span>
+    </span>
+    <% if @all_messages.any? %>
+      <ol class="note_list">
+        <%= render @page_messages %>
+      </ol>
+      <%= will_paginate @page_messages, renderer: will_pagenate_renderer %>
+    <% end %>
+
+  </div>
+
+</div>

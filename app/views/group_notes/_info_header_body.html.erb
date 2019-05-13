@@ -1,10 +1,22 @@
 <span class="header">
   <span class="title"><b><%= link_to note.title, group_group_note_path(note.group, note) %></b></span>
   <% if note.pen_name %>
-    <span class="pen_name"><i>by <%= note.pen_name.name %></i></span>
+    <span class="pen_name">
+      <% if note.pen_name.is_open? %>
+        <i>by <%= link_to note.pen_name.name, note.pen_name %></i>
+      <% else %>
+        <i>by <%= note.pen_name.name %></i>
+      <% end %>
+    </span>
   <% end %>
   <% if note.group %>
-    <span class="pen_name"><i>@ <%= note.group.name %></i></span>
+    <span class="group">
+      <% if note.group.is_open? %>
+        <i>@ <%= link_to note.group.name, note.group %></i>
+      <% else %>
+        <i>@ <%= note.group.name %></i>
+      <% end %>
+    </span>
   <% end %>
 
   <% if note.is_open? %>
@@ -27,6 +39,6 @@
 </span>
 
 <span class="body">
-  <span class="description"><%= note.description %></span>
+  <span class="outline"><%= note.outline %></span>
 </span>
       

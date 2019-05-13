@@ -1,6 +1,7 @@
 class User < ApplicationRecord
-  has_many :user_notes, dependent: :destroy
   has_many :pen_names, dependent: :destroy
+  has_many :user_notes, dependent: :destroy
+  has_many :user_rooms, dependent: :destroy
 
   has_many :active_readerships, class_name:  "Readership",
                                   foreign_key: "reader_id",

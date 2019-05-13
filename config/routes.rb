@@ -13,46 +13,33 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
 
-  resources :pen_names do
-    get :to_open, on: :member
-    get :to_close, on: :member
-  end
-  resources :pen_names
+  resources :pen_names, only: [:show, :new, :create, :edit, :update, :destroy]
 
-  resources :notes, only: [:index]
   resources :notes do
     resources :memos,    only: [:new, :create, :edit, :update, :destroy]
     resources :pictures, only: [:new, :create, :edit, :update, :destroy]
 
-    get :to_open, on: :member
-    get :to_close, on: :member
-
     get :set_point, on: :member
   end
-
+  resources :notes, only: [:index]
   resources :rooms do
     resources :messages,    only: [:create]
-
-    get :to_open, on: :member
-    get :to_close, on: :member
   end
 
   resources :user_notes, only: [:show, :new, :create, :edit, :update, :destroy]
+  resources :user_rooms, only: [:show, :new, :create, :edit, :update, :destroy]
 
   resources :groups do
     resources :group_notes, only: [:show, :new, :create, :edit, :update, :destroy]
-    resources :rooms,       only: [:show, :new, :create, :edit, :update, :destroy]
+    resources :group_rooms, only: [:show, :new, :create, :edit, :update, :destroy]
+    resources :members, only: [:index]
 
-    get :to_open, on: :member
-    get :to_close, on: :member
-
-    get :members, on: :member
     get :join, on: :member
     get :unjoin, on: :member
     get :change_leader, on: :member
     get :position, on: :member
   end
-  resources :groups
+  resources :groups, only: [:show, :new, :create, :edit, :update, :destroy]
 
   resources :tags, only: [:show]
 

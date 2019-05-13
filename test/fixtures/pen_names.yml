@@ -1,12 +1,12 @@
 <% 10.times do |n| %>
 user<%= n %>_pen_name1:
   name: <%= "user#{n}_pen_name1 name" %>
-  description: <%= "user#{n}_pen_name1 description" %>
+  outline: <%= "user#{n}_pen_name1 outline" %>
   user: user<%= n %>
   status: 1
 user<%= n %>_pen_name2:
   name: <%= "user#{n}_pen_name2 name" %>
-  description: <%= "user#{n}_pen_name2 description" %>
+  outline: <%= "user#{n}_pen_name2 outline" %>
   user: user<%= n %>
   status: 0
 <% end %>

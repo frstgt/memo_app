@@ -6,7 +6,7 @@ class UserNoteTest < ActiveSupport::TestCase
     @user = users(:user1)
     @user_pname = pen_names(:user1_pen_name1)
     @note = @user.user_notes.build(title: "Lorem ipsum",
-                                   description: "This is test.", pen_name_id: @user_pname.id)
+                                   outline: "This is test.", pen_name_id: @user_pname.id)
   end
 
   test "should be valid" do
@@ -29,7 +29,7 @@ class UserNoteTest < ActiveSupport::TestCase
   end
 
   test "description should be at most 1000 characters" do
-    @note.description = "a" * 1001
+    @note.outline = "a" * 1001
     assert_not @note.valid?
   end
 

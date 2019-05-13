@@ -4,7 +4,7 @@ class GroupNoteTest < ActiveSupport::TestCase
 
   def setup
     @group = groups(:group1)
-    @note = @group.group_notes.build(title: "Test note", description: "This is a test.")
+    @note = @group.group_notes.build(title: "Test note", outline: "This is a test.")
   end
 
   test "should be valid" do
@@ -27,7 +27,7 @@ class GroupNoteTest < ActiveSupport::TestCase
   end
 
   test "description should be at most 1000 characters" do
-    @note.description = "a" * 1001
+    @note.outline = "a" * 1001
     assert_not @note.valid?
   end
 

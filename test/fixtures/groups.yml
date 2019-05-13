@@ -1,8 +1,8 @@
 group1:
   name: "group1 name"
-  description: "group1 description"
-  status: 1
+  outline: "group1 outline"
+  status: 2
 group2:
   name: "group2 name"
-  description: "group2 description"
+  outline: "group2 outline"
   status: 0

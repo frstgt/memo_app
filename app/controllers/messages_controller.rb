@@ -7,9 +7,9 @@ class MessagesController < ApplicationController
     @message = @group.messages.build(message_params)
     if @message.save
       flash[:success] = "Message created"
-      redirect_to messages_group_path(@group)
+      redirect_to @room.redirect_path
     else
-      render 'groups/messages'
+      render 'rooms/show'
     end
   end
 

@@ -119,6 +119,7 @@ aside {
 
 /* forms */
 
+/*
 .form_control {
   text-align: center
 }
@@ -135,19 +136,13 @@ input {
 }
 
 .message_form {
-  img {
-    float: left;
-    display: line;
-    margin-left: 0px;
-    margin-right: 10px;
-    margin-top: 5px;
-  }
   textarea, input {
     display: block;
-    margin-left: 74px;
-    width: 90%;
+    margin-left: 0px;
+    width: 100%;
   }
 }
+*/
 
 #error_explanation {
   color: red;

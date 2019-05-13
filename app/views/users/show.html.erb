@@ -12,40 +12,29 @@
         <%= timestamp(@user) %>
       </span>
 
+      <span class="command">
+        <%= link_to "[edit]", edit_user_path(current_user) %>
+        <%= link_to "[delete]", user_path(current_user),
+                                  method: :delete, data: { confirm: "You sure?" } %>
+      </span>
+
     </section>
 
     <hr>
 
-    <span class="side_header">
+    <span class="main_header">
       <span class="count">
-        pen_names (<%= @user.pen_names.count %>)
+        rooms (<%= @all_rooms.count %>)
       </span>
       <span class="command">
-        <%= link_to "[pen_names]", pen_names_path %>
-        <%= link_to "[new]", new_pen_name_path %>
+        <%= link_to "[new]", new_user_room_path %>
       </span>
     </span>
-    <% if @user.pen_names.any? %>
-      <ol class="side_list">
-        <%= render @pen_names %>
+    <% if @all_rooms.any? %>
+      <ol class="note_list">
+        <%= render @page_rooms %>
       </ol>
-    <% end %>
-
-    <hr>
-
-    <span class="side_header">
-      <span class="count">
-        groups (<%= @user.groups.count %>)
-      </span>
-      <span class="command">
-        <%= link_to "[groups]", groups_path %>
-        <%= link_to "[new]", new_group_path %>
-      </span>
-    </span>
-    <% if @user.groups.any? %>
-      <ol class="side_list">
-        <%= render @groups %>
-      </ol>
+      <%= will_paginate @page_rooms, renderer: will_pagenate_renderer %>
     <% end %>
 
   </aside>
@@ -57,9 +46,6 @@
         user_notes (<%= @all_notes.count %>)
       </span>
       <span class="command">
-        <%= link_to "[notes,", notes_path %>
-        <%= link_to "(pos,", notes_path({mode: "pos"}) %>
-        <%= link_to "neg)]", notes_path({mode: "neg"}) %>
         <%= link_to "[new]", new_user_note_path %>
       </span>
     </span>

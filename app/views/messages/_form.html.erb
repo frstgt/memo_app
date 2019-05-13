@@ -1,12 +1,23 @@
-<%= form_for([@room, @message]) do |f| %>
+<%= form_for([@room.becomes(Room), @message]) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
-  <% pen_name = @group.get_user_member(current_user) %>
+  <div class="form-group">
+    <% pen_name = @room.get_user_pen_name(current_user) %>
+    <% if pen_name %>
+      <%= f.select :pen_name_id, [pen_name.name, pen_name.id], class: 'form-control' %>
+    <% else %>
+      <%= f.select :pen_name_id,
+                   current_user.pen_names.collect { |pen_name| [pen_name.name, pen_name.id] },
+                   { include_blank: "" }, class: 'form-control' %>
+    <% end %>
+  </div>
 
-  <%= icon_for(pen_name, { name: pen_name.name, size: 64 }) %>
-  <b><%= pen_name.name %></b>
+  <div class="form-group">
+    <%= f.text_area :content, row: 2, class: 'form-control' %>
+  </div>
 
-  <%= f.text_area :content, row: 2, class: 'form-control' %>
+  <div class="form-group text-right">
+    <%= f.submit "Create Message", class: "btn btn-primary" %>
+  </div>
 
-  <%= f.submit "Create Message", class: "btn btn-primary" %>
 <% end %>

@@ -1,20 +1,16 @@
 class PenNamesController < ApplicationController
   before_action :logged_in_user
-  before_action :pen_name_is_exist, except: [:index, :new, :create]
-  before_action :correct_user,      except: [:index, :new, :create, :show]
+  before_action :pen_name_is_exist, except: [:new, :create]
 
-  before_action :allowed_user,        only: [:show]
+  before_action :user_can_show,       only: [:show]
+  before_action :user_can_update,     only: [:edit, :update]
+  before_action :user_can_destroy,    only: [:destroy]
 
-  def index
-    @all_pen_names = PenName.where(status: PenName::ST_OPEN)
-    @page_pen_names = @all_pen_names.paginate(page: params[:page])
-    @sample_pen_names = @all_pen_names.sample(3)
-  end
 
   def show
     store_location
 
-    if @pen_name.user == current_user
+    if @pen_name.can_update?(current_user)
       @all_notes = @pen_name.user_notes
     else
       @all_notes = @pen_name.user_notes.where(status: Note::ST_OPEN)
@@ -52,25 +48,11 @@ class PenNamesController < ApplicationController
     flash[:success] = "PenName deleted"
     redirect_to current_user
   end
-
-  def to_open
-    @pen_name.to_open
-    redirect_to @pen_name
-  end
-  def to_close
-    @pen_name.to_close
-    @pen_name.groups.each do |group|
-      if group.is_regular_member?(@pen_name)
-        group.unjoin(@pen_name)
-      end
-    end
-    redirect_to @pen_name
-  end
   
   private
 
     def pen_name_params
-      params.require(:pen_name).permit(:name, :description, :picture)
+      params.require(:pen_name).permit(:name, :outline, :picture)
     end
 
     def pen_name_is_exist
@@ -78,16 +60,14 @@ class PenNamesController < ApplicationController
       redirect_to root_url if @pen_name.nil?
     end
 
-    def allowed_user
-      @pen_name = PenName.find_by(id: params[:id])
-      unless @pen_name and (current_user.pen_names.include?(@pen_name) or @pen_name.is_open?)
-        redirect_to root_url
-      end
+    def user_can_show
+      redirect_to root_url unless @pen_name.can_show?(current_user)
     end
-
-    def correct_user
-      @pen_name = current_user.pen_names.find_by(id: params[:id])
-      redirect_to root_url if @pen_name.nil?
+    def user_can_update
+      redirect_to root_url unless @pen_name.can_update?(current_user)
+    end
+    def user_can_destroy
+      redirect_to root_url unless @pen_name.can_destroy?(current_user)
     end
 
 end

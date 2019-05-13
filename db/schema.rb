@@ -10,16 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190506042102) do
+ActiveRecord::Schema.define(version: 20190512005135) do
 
   create_table "group_notes", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  create_table "group_rooms", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "groups", force: :cascade do |t|
     t.string "name"
-    t.text "description"
+    t.text "outline"
     t.string "picture"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -61,7 +66,7 @@ ActiveRecord::Schema.define(version: 20190506042102) do
 
   create_table "notes", force: :cascade do |t|
     t.string "title"
-    t.text "description"
+    t.text "outline"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -72,20 +77,18 @@ ActiveRecord::Schema.define(version: 20190506042102) do
     t.integer "status", default: 0
     t.index ["group_id"], name: "index_notes_on_group_id"
     t.index ["pen_name_id"], name: "index_notes_on_pen_name_id"
-    t.index ["user_id", "updated_at"], name: "index_notes_on_user_id_and_updated_at"
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
   create_table "pen_names", force: :cascade do |t|
     t.string "name"
-    t.text "description"
+    t.text "outline"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "picture"
     t.integer "status", default: 0
     t.index ["name"], name: "index_pen_names_on_name", unique: true
-    t.index ["user_id", "updated_at"], name: "index_pen_names_on_user_id_and_updated_at"
     t.index ["user_id"], name: "index_pen_names_on_user_id"
   end
 
@@ -111,12 +114,17 @@ ActiveRecord::Schema.define(version: 20190506042102) do
   create_table "rooms", force: :cascade do |t|
     t.string "title"
     t.text "outline"
+    t.integer "user_id"
+    t.integer "pen_name_id"
     t.integer "group_id"
     t.string "picture"
     t.integer "status", default: 0
+    t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_rooms_on_group_id"
+    t.index ["pen_name_id"], name: "index_rooms_on_pen_name_id"
+    t.index ["user_id"], name: "index_rooms_on_user_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -137,6 +145,11 @@ ActiveRecord::Schema.define(version: 20190506042102) do
   end
 
   create_table "user_notes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_rooms", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

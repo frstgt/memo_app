@@ -5,9 +5,6 @@
 
   <span class="command">
     <% if kind == "show" %>
-      <% if note.can_setup?(current_user) %>
-        <%= render 'notes/open_close_command', note: note %>
-      <% end %>
       <% if note.can_update?(current_user) %>
         <%= link_to "[edit]", edit_group_group_note_path(note.group, note) %>
       <% end %>

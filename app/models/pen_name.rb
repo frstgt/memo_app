@@ -15,18 +15,12 @@ class PenName < ApplicationRecord
   validates :name,  presence: true,
                     length: { minimum: 8, maximum: 32 },
                     uniqueness: true
-  validates :description, length: { maximum: 1000 }
+  validates :outline, length: { maximum: 1000 }
   validate  :picture_size
   validates :status,  presence: true
 
   ST_OPEN = 1
   ST_CLOSE = 0
-  def to_open
-    self.update_attributes({status: ST_OPEN})
-  end
-  def to_close
-    self.update_attributes({status: ST_CLOSE})
-  end
   def is_open?
     self.status == ST_OPEN
   end
@@ -40,6 +34,19 @@ class PenName < ApplicationRecord
       membership.destroy
     end
   end
+
+  def can_setup?(user)
+    self.user == user
+  end 
+  def can_show?(user)
+    self.user == user or self.is_open?
+  end
+  def can_update?(user)
+    self.user == user
+  end
+  def can_destroy?(user)
+    self.user == user
+  end 
 
   private
 

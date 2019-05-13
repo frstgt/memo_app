@@ -26,7 +26,7 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   test "description should be at most 1000 characters" do
-    @group.description = "a" * 1001
+    @group.outline = "a" * 1001
     assert_not @group.valid?
   end
 

@@ -3,8 +3,9 @@ class Group < ApplicationRecord
                                 foreign_key: "group_id",
                                 dependent:   :destroy
   has_many :members, through: :active_memberships, source: :member
+
   has_many :group_notes, dependent: :destroy
-  has_many :rooms, dependent: :destroy
+  has_many :group_rooms, dependent: :destroy
 
   default_scope -> { order(updated_at: :desc) }
 
@@ -13,19 +14,17 @@ class Group < ApplicationRecord
   validates :name,  presence: true,
                     length: { minimum: 8, maximum: 32 },
                     uniqueness: true
-  validates :description, length: { maximum: 1000 }
+  validates :outline, length: { maximum: 1000 }
   validate  :picture_size
   validates :status,  presence: true
 
   attr_accessor  :pen_name_id
 
+  ST_JOINUS = 2
   ST_OPEN = 1
   ST_CLOSE = 0
-  def to_open
-    self.update_attributes({status: ST_OPEN})
-  end
-  def to_close
-    self.update_attributes({status: ST_CLOSE})
+  def is_joinus?
+    self.status == ST_JOINUS
   end
   def is_open?
     self.status == ST_OPEN

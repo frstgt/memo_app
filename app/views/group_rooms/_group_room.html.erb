@@ -1,0 +1,9 @@
+<li id="group_room-<%= group_room.id %>">
+
+    <%= icon_for(group_room, { name: group_room.title, size: 64 }) %>
+
+    <%= render 'group_rooms/info_header_body', room: group_room %>
+
+    <%= render 'group_rooms/info_footer', room: group_room, kind: "_room" %>
+
+</li>

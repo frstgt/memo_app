@@ -16,9 +16,9 @@ users.each do |user|
 
   2.times do
     name = Faker::Name.name
-    description = Faker::Lorem.sentence(20)
+    outline = Faker::Lorem.sentence(20)
     status = [PenName::ST_CLOSE, PenName::ST_OPEN].sample
-    user.pen_names.create!(name: name, description: description,
+    user.pen_names.create!(name: name, outline: outline,
                           status: status)
   end
 end
@@ -26,10 +26,9 @@ end
 # groups
 2.times do |n|
   name  = Faker::Team.name
-  description = Faker::Lorem.sentence(20)
-  status = [Group::ST_CLOSE, Group::ST_OPEN].sample
-  Group.create!(name: name, description: description,
-                status: status)
+  outline = Faker::Lorem.sentence(20)
+  status = [Group::ST_CLOSE, Group::ST_OPEN, Group::ST_JOINUS].sample
+  Group.create!(name: name, outline: outline, status: status)
 end
 groups = Group.order(:created_at)
 
@@ -45,21 +44,6 @@ groups.each_with_index { |group, n|
   Membership.create!(group: group, member: members[n*5+3], position: Membership::POS_COMMON)
   Membership.create!(group: group, member: members[n*5+4], position: Membership::POS_VISITOR)
 }
-
-# rooms/messages
-groups.each do |group|
-
-  title = Faker::Book.title
-  outline = Faker::Lorem.sentence(20)
-  status = [Note::ST_CLOSE, Note::ST_OPEN].sample
-  room = group.rooms.create(title: title, outline: outline, status: status)
-
-  10.times do
-    member = group.members.sample
-    content = Faker::Lorem.sentence(10)
-    room.messages.create!(content: content, pen_name_id: member.id)
-  end
-end
 
 # tags
 ["tag1", "tag2", "tag3", "tag4", "tag5"].each do |name|
@@ -83,9 +67,9 @@ users.each do |user|
     pen_name_id = pen_name_ids.sample
       
     title = Faker::Book.title
-    description = Faker::Lorem.sentence(20)
+    outline = Faker::Lorem.sentence(20)
     status = [Note::ST_CLOSE, Note::ST_OPEN].sample
-    note = user.user_notes.create!(title: title, description: description,
+    note = user.user_notes.create!(title: title, outline: outline,
                                   pen_name_id: pen_name_id, status: status)
 
     number = 1
@@ -113,9 +97,9 @@ groups.each do |group|
     pen_name_id = pen_name_ids.sample
 
     title = Faker::Book.title
-    description = Faker::Lorem.sentence(20)
+    outline = Faker::Lorem.sentence(20)
     status = [Note::ST_CLOSE, Note::ST_OPEN].sample
-    note = group.group_notes.create!(title: title, description: description,
+    note = group.group_notes.create!(title: title, outline: outline,
                                     pen_name_id: pen_name_id, status: status)
 
     number = 1
@@ -136,6 +120,36 @@ users.each do |user|
   Note.order(:updated_at).each do |note|
     point = Array(-5..5).sample
     note.passive_readerships.create(reader_id: user.id, point: point)
+  end
+end
+
+# group_rooms/messages
+groups.each do |group|
+
+  title = Faker::Book.title
+  outline = Faker::Lorem.sentence(20)
+  status = [Note::ST_CLOSE, Note::ST_OPEN].sample
+  room = group.group_rooms.create(title: title, outline: outline, status: status)
+
+  10.times do
+    member = group.members.sample
+    content = Faker::Lorem.sentence(5)
+    room.messages.create!(content: content, pen_name_id: member.id)
+  end
+end
+
+# user_rooms/messages
+users.each do |user|
+
+  title = Faker::Book.title
+  outline = Faker::Lorem.sentence(20)
+  status = [Note::ST_CLOSE, Note::ST_OPEN].sample
+  room = user.user_rooms.create(title: title, outline: outline, status: status)
+
+  10.times do
+    pen_name = PenName.order(:created_at).sample
+    content = Faker::Lorem.sentence(5)
+    room.messages.create!(content: content, pen_name_id: pen_name.id)
   end
 end
 

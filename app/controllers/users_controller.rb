@@ -7,15 +7,14 @@ class UsersController < ApplicationController
 
     @user = User.find(params[:id])
     @all_notes = @user.user_notes
+    @all_rooms = @user.user_rooms
     @page_notes = @all_notes.paginate(page: params[:page])
-    @pen_names = @user.pen_names
-    @groups = @user.groups
+    @page_rooms = @all_rooms.paginate(page: params[:page])
   end
 
   def new
     @user = User.new
   end
-
   def create
     @user = User.new(user_params)
     if @user.save
@@ -30,7 +29,6 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(params[:id])
   end
-
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)

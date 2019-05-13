@@ -5,13 +5,13 @@
   <aside class="col-md-4">
 
     <section class="info">
-      (group room)<br>
+      (user room)<br>
 
-      <%= render 'rooms/info_header_body', room: @room %><br>
+      <%= render 'user_rooms/info_header_body', room: @room %><br>
 
       <%= icon_for(@room, { name: @room.title, size: 256 }) %><br>
 
-      <%= render 'rooms/info_footer', room: @room, kind: "show" %>
+      <%= render 'user_rooms/info_footer', room: @room, kind: "show" %>
 
     </section>
     

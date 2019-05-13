@@ -1,28 +1,20 @@
 class GroupsController < ApplicationController
   before_action :logged_in_user
-  before_action :group_is_exist,             except: [:index, :new, :create]
-  before_action :user_have_member,           except: [:index, :new, :create, :show, :join]
+  before_action :group_is_exist,             except: [:new, :create]
+  before_action :user_have_member,           except: [:new, :create, :show, :join]
 
-  before_action :allowed_user,                 only: [:show]
+  before_action :user_can_show,                only: [:show]
+  before_action :user_can_join,                only: [:join]
+  before_action :user_can_unjoin,              only: [:unjoin]
 
-  before_action :group_is_open,                only: [:join]
   before_action :user_pen_name,                only: [:create, :join, :unjoin]
-  before_action :not_group_member,             only: [:join]
 
   before_action :user_have_leader,             only: [:change_leader]
-  before_action :user_have_no_leader,          only: [:unjoin]
-  before_action :user_have_leading_member,     only: [:edit, :update, :destroy,
-                                                      :to_open, :to_close, :position]
+  before_action :user_have_leading_member,     only: [:edit, :update, :destroy, :position]
   before_action :group_member,                 only: [:position]
   before_action :position_check,               only: [:position]
 
   before_action :user_have_only_member,        only: [:destroy]
-
-  def index
-    @all_groups = Group.where(status: Group::ST_OPEN)
-    @page_groups = @all_groups.paginate(page: params[:page])
-    @sample_groups = @all_groups.sample(3)
-  end
 
   def show
     store_location
@@ -30,17 +22,13 @@ class GroupsController < ApplicationController
     pen_name = @group.get_user_member(current_user)
     if pen_name and @group.is_regular_member?(pen_name)
       @all_notes = @group.group_notes
-      @all_rooms = @group.rooms
+      @all_rooms = @group.group_rooms
     else
       @all_notes = @group.group_notes.where(status: Note::ST_OPEN)
-      @all_rooms = @group.rooms.where(status: Note::ST_OPEN)
+      @all_rooms = @group.group_rooms.where(status: Note::ST_OPEN)
     end
     @page_notes = @all_notes.paginate(page: params[:page])
     @page_rooms = @all_rooms.paginate(page: params[:page])
-  end
-  def members
-    @all_members = @group.members    
-    @page_members = @all_members.paginate(page: params[:page])    
   end
 
   def new
@@ -78,18 +66,6 @@ class GroupsController < ApplicationController
 
   #
 
-  def to_open
-    @group.to_open
-    redirect_to @group
-  end
-  def to_close
-    @group.to_close
-    @group.irregular_members.each do |visitor|
-      @group.unjoin(visitor)
-    end
-    redirect_to @group
-  end
-
   def join
     @group.join(@user_pen_name)
     redirect_to groups_path
@@ -101,17 +77,17 @@ class GroupsController < ApplicationController
 
   def change_leader
     @group.change_leader
-    redirect_to members_group_path(@group)
+    redirect_to group_members_path(@group)
   end
   def position
     @group.set_position(@group_member, @to_pos)
-    redirect_to members_group_path(@group)
+    redirect_to group_members_path(@group)
   end
 
   private
 
     def group_params
-      params.require(:group).permit(:name, :description, :picture, :pen_name_id)
+      params.require(:group).permit(:name, :outline, :picture, :pen_name_id, :status)
     end
 
     def group_is_exist
@@ -123,26 +99,23 @@ class GroupsController < ApplicationController
       redirect_to root_url unless @user_member
     end
 
-    def allowed_user
-      @user_member = @group.get_user_member(current_user)
-      unless @user_member or @group.is_open?
+    def user_can_show
+      user_member = @group.get_user_member(current_user)
+      unless user_member or @group.is_open? or @group.is_joinus?
         redirect_to root_url
       end  
     end
-
-    def group_is_open
-      unless @group.is_open?
-        redirect_to root_url
-      end
+    def user_can_join
+      user_member = @group.get_user_member(current_user)
+      redirect_to root_url unless (user_member == nil) and @group.is_joinus?
+    end
+    def user_can_unjoin
+      redirect_to root_url if @group.is_leader?(@user_member)
     end
 
     def group_member
       @group_member = @group.members.find_by(id: params[:group][:pen_name_id])
       redirect_to root_url unless @group_member
-    end
-    def not_group_member
-      @group_member = @group.members.find_by(id: params[:group][:pen_name_id])
-      redirect_to root_url if @group_member
     end
     def user_pen_name
       @user_pen_name = current_user.pen_names.find_by(id: params[:group][:pen_name_id])
@@ -161,9 +134,6 @@ class GroupsController < ApplicationController
 
     def user_have_leader
       redirect_to root_url unless @group.is_leader?(@user_member)
-    end
-    def user_have_no_leader
-      redirect_to root_url if @group.is_leader?(@user_member)
     end
     def user_have_leading_member
       redirect_to root_url unless @group.is_leading_member?(@user_member)

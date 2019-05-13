@@ -37,7 +37,7 @@
         user_notes (<%= @all_notes.count %>)
       </span>
       <span class="command">
-        <% if @pen_name.user == current_user %>
+        <% if @pen_name.can_update?(current_user) %>
           <%= link_to "[new]", new_user_note_path %>
         <% end %>
       </span>
