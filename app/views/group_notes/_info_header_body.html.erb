@@ -2,7 +2,7 @@
   <span class="title"><b><%= link_to note.title, group_group_note_path(note.group, note) %></b></span>
   <% if note.pen_name %>
     <span class="pen_name">
-      <% if note.pen_name.is_open? %>
+      <% if note.pen_name.can_show?(current_user) %>
         <i>by <%= link_to note.pen_name.name, note.pen_name %></i>
       <% else %>
         <i>by <%= note.pen_name.name %></i>
@@ -11,7 +11,7 @@
   <% end %>
   <% if note.group %>
     <span class="group">
-      <% if note.group.is_open? %>
+      <% if note.group.can_show?(current_user) %>
         <i>@ <%= link_to note.group.name, note.group %></i>
       <% else %>
         <i>@ <%= note.group.name %></i>
@@ -38,7 +38,8 @@
   </span>
 </span>
 
+<br>
+
 <span class="body">
   <span class="outline"><%= note.outline %></span>
 </span>
-      

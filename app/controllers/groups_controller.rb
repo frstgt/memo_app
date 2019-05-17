@@ -100,10 +100,7 @@ class GroupsController < ApplicationController
     end
 
     def user_can_show
-      user_member = @group.get_user_member(current_user)
-      unless user_member or @group.is_open? or @group.is_joinus?
-        redirect_to root_url
-      end  
+      redirect_to root_url unless @group.can_show?(current_user)
     end
     def user_can_join
       user_member = @group.get_user_member(current_user)

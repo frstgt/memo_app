@@ -1,4 +1,13 @@
 <% provide(:title, @pen_name.name + " Home") %>
+
+<% if @pen_name.user == current_user %>
+  <% new_room_command = link_to "[new]", new_user_room_path %>
+  <% new_note_command = link_to "[new]", new_user_note_path %>
+<% else %>
+  <% new_room_command = "" %>
+  <% new_note_command = "" %>
+<% end %>
+
 <div class="row">
 
   <aside class="col-md-4">
@@ -6,48 +15,26 @@
     <section class="info">
       (pen_name home)<br>
 
-      <%= render 'pen_names/info_header_body', pen_name: @pen_name %>
+      <%= render 'pen_names/info_header_body', pen_name: @pen_name %><br>
 
-      <%= icon_for(@pen_name, { name: @pen_name.name, size: 256 }) %>
+      <%= icon_for(@pen_name, { name: @pen_name.name, size: 256 }) %><br>
 
       <%= render 'pen_names/info_footer', pen_name: @pen_name, kind: "show" %>
     </section>
 
     <hr>
 
-    <span class="side_header">
-      <span class="count">
-        groups (<%= @groups.count %>)
-      </span>
-      <span class="command">
-      </span>
-    </span>
-    <% if @groups.any? %>
-      <ol class="side_list">
-        <%= render @groups %>
-      </ol>
-    <% end %>
+    <%= render 'shared/paging_list',
+                title: "user rooms", all_list: @all_rooms, page_list: @page_rooms,
+                command: new_room_command, paging: true %>
 
   </aside>
 
   <div class="col-md-8">
 
-    <span class="main_header">
-      <span class="count">
-        user_notes (<%= @all_notes.count %>)
-      </span>
-      <span class="command">
-        <% if @pen_name.can_update?(current_user) %>
-          <%= link_to "[new]", new_user_note_path %>
-        <% end %>
-      </span>
-    </span>
-    <% if @all_notes.any? %>
-      <ol class="note_list">
-        <%= render @page_notes %>
-      </ol>
-      <%= will_paginate @page_notes, renderer: will_pagenate_renderer %>
-    <% end %>
+    <%= render 'shared/paging_list',
+                title: "user notes", all_list: @all_notes, page_list: @page_notes,
+                command: new_note_command, paging: true %>
 
   </div>
 

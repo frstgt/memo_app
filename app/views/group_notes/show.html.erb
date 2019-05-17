@@ -1,6 +1,12 @@
 <% provide(:title, @note.title) %>
 
-<% pen_name = @note.group.get_user_member(current_user) %>
+<% if @note.can_update?(current_user) %>
+  <% new_memo_command = link_to "[new]", new_note_memo_path(@note) %>
+  <% new_picture_command = link_to "[new]", new_note_picture_path(@note) %>
+<% else %>
+  <% new_memo_command = "" %>
+  <% new_picture_command = "" %>
+<% end %>
 
 <div class="row">
 
@@ -9,9 +15,9 @@
     <section class="info">
       (group_note)<br>
 
-      <%= render 'group_notes/info_header_body', note: @note %>
+      <%= render 'group_notes/info_header_body', note: @note %><br>
 
-      <%= icon_for(@note, { name: @note.title, size: 256 }) %>
+      <%= icon_for(@note, { name: @note.title, size: 256 }) %><br>
 
       <%= render 'group_notes/info_footer', note: @note, kind: "show" %>
     </section>
@@ -19,41 +25,18 @@
     <hr>
 
     <% if @note.can_update?(current_user) %>
-      <span class="side_header small">
-        <span class="count">
-          pictures (<%= @pictures.count %>)
-        </span>
-        <span class="command">
-          <%= link_to "[new]", new_note_picture_path(@note) %>
-        </span>
-      </span>
-      <% if @pictures.any? %>
-        <ol class="picture_list small">
-          <%= render @pictures %>
-        </ol>
-      <% end %>
+      <%= render 'shared/paging_pictures',
+                  title: "pictures", all_list: @pictures, page_list: @pictures,
+                  command: new_picture_command, paging: false %>
     <% end %>
     
   </aside>
 
   <div class="col-md-8">
 
-    <span class="main_header">
-      <span class="count">
-        memos (<%= @all_memos.count %>)
-      </span>
-      <span class="command">
-        <% if @note.can_update?(current_user) %>
-          <%= link_to "[new]", new_note_memo_path(@note) %>
-        <% end %>
-      </span>
-    </span>
-    <% if @all_memos.any? %>
-      <ol class="memo_list">
-        <%= render @page_memos %>
-      </ol>
-      <%= will_paginate @page_memos, renderer: will_pagenate_renderer %>
-    <% end %>
+    <%= render 'shared/paging_memos',
+                title: "memos", all_list: @all_memos, page_list: @page_memos,
+                command: new_memo_command, paging: true %>
 
   </div>
 

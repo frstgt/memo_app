@@ -3,8 +3,12 @@
   <%= icon_for(member, { name: member.name, size: 64 }) %>
 
   <span class="header">
-    <span class="position">(<%= @group.get_position_name(member) %>)</span>
     <span class="name"><b><%= link_to member.name, member %></b></span>
+    <span class="position">
+      <span class="badge badge-info">
+        <%= @group.get_position_name(member) %>
+      </span>
+    </span>
     <% if member.user == current_user %>
       <span class="badge badge-info">me</span>
     <% end %>

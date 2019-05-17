@@ -23,17 +23,9 @@
       <%= render 'messages/form' %>
     </span>
 
-    <span class="main_header">
-      <span class="count">
-        messages (<%= @all_messages.count %>)
-      </span>
-    </span>
-    <% if @all_messages.any? %>
-      <ol class="note_list">
-        <%= render @page_messages %>
-      </ol>
-      <%= will_paginate @page_messages, renderer: will_pagenate_renderer %>
-    <% end %>
+    <%= render 'shared/paging_list',
+                title: "messages", all_list: @all_messages, page_list: @page_messages,
+                command: "", paging: true %>
 
   </div>
 

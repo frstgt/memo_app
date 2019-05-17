@@ -6,15 +6,21 @@
   <div class="col-md-6">
     <%= form_for(:session, url: login_path) do |f| %>
 
-      <%= f.label :name %>
-      <%= f.text_field :name, class: 'form-control' %>
+      <div class='form-group'>
+        <%= f.label :name %>
+        <%= f.text_field :name, class: 'form-control' %>
+      </div>
 
-      <%= f.label :password %>
-      <%= f.password_field :password, class: 'form-control' %>
+      <div class='form-group'>
+        <%= f.label :password %>
+        <%= f.password_field :password, class: 'form-control' %>
+      </div>
 
-      <%= f.submit "Log in", class: "btn btn-primary" %>
+      <div class='form-group text-right'>
+        <%= f.submit "Log in", class: "btn btn-primary" %>
+      </div>
     <% end %>
 
-    <p>New user? <%= link_to "Sign up now!", signup_path %></p>
+    <p class='center'>New user? <%= link_to "Sign up now!", signup_path %></p>
   </div>
 </div>

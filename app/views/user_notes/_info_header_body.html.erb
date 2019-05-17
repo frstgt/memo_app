@@ -1,8 +1,9 @@
 <span class="header">
   <span class="title"><b><%= link_to note.title, note %></b></span>
+
   <% if note.pen_name %>
     <span class="pen_name">
-      <% if note.pen_name.is_open? %>
+      <% if note.pen_name.can_show?(current_user) %>
         <i>by <%= link_to note.pen_name.name, note.pen_name %></i>
       <% else %>
         <i>by <%= note.pen_name.name %></i>
@@ -28,6 +29,8 @@
     <% end %>
   </span>
 </span>
+
+<br>
 
 <span class="body">
   <span class="outline"><%= note.outline %></span>

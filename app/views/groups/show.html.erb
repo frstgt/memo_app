@@ -1,6 +1,13 @@
 <% provide(:title, @group.name + " Home") %>
 
 <% pen_name = @group.get_user_member(current_user) %>
+<% if pen_name and @group.is_leading_member?(pen_name) %>
+  <% new_room_command = link_to "[new]", new_group_group_room_path(@group) %>
+  <% new_note_command = link_to "[new]", new_group_group_note_path(@group) %>
+<% else %>
+  <% new_room_command = "" %>
+  <% new_note_command = "" %>
+<% end %>
 
 <div class="row">
 
@@ -10,9 +17,9 @@
 
       (group home)<br>
 
-      <%= render 'groups/info_header_body', group: @group, pen_name: pen_name %>
+      <%= render 'groups/info_header_body', group: @group, pen_name: pen_name %><br>
 
-      <%= icon_for(@group, { name: @group.name, size: 256 }) %>
+      <%= icon_for(@group, { name: @group.name, size: 256 }) %><br>
 
       <%= render 'groups/info_footer',
                   group: @group, pen_name: pen_name, kind: "show" %>
@@ -21,44 +28,17 @@
 
     <hr>
 
-    <span class="main_header">
-      <span class="count">
-        rooms (<%= @all_rooms.count %>)
-      </span>
-      <span class="command">
-        <% if pen_name and @group.is_leading_member?(pen_name) %>
-          <%= link_to "[new]", new_group_group_room_path(@group) %>
-        <% end %>
-      </span>
-    </span>
-    <% if @all_rooms.any? %>
-      <ol class="note_list">
-        <%= render @page_rooms %>
-      </ol>
-      <%= will_paginate @page_rooms, renderer: will_pagenate_renderer %>
-    <% end %>
+    <%= render 'shared/paging_list',
+                title: "group rooms", all_list: @all_rooms, page_list: @page_rooms,
+                command: new_room_command, paging: true %>
 
   </aside>
 
   <div class="col-md-8">
 
-    <span class="main_header">
-      <span class="count">
-        group_notes (<%= @all_notes.count %>)
-      </span>
-      <span class="command">
-        <%= link_to "[notes]", notes_path %>
-        <% if pen_name and @group.is_leading_member?(pen_name) %>
-          <%= link_to "[new]", new_group_group_note_path(@group) %>
-        <% end %>
-      </span>
-    </span>
-    <% if @all_notes.any? %>
-      <ol class="note_list">
-        <%= render @page_notes %>
-      </ol>
-      <%= will_paginate @page_notes, renderer: will_pagenate_renderer %>
-    <% end %>
+    <%= render 'shared/paging_list',
+                title: "group notes", all_list: @all_notes, page_list: @page_notes,
+                command: new_note_command, paging: true %>
 
   </div>
 

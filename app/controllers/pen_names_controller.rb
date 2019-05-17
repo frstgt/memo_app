@@ -12,11 +12,13 @@ class PenNamesController < ApplicationController
 
     if @pen_name.can_update?(current_user)
       @all_notes = @pen_name.user_notes
+      @all_rooms = @pen_name.user_rooms
     else
       @all_notes = @pen_name.user_notes.where(status: Note::ST_OPEN)
+      @all_rooms = @pen_name.user_rooms.where(status: Room::ST_OPEN)
     end
     @page_notes = @all_notes.paginate(page: params[:page])
-    @groups = @pen_name.groups
+    @page_rooms = @all_rooms.paginate(page: params[:page])
   end
 
   def new

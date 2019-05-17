@@ -57,11 +57,12 @@ tag_ids.append(nil)
 
 # user_notes/memos
 users.each do |user|
+
   pen_name_ids = []
   user.pen_names.each do |pen_name|
     pen_name_ids.append(pen_name.id)
   end
-  pen_name_ids.append(nil)  
+  pen_name_ids.append(nil)
 
   3.times do
     pen_name_id = pen_name_ids.sample
@@ -87,6 +88,7 @@ end
 
 # group_notes/memos
 groups.each do |group|
+
   pen_name_ids = []
   group.members.each do |pen_name|
     pen_name_ids.append(pen_name.id)
@@ -126,30 +128,50 @@ end
 # group_rooms/messages
 groups.each do |group|
 
-  title = Faker::Book.title
-  outline = Faker::Lorem.sentence(20)
-  status = [Note::ST_CLOSE, Note::ST_OPEN].sample
-  room = group.group_rooms.create(title: title, outline: outline, status: status)
+  pen_name_ids = []
+  group.members.each do |pen_name|
+    pen_name_ids.append(pen_name.id)
+  end
+  pen_name_ids.append(nil)  
 
-  10.times do
-    member = group.members.sample
-    content = Faker::Lorem.sentence(5)
-    room.messages.create!(content: content, pen_name_id: member.id)
+  3.times do
+    title = Faker::Book.title
+    outline = Faker::Lorem.sentence(20)
+    pen_name_id = pen_name_ids.sample
+    status = [Note::ST_CLOSE, Note::ST_OPEN].sample
+    room = group.group_rooms.create(title: title, outline: outline,
+                                    pen_name_id: pen_name_id, status: status)
+
+    5.times do
+      member = group.members.sample
+      content = Faker::Lorem.sentence(5)
+      room.messages.create!(content: content, pen_name_id: member.id)
+    end
   end
 end
 
 # user_rooms/messages
 users.each do |user|
 
-  title = Faker::Book.title
-  outline = Faker::Lorem.sentence(20)
-  status = [Note::ST_CLOSE, Note::ST_OPEN].sample
-  room = user.user_rooms.create(title: title, outline: outline, status: status)
+  pen_name_ids = []
+  user.pen_names.each do |pen_name|
+    pen_name_ids.append(pen_name.id)
+  end
+  pen_name_ids.append(nil)
 
-  10.times do
-    pen_name = PenName.order(:created_at).sample
-    content = Faker::Lorem.sentence(5)
-    room.messages.create!(content: content, pen_name_id: pen_name.id)
+  3.times do
+    title = Faker::Book.title
+    outline = Faker::Lorem.sentence(20)
+    pen_name_id = pen_name_ids.sample
+    status = [Note::ST_CLOSE, Note::ST_OPEN].sample
+    room = user.user_rooms.create(title: title, outline: outline,
+                                  pen_name_id: pen_name_id, status: status)
+
+    5.times do
+      pen_name = PenName.order(:created_at).sample
+      content = Faker::Lorem.sentence(5)
+      room.messages.create!(content: content, pen_name_id: pen_name.id)
+    end
   end
 end
 

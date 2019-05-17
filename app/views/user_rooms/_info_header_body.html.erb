@@ -3,6 +3,16 @@
     <b><%= link_to room.title, room %></b>
   </span>
 
+  <% if room.pen_name %>
+    <span class="pen_name">
+      <% if room.pen_name.can_show?(current_user) %>
+        <i>by <%= link_to room.pen_name.name, room.pen_name %></i>
+      <% else %>
+        <i>by <%= room.pen_name.name %></i>
+      <% end %>
+    </span>
+  <% end %>
+
   <% if room.is_open? %>
     <span class="badge badge-primary">open</span>
   <% else %>

@@ -166,6 +166,11 @@ class Group < ApplicationRecord
     member
   end
 
+  def can_show?(user)
+    user_member = self.get_user_member(user)
+    user_member or self.is_open? or self.is_joinus?
+  end
+
   private
 
     def picture_size

@@ -6,19 +6,9 @@
 
   <div class="col-md-8">
 
-    <span class="main_header">
-      <span class="count">
-        tagged notes (<%= @all_notes.count %>)
-      </span>
-      <span class="command">
-      </span>
-    </span>
-    <% if @all_notes.any? %>
-      <ol class="note_list">
-        <%= render @page_notes %>
-      </ol>
-      <%= will_paginate @page_notes, renderer: will_pagenate_renderer %>
-    <% end %>
+    <%= render 'shared/paging_list',
+                title: "tagged notes", all_list: @all_notes, page_list: @page_notes,
+                command: "", paging: true %>
 
   </div>
 

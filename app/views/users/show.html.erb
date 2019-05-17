@@ -22,39 +22,17 @@
 
     <hr>
 
-    <span class="main_header">
-      <span class="count">
-        rooms (<%= @all_rooms.count %>)
-      </span>
-      <span class="command">
-        <%= link_to "[new]", new_user_room_path %>
-      </span>
-    </span>
-    <% if @all_rooms.any? %>
-      <ol class="note_list">
-        <%= render @page_rooms %>
-      </ol>
-      <%= will_paginate @page_rooms, renderer: will_pagenate_renderer %>
-    <% end %>
+    <%= render 'shared/paging_list',
+                title: "user rooms", all_list: @all_rooms, page_list: @page_rooms,
+                command: (link_to "[new]", new_user_room_path), paging: true %>
 
   </aside>
 
   <div class="col-md-8">
 
-    <span class="main_header">
-      <span class="count">
-        user_notes (<%= @all_notes.count %>)
-      </span>
-      <span class="command">
-        <%= link_to "[new]", new_user_note_path %>
-      </span>
-    </span>
-    <% if @all_notes.any? %>
-      <ol class="note_list">
-        <%= render @page_notes %>
-      </ol>
-      <%= will_paginate @page_notes, renderer: will_pagenate_renderer %>
-    <% end %>
+    <%= render 'shared/paging_list',
+                title: "user notes", all_list: @all_notes, page_list: @page_notes,
+                command: (link_to "[new]", new_user_note_path), paging: true %>
 
   </div>
 

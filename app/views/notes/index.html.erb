@@ -3,36 +3,17 @@
 
   <aside class="col-md-4">
 
-    <span class="side_header">
-      <span class="count">
-        pickups (<%= @sample_notes.count %>)
-      </span>
-      <span class="new_command">
-      </span>
-    </span>
-    <% if @sample_notes.any? %>
-      <ol class="side_list">
-        <%= render @sample_notes %>
-      </ol>
-    <% end %>
+    <%= render 'shared/paging_list',
+                title: "pickups", all_list: @sample_notes, page_list: @sample_notes,
+                command: "", paging: false %>
 
   </aside>
 
   <div class="col-md-8">
 
-    <span class="main_header">
-      <span class="count">
-        notes (<%= @all_notes.count %>)
-      </span>
-      <span class="new_command">
-      </span>
-    </span>
-    <% if @all_notes.any? %>
-      <ol class="note_list">
-        <%= render @page_notes %>
-      </ol>
-      <%= will_paginate @page_notes, renderer: will_pagenate_renderer %>
-    <% end %>
+    <%= render 'shared/paging_list',
+                title: "notes", all_list: @all_notes, page_list: @page_notes,
+                command: "", paging: true %>
 
   </div>
 

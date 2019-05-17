@@ -1,0 +1,22 @@
+<!-- title -->
+<!-- all_list -->
+<!-- page_list -->
+<!-- command -->
+<!-- paging -->
+
+<span class="paging_list_header">
+  <span class="count">
+    <%= title %> (<%= all_list.count %>)
+  </span>
+  <span class="command">
+    <%= command %>
+  </span>
+</span>
+<% if all_list.any? %>
+  <ol class="paging_list_body">
+    <%= render page_list %>
+  </ol>
+  <% if paging %>
+    <%= will_paginate page_list, renderer: will_pagenate_renderer %>
+  <% end %>
+<% end %>

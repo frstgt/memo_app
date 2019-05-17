@@ -22,20 +22,10 @@
 
   <div class="col-md-8">
 
-    <span class="main_header">
-      <span class="count">
-        members (<%= @all_members.count %>)
-      </span>
-      <span class="new_command">
-      </span>
-    </span>
+    <%= render 'shared/paging_members',
+                title: "group members", all_list: @all_members, page_list: @page_members,
+                command: "", paging: true %>
 
-    <% if @all_members.any? %>
-      <ol class="note_list">
-        <%= render :partial => "member", :collection => @page_members %>
-      </ol>
-      <%= will_paginate @page_members, renderer: will_pagenate_renderer %>
-    <% end %>
   </div>
 
 </div>
