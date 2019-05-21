@@ -1,16 +1,17 @@
-<li id="memo-<%= memo.id %>">
+<li id="memo-<%= memo.id %>" class="media">
 
-  <span class="header">
-    <% if memo.title %>
-      <span class="title"><b><%= memo.title %></b></span>
-    <% end %>
-  </span>
+  <div class="media-body">
 
-  <span class="body">
-    <span class="content"><%= sanitize markdown(memo.content) %></span>
-  </span>
+    <span class="title">
+      <% if memo.title %>
+        <b><%= memo.title %></b>
+      <% end %>
+    </span>
 
-  <span class="footer">
+    <span class="content">
+      <%= sanitize markdown(memo.content) %>
+    </span>
+
     <span class="timestamp text-muted">
       <%= timestamp(memo) %>
     </span>
@@ -26,6 +27,7 @@
                                 method: :delete, data: { confirm: "You sure?" } %>
       <% end %>
     </span>
-  </span>
+
+  </div>
 
 </li>

@@ -1,26 +1,27 @@
-<li id="picture-<%= picture.id %>">
+<li id="picture-<%= picture.id %>" class="media">
 
-  <span class="header">
-    <% if picture.picture? %>
-      <%= image_tag picture.picture.url(:thumb) %>
-    <% end %>
-  </span>
+  <% if picture.picture? %>
+    <%= image_tag picture.picture.url(:thumb), class: "icon mr-3" %>
+  <% end %>
 
-  <span class="body">
-    <% if picture.picture? %>
-      <%= link_to "#{picture.picture.url}", picture.picture.url %>
-    <% end %>
-  </span>
+  <div class="media-body">
 
-  <span class="footer">
+    <span class="picture-url">
+      <% if picture.picture? %>
+        <%= link_to "#{picture.picture.url}", picture.picture.url %>
+      <% end %>
+    </span>
+
     <span class="timestamp text-muted">
       <%= timestamp(picture) %>
     </span>
+
     <span class="command">
       <%= link_to "[edit]", edit_note_picture_path(@note, picture) %>
       <%= link_to "[delete]", note_picture_path(@note, picture),
                               method: :delete, data: { confirm: "You sure?" } %>
     </span>
-  </span>
+
+  </div>
 
 </li>

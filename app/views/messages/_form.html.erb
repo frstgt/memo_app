@@ -4,7 +4,7 @@
   <div class="form-group">
     <% pen_name = @room.get_user_pen_name(current_user) %>
     <% if pen_name %>
-      <%= f.select :pen_name_id, [pen_name.name, pen_name.id], class: 'form-control' %>
+      <%= f.select :pen_name_id, [[pen_name.name, pen_name.id]], class: 'form-control' %>
     <% else %>
       <%= f.select :pen_name_id,
                    current_user.pen_names.collect { |pen_name| [pen_name.name, pen_name.id] },

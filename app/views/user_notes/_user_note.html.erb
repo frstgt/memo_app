@@ -1,9 +1,10 @@
-<li id="user_note-<%= user_note.id %>">
+<li id="user_note-<%= user_note.id %>" class="media">
 
     <%= icon_for(user_note, { name: user_note.title, size: 64 }) %>
 
-    <%= render 'user_notes/info_header_body', note: user_note %>
-
-    <%= render 'user_notes/info_footer', note: user_note, kind: "_user_note" %>
+    <div class="media-body">
+        <%= render 'user_notes/info_header_body', note: user_note %>
+        <%= render 'user_notes/info_footer', note: user_note, kind: "_user_note" %>
+    </div>
 
 </li>

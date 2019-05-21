@@ -1,23 +1,23 @@
-<span class="header">
-  <span class="name">
+<span class="name">
+  <% if group.can_show?(current_user) %>
     <b><%= link_to group.name, group %></b>
-  </span>
-
-  <% if group.is_joinus? %>
-    <span class="badge badge-warning">join us</span>
-  <% elsif group.is_open? %>
-    <span class="badge badge-primary">open</span>
   <% else %>
-    <span class="badge badge-dark">closed</span>
-  <% end %>
-
-  <% if pen_name %>
-    <span class="badge badge-info">us</span>
+    <b><%= group.name %></b>
   <% end %>
 </span>
 
-<br>
+<% if group.is_joinus? %>
+  <span class="badge badge-warning">join us</span>
+<% elsif group.is_open? %>
+  <span class="badge badge-primary">open</span>
+<% else %>
+  <span class="badge badge-dark">closed</span>
+<% end %>
 
-<span class="body">
-  <span class="outline"><%= group.outline %></span>
-</span>
+<% if pen_name %>
+  <span class="badge badge-info">us</span>
+<% end %>
+
+<div class="outline">
+  <%= group.outline %>
+</div>

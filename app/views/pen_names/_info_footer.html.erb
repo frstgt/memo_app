@@ -1,28 +1,26 @@
-<span class="footer">
-  <span class="timestamp text-muted">
-    <%= timestamp(pen_name) %>
-  </span>
+<span class="timestamp text-muted">
+  <%= timestamp(pen_name) %>
+</span>
 
-  <span class="counter text-muted">
-    (
-      <% if pen_name.can_update?(current_user) %>
-        <%= "user_notes: #{pen_name.user_notes.count}" %>,
-      <% else %>
-        <%= "user_notes: #{pen_name.user_notes.where(status: Note::ST_OPEN).count}" %>,
-      <% end %>
-      <%= "groups: #{pen_name.groups.count}" %>
-    )
-  </span>
-
-  <span class="command">
-    <% if kind == "show" %>
-      <% if pen_name.can_update?(current_user) %>
-        <%= link_to "[edit]", edit_pen_name_path(pen_name) %>
-      <% end %>
-      <% if pen_name.can_destroy?(current_user) %>
-        <%= link_to "[delete]", pen_name,
-                    method: :delete, data: { confirm: "You sure?" } %> 
-      <% end %>
+<span class="counter text-muted">
+  (
+    <% if pen_name.can_update?(current_user) %>
+      <%= "user_notes: #{pen_name.user_notes.count}" %>,
+    <% else %>
+      <%= "user_notes: #{pen_name.user_notes.where(status: Note::ST_OPEN).count}" %>,
     <% end %>
-  </span>
+    <%= "groups: #{pen_name.groups.count}" %>
+  )
+</span>
+
+<span class="command">
+  <% if kind == "show" %>
+    <% if pen_name.can_update?(current_user) %>
+      <%= link_to "[edit]", edit_pen_name_path(pen_name) %>
+    <% end %>
+    <% if pen_name.can_destroy?(current_user) %>
+      <%= link_to "[delete]", pen_name,
+                  method: :delete, data: { confirm: "You sure?" } %> 
+    <% end %>
+  <% end %>
 </span>

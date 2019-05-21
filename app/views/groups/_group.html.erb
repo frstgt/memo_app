@@ -1,10 +1,11 @@
-<li id="group-<%= group.id %>">
+<li id="group-<%= group.id %>" class="media">
   <% pen_name = group.get_user_member(current_user) %>
 
   <%= icon_for(group, { name: group.name, size: 64 }) %>
 
-  <%= render 'groups/info_header_body', group: group, pen_name: pen_name %>
-
-  <%= render 'groups/info_footer',
-              group: group, pen_name: pen_name, kind: "_group" %>
+  <div class="media-body">
+    <%= render 'groups/info_header_body', group: group, pen_name: pen_name %>
+    <%= render 'groups/info_footer',
+                group: group, pen_name: pen_name, kind: "_group" %>
+  </div>
 </li>

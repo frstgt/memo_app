@@ -20,10 +20,8 @@
 
     </section>
 
-    <hr>
-
     <%= render 'shared/paging_list',
-                title: "user rooms", all_list: @all_rooms, page_list: @page_rooms,
+                title: "rooms", all_list: @all_rooms, page_list: @page_rooms,
                 command: (link_to "[new]", new_user_room_path), paging: true %>
 
   </aside>
@@ -31,7 +29,7 @@
   <div class="col-md-8">
 
     <%= render 'shared/paging_list',
-                title: "user notes", all_list: @all_notes, page_list: @page_notes,
+                title: "notes", all_list: @all_notes, page_list: @page_notes,
                 command: (link_to "[new]", new_user_note_path), paging: true %>
 
   </div>

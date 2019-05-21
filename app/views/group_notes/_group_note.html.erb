@@ -1,11 +1,10 @@
-<li id="group_note-<%= group_note.id %>">
-
-  <% pen_name = group_note.group.get_user_member(current_user) %>
+<li id="group_note-<%= group_note.id %>" class="media">
 
   <%= icon_for(group_note, { name: group_note.title, size: 64 }) %>
 
-  <%= render 'group_notes/info_header_body', note: group_note %>
-
-  <%= render 'group_notes/info_footer', note: group_note, kind: "_group_note" %>
+  <div class="media-body">
+    <%= render 'group_notes/info_header_body', note: group_note %>
+    <%= render 'group_notes/info_footer', note: group_note, kind: "_group_note" %>
+  </div>
 
 </li>

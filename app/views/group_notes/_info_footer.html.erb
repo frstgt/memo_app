@@ -1,21 +1,19 @@
-<span class="footer">
-  <span class="timestamp text-muted">
-    <%= timestamp(note) %>
-  </span>
+<span class="timestamp text-muted">
+  <%= timestamp(note) %>
+</span>
 
-  <span class="command">
-    <% if kind == "show" %>
-      <% if note.can_update?(current_user) %>
-        <%= link_to "[edit]", edit_group_group_note_path(note.group, note) %>
-      <% end %>
-      <% if note.can_destroy?(current_user) %>
-        <%= link_to "[delete]", group_group_note_path(note.group, note), method: :delete,
-                                data: { confirm: "You sure?" } %>
-      <% end %>
+<span class="command">
+  <% if kind == "show" %>
+    <% if note.can_update?(current_user) %>
+      <%= link_to "[edit]", edit_group_group_note_path(note.group, note) %>
     <% end %>
+    <% if note.can_destroy?(current_user) %>
+      <%= link_to "[delete]", group_group_note_path(note.group, note), method: :delete,
+                              data: { confirm: "You sure?" } %>
+    <% end %>
+  <% end %>
 
-    <% if kind == "_group_note" %>
-      <%= render 'notes/point_command', note: note %>
-    <% end %>
-  </span>
+  <% if kind == "_group_note" %>
+    <%= render 'notes/point_command', note: note %>
+  <% end %>
 </span>

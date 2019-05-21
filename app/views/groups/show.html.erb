@@ -17,7 +17,7 @@
 
       (group home)<br>
 
-      <%= render 'groups/info_header_body', group: @group, pen_name: pen_name %><br>
+      <%= render 'groups/info_header_body', group: @group, pen_name: pen_name %>
 
       <%= icon_for(@group, { name: @group.name, size: 256 }) %><br>
 
@@ -26,10 +26,8 @@
 
     </section>
 
-    <hr>
-
     <%= render 'shared/paging_list',
-                title: "group rooms", all_list: @all_rooms, page_list: @page_rooms,
+                title: "rooms", all_list: @all_rooms, page_list: @page_rooms,
                 command: new_room_command, paging: true %>
 
   </aside>
@@ -37,7 +35,7 @@
   <div class="col-md-8">
 
     <%= render 'shared/paging_list',
-                title: "group notes", all_list: @all_notes, page_list: @page_notes,
+                title: "notes", all_list: @all_notes, page_list: @page_notes,
                 command: new_note_command, paging: true %>
 
   </div>

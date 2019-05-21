@@ -5,7 +5,7 @@
 $gray-base: #000 !default;
 $gray-darker: lighten($gray-base, 13.5%) !default; // #222
 $gray: lighten($gray-base, 33.5%) !default; // #555
-$gray-light: lighten($gray-base, 46.7%) !default; // #777
+$gray-lighter: lighten($gray-base, 46.7%) !default; // #777
 
 $state-danger-text: #a94442 !default;
 
@@ -66,7 +66,7 @@ footer {
   margin-top: 45px;
   padding-top: 5px;
   border-top: 1px solid $gray-medium-light;
-  color: $gray-light;
+  color: $gray-lighter;
   a {
     color: $gray;
     &:hover {
@@ -112,37 +112,12 @@ aside {
     }
     .timestamp {
       display: block;
-      color: $gray-light;
+      color: $gray-lighter;
     }
   }
 }
 
 /* forms */
-
-/*
-.form_control {
-  text-align: center
-}
-
-input, textarea, select, .uneditable-input {
-  border: 1px solid #bbb;
-  width: 100%;
-  margin-bottom: 15px;
-  @include box_sizing;
-}
-
-input {
-  height: auto !important;
-}
-
-.message_form {
-  textarea, input {
-    display: block;
-    margin-left: 0px;
-    width: 100%;
-  }
-}
-*/
 
 #error_explanation {
   color: red;
@@ -182,109 +157,27 @@ input {
   }
 }
 
-/* notes, memos, pen_names, groups */
+/* list */
 
-.main_header {
-  display: block;
-  .count {
-    color: $gray-light;
+.paging_list_header {
+  background: #e8e8e8;
+  .title-count {
+    margin-left: 5px;
+  }
+  .command {
+    margin-right: 5px;
   }
 }
 
-.side_header {
-  display: block;
-  .count {
-    color: $gray-light;
-  }
-}
-
-aside {
-  textarea {
-    height: 100px;
-    margin-bottom: 5px;
-  }
-}
-
-span.picture {
-  margin-top: 10px;
-  input {
-    border: 0;
-  }
-}
-
-.paging_list_body { // notes, books, pen_names, groups
-  list-style: none;
-  padding: 0;
+.list-unstyled {
   li {
-    padding: 10px 0px;
-    border-top: 1px solid #e8e8e8;
-  }
-  img {
-    float: left;
-    margin-right: 10px;
-    margin-top: 5px;
-  }
-  .header {
-    margin-top: 5em;
-    padding-top: 0;
-  }
-  .body {
-    display: block;
-    margin-left: 74px;
-  }
-  .footer {
-    display: block;
-    margin-left: 74px;
+    padding: 10px 0;
+    border-bottom: 1px solid #e8e8e8;
   }
 }
-.paging_memos_body { // memos
-  list-style: none;
-  padding: 0;
-  li {
-    padding: 10px 0px;
-    border-top: 1px solid #e8e8e8;
-  }
-  .header {
-    margin-top: 5em;
-    padding-top: 0;
-  }
-  .body {
-    display: block;
-    margin-left: 0px;
-    img {
-      display: block;
-    }
-  }
-  .footer {
-    display: block;
-    margin-left: 0px;
-  }
-}
-.paging_pictures_body {
-  list-style: none;
-  padding: 0;
-  li {
-    padding: 10px 0px;
-    border-top: 1px solid #e8e8e8;
-  }
-  img {
-    float: left;
-    margin-right: 10px;
-    margin-top: 5px;
-  }
-  .header {
-    margin-top: 5em;
-    padding-top: 0;
-  }
-  .body {
-    display: block;
-    margin-left: 60px;
-  }
-  .footer {
-    display: block;
-    margin-left: 60px;
-    margin-bottom: 0px;
-  }
+
+.tags {
+  background: #f8f8f8;
 }
 
 .command {

@@ -2,16 +2,17 @@
 
   <%= render 'shared/error_messages', object: f.object %>
 
-  <span class="picture">
+  <div class="form-group">
     <%= f.label :picture %><br>
     <% if @picture.picture? %>
       <%= image_tag @picture.picture.url(:thumb) %>
-      <%= @picture.picture.url %>
     <% end %>
     <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
-  </span>
+  </div>
 
-  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+  <div class="form-group text-right">
+    <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+  </div>
 
 <% end %>
 

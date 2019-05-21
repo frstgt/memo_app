@@ -55,7 +55,7 @@ class GroupRoomsController < ApplicationController
       redirect_to root_url unless @group
     end
     def room_is_exist
-      @note = Room.find_by(id: params[:id])
+      @room = Room.find_by(id: params[:id])
       redirect_to root_url unless @room
     end
 

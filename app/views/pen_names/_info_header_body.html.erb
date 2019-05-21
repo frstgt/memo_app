@@ -1,21 +1,21 @@
-<span class="header">
-  <span class="name">
+<span class="name">
+  <% if pen_name.can_show?(current_user) %>
     <b><%= link_to pen_name.name, pen_name %></b>
-  </span>
-
-  <% if pen_name.is_open? %>
-    <span class="badge badge-primary">open</span>
   <% else %>
-    <span class="badge badge-dark">closed</span>
-  <% end %>
-
-  <% if pen_name.user == current_user %>
-    <span class="badge badge-info">me</span>
+    <b><%= pen_name.name %></b>
   <% end %>
 </span>
 
-<br>
+<% if pen_name.is_open? %>
+  <span class="badge badge-primary">open</span>
+<% else %>
+  <span class="badge badge-dark">closed</span>
+<% end %>
 
-<span class="body">
-  <span class="outline"><%= pen_name.outline %></span>
-</span>
+<% if pen_name.user == current_user %>
+  <span class="badge badge-info">me</span>
+<% end %>
+
+<div class="outline">
+  <%= pen_name.outline %>
+</div>

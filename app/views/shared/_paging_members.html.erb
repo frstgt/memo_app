@@ -4,16 +4,16 @@
 <!-- command -->
 <!-- paging -->
 
-<span class="paging_list_header">
+<div class="paging_list_header">
   <span class="count">
     <%= title %> (<%= all_list.count %>)
   </span>
   <span class="command">
     <%= command %>
   </span>
-</span>
+</div>
 <% if all_list.any? %>
-  <ol class="paging_list_body">
+  <ol class="list-unstyled">
     <%= render :partial => "member", :collection => page_list %>
   </ol>
   <% if paging %>

@@ -1,9 +1,10 @@
-<li id="user_room-<%= user_room.id %>">
+<li id="user_room-<%= user_room.id %>" class="media">
 
-    <%= icon_for(user_room, { name: user_room.title, size: 64 }) %>
+  <%= icon_for(user_room, { name: user_room.title, size: 64 }) %>
 
+  <div class="media-body">
     <%= render 'user_rooms/info_header_body', room: user_room %>
-
     <%= render 'user_rooms/info_footer', room: user_room, kind: "_room" %>
+  </div>
 
 </li>

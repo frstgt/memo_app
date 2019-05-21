@@ -1,36 +1,39 @@
-<span class="header">
-  <span class="title">
+<span class="title">
+  <% if room.can_show?(current_user) %>
     <b><%= link_to room.title, group_group_room_path(room.group, room) %></b>
-  </span>
-  <% if room.pen_name %>
-    <span class="pen_name">
-      <% if room.pen_name.can_show?(current_user) %>
-        <i>by <%= link_to room.pen_name.name, room.pen_name %></i>
-      <% else %>
-        <i>by <%= room.pen_name.name %></i>
-      <% end %>
-    </span>
-  <% end %>
-  <% if room.group %>
-    <span class="group">
-      <% if room.group.can_show?(current_user) %>
-        <i>@ <%= link_to room.group.name, room.group %></i>
-      <% else %>
-        <i>@ <%= room.group.name %></i>
-      <% end %>
-    </span>
-  <% end %>
-
-  <% if room.is_open? %>
-    <span class="badge badge-primary">open</span>
   <% else %>
-    <span class="badge badge-dark">closed</span>
+    <b><%= room.title %></b>
   <% end %>
-
 </span>
+
+<% if room.pen_name %>
+  <span class="pen_name">
+    <% if room.pen_name.can_show?(current_user) %>
+      <i>by <%= link_to room.pen_name.name, room.pen_name %></i>
+    <% else %>
+      <i>by <%= room.pen_name.name %></i>
+    <% end %>
+  </span>
+<% end %>
+
+<% if room.group %>
+  <span class="group">
+    <% if room.group.can_show?(current_user) %>
+      <i>@ <%= link_to room.group.name, room.group %></i>
+    <% else %>
+      <i>@ <%= room.group.name %></i>
+    <% end %>
+  </span>
+<% end %>
+
+<% if room.is_open? %>
+  <span class="badge badge-primary">open</span>
+<% else %>
+  <span class="badge badge-dark">closed</span>
+<% end %>
 
 <br>
 
-<span class="body">
-  <span class="outline"><%= room.outline %></span>
-</span>
+<div class="outline">
+  <%= room.outline %>
+</div>

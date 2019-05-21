@@ -1,22 +1,23 @@
-<li id="message-<%= message.id %>">
+<li id="message-<%= message.id %>" class="media">
 
   <% pen_name = message.pen_name %>
-  <%= icon_for(pen_name, { name: pen_name.name, size: 64 }) %>
 
-  <span class="header">
+  <%= icon_for(pen_name, { name: pen_name.name, size: 32 }) %>
+
+  <div class="media-body">
+
     <span class="name">
       <b><%= pen_name.name %></b>
     </span>
-  </span>
 
-  <span class="body">
-    <span class="content"><%= message.content %></span>
-  </span>
+    <span class="content">
+      <%= message.content %>
+    </span>
 
-  <span class="footer">
     <span class="timestamp text-muted">
       <%= timestamp(message, created=true, updated=false) %>
     </span>
-  </span>
+
+  </div>
 
 </li>

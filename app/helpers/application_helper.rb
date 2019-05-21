@@ -19,7 +19,7 @@ module ApplicationHelper
     name = options[:name]
     size = options[:size]
 
-    image_tag(icon, alt: name, width: size, height: size, class: "icon")
+    image_tag(icon, alt: name, width: size, height: size, class: "mr-3 icon")
   end
   
   def timestamp(object, created=true, updated=true)
