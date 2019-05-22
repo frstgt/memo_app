@@ -16,13 +16,35 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
 
     @other     = users(:user9)
     @other_pname = pen_names(:user9_pen_name1)
+    @opened_group = groups(:group2)
+    @closed_group = groups(:group3)
   end
 
-  test "show open group" do # group home
+  test "show joinused group" do
     [@leader, @subleader, @common, @visitor, @other].each do |user|
       log_in_as(user)
       get group_path(@group)
       assert_template 'groups/show'
+    end
+  end
+  test "show opened group" do
+    [@leader, @subleader, @common, @visitor, @other].each do |user|
+      log_in_as(user)
+      get group_path(@opened_group)
+      assert_template 'groups/show'
+    end
+  end
+  test "show closed group" do
+    [@leader, @subleader, @common, @visitor].each do |user|
+      log_in_as(user)
+      get group_path(@closed_group)
+      assert_template 'groups/show'
+    end
+
+    [@other].each do |user|
+      log_in_as(user)
+      get group_path(@closed_group)
+      assert_redirected_to root_path
     end
   end
 
@@ -101,14 +123,34 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to @other
   end
 
-  test "join/unjoin" do
+  test "other can join joinused group" do
+    log_in_as(@other)
+
+    get join_group_path(@closed_group), params: { group: { pen_name_id: @other_pname.id } }
+    assert_redirected_to root_path
+
+    get join_group_path(@opened_group), params: { group: { pen_name_id: @other_pname.id } }
+    assert_redirected_to root_path
+
+    get join_group_path(@group), params: { group: { pen_name_id: @other_pname.id } }
+    assert_redirected_to @group
+  end
+  test "member cannot join group" do
     [@leader, @subleader, @common, @visitor].each do |user|
       log_in_as(user)
       pen_name = @group.get_user_member(user)
       get join_group_path(@group), params: { group: { pen_name_id: pen_name.id } }
       assert_redirected_to root_path
     end
-
+  end
+  test "member cannot join group as other" do
+    [@leader, @subleader, @common, @visitor].each do |user|
+      log_in_as(user)
+      get join_group_path(@group), params: { group: { pen_name_id: @other_pname.id } }
+      assert_redirected_to root_path
+    end    
+  end
+  test "member can unjoin group except leader" do
     [@leader].each do |user|
       log_in_as(user)
       pen_name = @group.get_user_member(user)
@@ -120,32 +162,23 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
       log_in_as(user)
       pen_name = @group.get_user_member(user)
       get unjoin_group_path(@group), params: { group: { pen_name_id: pen_name.id } }
-      assert_redirected_to groups_path
-      assert_not @group.is_member?(pen_name)
+      assert_redirected_to user
     end
-
-    [@leader, @subleader, @common, @visitor].each do |user|
+  end
+  test "member can unjoin closed group" do
+    [@subleader, @common, @visitor].each do |user|
       log_in_as(user)
-      get join_group_path(@group), params: { group: { pen_name_id: @other_pname.id } }
-      assert_redirected_to root_path
+      pen_name = @closed_group.get_user_member(user)
+      get unjoin_group_path(@closed_group), params: { group: { pen_name_id: pen_name.id } }
+      assert_redirected_to user
     end
-
+  end
+  test "other cannot unjoin group as member" do
     log_in_as(@other)
     [@leader_pname, @subleader_pname, @common_pname, @visitor_pname].each do |pname|
       get unjoin_group_path(@group), params: { group: { pen_name_id: pname.id } }
       assert_redirected_to root_path
     end
-
-    get join_group_path(@group), params: { group: { pen_name_id: @other_pname.id } }
-    assert_redirected_to groups_path
-    assert @group.is_member?(@other_pname)
-    get unjoin_group_path(@group), params: { group: { pen_name_id: @other_pname.id } }
-    assert_redirected_to groups_path
-    assert_not @group.is_member?(@other_pname)
-  end
-
-  test "joinus/open/close" do
-    pass "later"
   end
 
   test "position @leader" do

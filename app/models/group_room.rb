@@ -11,20 +11,21 @@ class GroupRoom < Room
     end
   end
 
-  def can_setup?(user)
-    member = self.group.get_user_member(user)
-    member and self.group.is_leading_member?(member)
-  end  
   def can_show?(user)
-    self.group.get_user_member(user) or self.is_open?
+    member = self.group.get_user_member(user)
+    (member and self.group.is_regular_member?(member)) or self.is_open?
   end
   def can_update?(user)
     member = self.group.get_user_member(user)
-    member and self.group.is_regular_member?(member)
+    member and self.group.is_leading_member?(member)
   end
   def can_destroy?(user)
     member = self.group.get_user_member(user)
     member and self.group.is_leading_member?(member)
+  end
+  def can_control_messages?(user)
+    member = self.group.get_user_member(user)
+    (member and self.group.is_regular_member?(member)) or self.is_open?
   end
 
   include Rails.application.routes.url_helpers

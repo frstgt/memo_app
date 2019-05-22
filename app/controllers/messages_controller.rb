@@ -21,7 +21,7 @@ class MessagesController < ApplicationController
 
     def room_is_exist
       @room = Room.find_by(id: params[:room_id])
-      redirect_to root_url unless @room
+      redirect_to root_url unless @room and @room.can_control_messages?(current_user)
     end
 
     def user_have_member

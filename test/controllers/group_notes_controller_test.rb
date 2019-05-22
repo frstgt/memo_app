@@ -17,13 +17,27 @@ class GroupNotesControllerTest < ActionDispatch::IntegrationTest
 
     @other     = users(:user9)
     @other_pname = pen_names(:user9_pen_name1)
+    @closed_note = group_notes(:group1_note2)
   end
-  
-  test "show group note" do
+
+  test "show opened group note" do
     [@leader, @subleader, @common, @visitor, @other].each do |user|
       log_in_as(user)
       get group_group_note_path(@group, @note)
       assert_template 'group_notes/show'
+    end
+  end
+  test "show closed group note" do
+    [@leader, @subleader, @common].each do |user|
+      log_in_as(user)
+      get group_group_note_path(@group, @closed_note)
+      assert_template 'group_notes/show'
+    end
+
+    [@visitor, @other].each do |user|
+      log_in_as(user)
+      get group_group_note_path(@group, @closed_note)
+      assert_redirected_to root_path
     end
   end
   
@@ -56,7 +70,7 @@ class GroupNotesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "edit/update group note" do
-    [@leader, @subleader, @common].each do |user|
+    [@leader, @subleader].each do |user|
       log_in_as(user)
 
       get edit_group_group_note_path(@group, @note)
@@ -67,7 +81,7 @@ class GroupNotesControllerTest < ActionDispatch::IntegrationTest
       assert_redirected_to group_group_note_path(@group, @note)
     end
 
-    [@visitor, @other].each do |user|
+    [@common, @visitor, @other].each do |user|
       log_in_as(user)
 
       get edit_group_group_note_path(@group, @note)
@@ -103,10 +117,6 @@ class GroupNotesControllerTest < ActionDispatch::IntegrationTest
       end
       assert_redirected_to root_path
     end
-  end
-
-  test "to_open/to_close" do
-    pass "later"
   end
 
 end

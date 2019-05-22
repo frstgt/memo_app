@@ -1,1 +1,31 @@
+user1_room1:
+  type: UserRoom
+  title: "user1_room1 title"
+  updated_at: <%= 10.minutes.ago %>
+  user: user1
+  pen_name: user1_pen_name1
+  status: 1
 
+user1_room2:
+  type: UserRoom
+  title: "user1_room2 title"
+  updated_at: <%= 3.years.ago %>
+  user: user1
+  pen_name: user1_pen_name1
+  status: 0
+
+user1_room3:
+  type: UserRoom
+  title: "user1_room3 title"
+  updated_at: <%= 2.hours.ago %>
+  user: user1
+  pen_name: user1_pen_name1
+  status: 0
+
+user1_room_most_recent:
+  type: UserRoom
+  title: "user1_room_most_recent"
+  updated_at: <%= Time.zone.now %>
+  user: user1
+  pen_name: user1_pen_name1
+  status: 0

@@ -68,11 +68,11 @@ class GroupsController < ApplicationController
 
   def join
     @group.join(@user_pen_name)
-    redirect_to groups_path
+    redirect_to @group
   end
   def unjoin
     @group.unjoin(@user_pen_name)
-    redirect_to groups_path
+    redirect_to current_user
   end
 
   def change_leader

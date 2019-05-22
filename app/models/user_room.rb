@@ -11,9 +11,6 @@ class UserRoom < Room
     end
   end
 
-  def can_setup?(user)
-    self.user == user
-  end 
   def can_show?(user)
     self.user == user or self.is_open?
   end
@@ -22,7 +19,10 @@ class UserRoom < Room
   end
   def can_destroy?(user)
     self.user == user
-  end 
+  end
+  def can_control_messages?(user)
+    (self.user == user) or self.is_open?
+  end
 
   include Rails.application.routes.url_helpers
   def redirect_path

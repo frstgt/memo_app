@@ -1,0 +1,24 @@
+group1_room1:
+  type: GroupRoom
+  title: "group1_room1 title"
+  updated_at: <%= 10.minutes.ago %>
+  group: group1
+  status: 1
+group1_room2:
+  type: GroupRoom
+  title: "group1_room2 title"
+  updated_at: <%= 3.years.ago %>
+  group: group1
+  status: 0
+group1_room3:
+  type: GroupRoom
+  title: "group1_room3 title"
+  updated_at: <%= 2.hours.ago %>
+  group: group1
+  status: 0
+group1_room_most_recent:
+  type: GroupRoom
+  title: "group1_room_most_reset title"
+  updated_at: <%= Time.zone.now %>
+  group: group1
+  status: 0

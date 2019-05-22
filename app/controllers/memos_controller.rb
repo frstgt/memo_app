@@ -55,7 +55,7 @@ class MemosController < ApplicationController
 
     def note_is_exist
       @note = Note.find_by(id: params[:note_id])
-      redirect_to root_url unless @note and @note.can_update?(current_user)
+      redirect_to root_url unless @note and @note.can_control_memos?(current_user)
     end
 
     def memo_is_exist

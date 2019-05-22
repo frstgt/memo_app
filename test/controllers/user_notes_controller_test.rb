@@ -8,15 +8,26 @@ class UserNotesControllerTest < ActionDispatch::IntegrationTest
     @note = user_notes(:user1_note1)
 
     @other_user = users(:user2)
+    @closed_note = user_notes(:user1_note2)
   end
   
-  test "show note" do
+  test "show opened note" do
     log_in_as(@other_user)
     get user_note_path(@note)
     assert_template 'user_notes/show'
 
     log_in_as(@user)
     get user_note_path(@note)
+    assert_template 'user_notes/show'
+  end
+
+  test "show closed note" do
+    log_in_as(@other_user)
+    get user_note_path(@closed_note)
+    assert_redirected_to root_path
+
+    log_in_as(@user)
+    get user_note_path(@closed_note)
     assert_template 'user_notes/show'
   end
   
@@ -61,10 +72,6 @@ class UserNotesControllerTest < ActionDispatch::IntegrationTest
       delete user_note_path(@note)
     end
     assert_redirected_to @user
-  end
-
-  test "to_open/to_close" do
-    pass "later"
   end
 
 end

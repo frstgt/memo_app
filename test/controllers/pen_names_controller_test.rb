@@ -7,15 +7,26 @@ class PenNamesControllerTest < ActionDispatch::IntegrationTest
     @pen_name = pen_names(:user1_pen_name1)
 
     @other_user = users(:user2)
+    @closed_pen_name = pen_names(:user1_pen_name2)
   end
 
-  test "show pen_name" do
+  test "show opened pen_name" do
     log_in_as(@other_user)
     get pen_name_path(@pen_name)
     assert_template 'pen_names/show'
 
     log_in_as(@user)
     get pen_name_path(@pen_name)
+    assert_template 'pen_names/show'
+  end
+
+  test "show closed pen_name" do
+    log_in_as(@other_user)
+    get pen_name_path(@closed_pen_name)
+    assert_redirected_to root_path
+
+    log_in_as(@user)
+    get pen_name_path(@closed_pen_name)
     assert_template 'pen_names/show'
   end
 
@@ -58,10 +69,6 @@ class PenNamesControllerTest < ActionDispatch::IntegrationTest
       delete pen_name_path(@pen_name)
     end
     assert_redirected_to @user
-  end
-
-  test "to_open/to_close" do
-    pass "later"
   end
 
 end

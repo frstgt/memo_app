@@ -5,4 +5,8 @@ group1:
 group2:
   name: "group2 name"
   outline: "group2 outline"
+  status: 1
+group3:
+  name: "group3 name"
+  outline: "group3 outline"
   status: 0

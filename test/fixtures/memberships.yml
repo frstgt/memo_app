@@ -21,4 +21,36 @@ group1_visitor:
   member: "user4_pen_name1"
   position: 3
 
+group2_leader:
+  group: group2
+  member: "user1_pen_name1"
+  position: 0
+group2_subleader:
+  group: group2
+  member: "user2_pen_name1"
+  position: 1
+group2_common:
+  group: group2
+  member: "user3_pen_name1"
+  position: 2
+group2_visitor:
+  group: group2
+  member: "user4_pen_name1"
+  position: 3
 
+group3_leader:
+  group: group3
+  member: "user1_pen_name1"
+  position: 0
+group3_subleader:
+  group: group3
+  member: "user2_pen_name1"
+  position: 1
+group3_common:
+  group: group3
+  member: "user3_pen_name1"
+  position: 2
+group3_visitor:
+  group: group3
+  member: "user4_pen_name1"
+  position: 3

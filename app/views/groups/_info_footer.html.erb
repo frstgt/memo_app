@@ -18,7 +18,7 @@
 
 <span class="command">
 
-  <% if kind == "_group" %>
+  <% if kind == "show" %>
     <% if pen_name %>
       <% if group.is_general_member?(pen_name) %>
         <span class="dropdown">
@@ -31,6 +31,12 @@
                     data: { confirm: "You sure?" } %></li>
           </ul>
         </span>
+      <% end %>
+
+      <% if group.is_leading_member?(pen_name) %>
+        <%= link_to "[edit]", edit_group_path(group) %>
+        <%= link_to "[delete]", group, method: :delete,
+                               data: { confirm: "You sure?" } %>
       <% end %>
 
     <% else %>
@@ -47,14 +53,8 @@
         </ul>
       </span>
     <% end %>
-  <% end %>
-    
-  <% if kind == "show" %>
-    <% if pen_name and group.is_leading_member?(pen_name) %>
-      <%= link_to "[edit]", edit_group_path(group) %>
-      <%= link_to "[delete]", group, method: :delete,
-                               data: { confirm: "You sure?" } %>
-    <% end %>
+
+
   <% end %>
 
 </span>
