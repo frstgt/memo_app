@@ -46,7 +46,7 @@ class UserRoomsController < ApplicationController
   private
 
     def room_params
-      params.require(:user_room).permit(:title, :outline, :pen_name_id, :picture)
+      params.require(:user_room).permit(:title, :outline, :pen_name_id, :picture, :status)
     end
 
     def room_is_exist

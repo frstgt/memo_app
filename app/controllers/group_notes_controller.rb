@@ -54,7 +54,7 @@ class GroupNotesController < ApplicationController
   private
 
     def note_params
-      params.require(:group_note).permit(:title, :outline, :pen_name_id, :picture, :tag_list)
+      params.require(:group_note).permit(:title, :outline, :pen_name_id, :picture, :tag_list, :status)
     end
 
     def group_is_exist

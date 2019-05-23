@@ -47,7 +47,7 @@ class GroupRoomsController < ApplicationController
   private
 
     def room_params
-      params.require(:group_room).permit(:title, :outline, :pen_name_id, :picture)
+      params.require(:group_room).permit(:title, :outline, :pen_name_id, :picture, :status)
     end
 
     def group_is_exist
