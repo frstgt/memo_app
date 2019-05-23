@@ -52,6 +52,13 @@ class GroupsController < ApplicationController
   def update
     if @group.update_attributes(group_params)
       flash[:success] = "Group updated"
+
+      unless @group.is_open?
+        @group.irregular_members.each do |member|
+          @group.unjoin(member)
+        end
+      end
+
       redirect_to @group
     else
       render 'edit'

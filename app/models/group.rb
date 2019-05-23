@@ -135,7 +135,7 @@ class Group < ApplicationRecord
     membership = active_memberships.find_by(member_id: pen_name.id)
     membership and membership.position <= Membership::POS_COMMON
   end
-  def is_iregular_member?(pen_name) # visitor
+  def is_irregular_member?(pen_name) # visitor
     membership = active_memberships.find_by(member_id: pen_name.id)
     membership and membership.position == Membership::POS_VISITOR
   end

@@ -39,6 +39,15 @@ class PenNamesController < ApplicationController
   def update
     if @pen_name.update_attributes(pen_name_params)
       flash[:success] = "PenName updated"
+      
+      unless @pen_name.is_open?
+        @pen_name.groups.each do |group|
+          if group.is_irregular_member?(@pen_name)
+            group.unjoin(@pen_name)
+          end
+        end
+      end
+      
       redirect_to @pen_name
     else
       render 'edit'
