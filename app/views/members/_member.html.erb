@@ -26,8 +26,8 @@
       <%= member.outline %>
     </div>
 
-    <span class="timestamp text-muted">
-      updated <%= time_ago_in_words(member.updated_at) %> ago.
+    <span class="timestamp text-muted small">
+      <%= timestamp(member) %>
     </span>
 
     <span class="command">

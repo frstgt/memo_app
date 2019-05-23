@@ -27,7 +27,7 @@ class PenNameTest < ActiveSupport::TestCase
   end
 
   test "name should be at most 32 characters" do
-    @pen_name.name = "a" * 33
+    @pen_name.name = "a" * 65
     assert_not @pen_name.valid?
   end
 

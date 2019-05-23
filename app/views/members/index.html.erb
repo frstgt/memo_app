@@ -12,7 +12,7 @@
 
       <%= render 'groups/info_header_body', group: @group, pen_name: pen_name %>
 
-      <%= icon_for(@group, { name: @group.name, size: 256 }) %>
+      <%= icon_for(@group, { name: @group.name, size: 256 }) %><br>
 
       <%= render 'groups/info_footer',
                   group: @group, pen_name: pen_name, kind: "members" %>
@@ -23,7 +23,7 @@
   <div class="col-md-8">
 
     <%= render 'shared/paging_members',
-                title: "group members", all_list: @all_members, page_list: @page_members,
+                title: "members", all_list: @all_members, page_list: @page_members,
                 command: "", paging: true %>
 
   </div>

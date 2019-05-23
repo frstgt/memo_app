@@ -21,7 +21,7 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   test "name should not be too long" do
-    @group.name = "a" * 33
+    @group.name = "a" * 65
     assert_not @group.valid?
   end
 

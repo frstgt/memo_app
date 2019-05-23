@@ -14,7 +14,7 @@ class PenName < ApplicationRecord
 
   validates :user_id, presence: true
   validates :name,  presence: true,
-                    length: { minimum: 8, maximum: 32 },
+                    length: { minimum: 8, maximum: 64 },
                     uniqueness: true
   validates :outline, length: { maximum: 1000 }
   validate  :picture_size

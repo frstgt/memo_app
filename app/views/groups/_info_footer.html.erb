@@ -1,16 +1,12 @@
-<span class="timestamp text-muted">
+<span class="timestamp text-muted small">
   <%= timestamp(group) %>
 </span>
 
-<span class="counter text-muted">
+<span class="counter text-muted small">
   (
     <% if pen_name %>
-      <%= "group_notes: #{group.group_notes.count}" %>,
-      <%= "group_rooms: #{group.group_rooms.count}" %>,
       <%= link_to "members: #{group.members.count}", group_members_path(group) %>
     <% else %>
-      <%= "group_notes: #{group.group_notes.where(status: Note::ST_OPEN).count}" %>,
-      <%= "group_rooms: #{group.group_rooms.where(status: Room::ST_OPEN).count}" %>,
       <%= "members: #{group.members.count}" %>
     <% end %>
   )

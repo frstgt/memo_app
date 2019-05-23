@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :notes, through: :active_readerships,  source: :note
 
   validates :name,  presence: true,
-                    length: { minimum: 8, maximum: 32 },
+                    length: { minimum: 8, maximum: 64 },
                     uniqueness: true
 
   has_secure_password

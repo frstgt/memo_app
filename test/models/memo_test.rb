@@ -16,11 +16,6 @@ class MemoTest < ActiveSupport::TestCase
     assert_not @memo.valid?
   end
 
-  test "content should be present" do
-    @memo.content = "    "
-    assert_not @memo.valid?
-  end
-
   test "content should be at most 1000 characters" do
     @memo.content = "a" * 1001
     assert_not @memo.valid?

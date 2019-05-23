@@ -1,16 +1,5 @@
-<span class="timestamp text-muted">
+<span class="timestamp text-muted small">
   <%= timestamp(pen_name) %>
-</span>
-
-<span class="counter text-muted">
-  (
-    <% if pen_name.can_update?(current_user) %>
-      <%= "user_notes: #{pen_name.user_notes.count}" %>,
-    <% else %>
-      <%= "user_notes: #{pen_name.user_notes.where(status: Note::ST_OPEN).count}" %>,
-    <% end %>
-    <%= "groups: #{pen_name.groups.count}" %>
-  )
 </span>
 
 <span class="command">
