@@ -1,49 +1,53 @@
-<span class="title">
-  <% if note.can_show?(current_user) %>
-    <b><%= link_to note.title, group_group_note_path(note.group, note) %></b>
-  <% else %>
-    <b><%= note.title %></b>
-  <% end %>
-</span>
-
-<% if note.pen_name %>
-  <span class="pen_name">
-    <% if note.pen_name.can_show?(current_user) %>
-      <i>by <%= link_to note.pen_name.name, note.pen_name %></i>
-    <% else %>
-      <i>by <%= note.pen_name.name %></i>
-    <% end %>
-  </span>
-<% end %>
-
-<% if note.group %>
-  <span class="group">
-    <% if note.group.can_show?(current_user) %>
-      <i>@ <%= link_to note.group.name, note.group %></i>
-    <% else %>
-      <i>@ <%= note.group.name %></i>
-    <% end %>
-  </span>
-<% end %>
-
-<% if note.is_open? %>
-  <span class="badge badge-primary">open</span>
-<% else %>
-  <span class="badge badge-dark">closed</span>
-<% end %>
-
-<% if note.group.get_user_member(current_user) %>
-  <span class="badge badge-info">ours</span>
-<% end %>
-
-<br>
+<div class="info-header">
   
-<div class="tags small">
-  <% note.tags.each do |tag| %>
-    <%= link_to tag.name, tag %>
+  <span class="title">
+    <% if note.can_show?(current_user) %>
+      <b><%= link_to note.title, group_group_note_path(note.group, note) %></b>
+    <% else %>
+      <b><%= note.title %></b>
+    <% end %>
+  </span>
+  
+  <% if note.pen_name %>
+    <span class="pen_name">
+      <% if note.pen_name.can_show?(current_user) %>
+        <i>by <%= link_to note.pen_name.name, note.pen_name %></i>
+      <% else %>
+        <i>by <%= note.pen_name.name %></i>
+      <% end %>
+    </span>
   <% end %>
+  
+  <% if note.group %>
+    <span class="group">
+      <% if note.group.can_show?(current_user) %>
+        <i>@ <%= link_to note.group.name, note.group %></i>
+      <% else %>
+        <i>@ <%= note.group.name %></i>
+      <% end %>
+    </span>
+  <% end %>
+  
+  <% if note.is_open? %>
+    <span class="badge badge-primary">open</span>
+  <% else %>
+    <span class="badge badge-dark">closed</span>
+  <% end %>
+  
+  <% if note.group.get_user_member(current_user) %>
+    <span class="badge badge-info">ours</span>
+  <% end %>
+    
+  <div class="tags small">
+    <% note.tags.each do |tag| %>
+      <%= link_to tag.name, tag %>
+    <% end %>
+  </div>
+  
 </div>
 
-<div class="outline">
-  <%= note.outline %>
+<div class="info-body">  
+  <div class="outline">
+    <%= note.outline %>
+  </div>
 </div>

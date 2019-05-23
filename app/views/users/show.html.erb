@@ -4,19 +4,23 @@
   <aside class="col-md-4">
 
     <section class="info">
-      (user home)<br>
+      (user home)
 
-      <span class="name"><b><%= @user.name %></b></span>
+      <div class="info-header">
+        <span class="name"><b><%= @user.name %></b></span>
+      </div>
 
-      <span class="timestamp text-muted small">
-        <%= timestamp(@user) %>
-      </span>
+      <div class="info-footer">
+        <span class="timestamp text-muted small">
+          <%= timestamp(@user) %>
+        </span>
 
-      <span class="command">
-        <%= link_to "[edit]", edit_user_path(current_user) %>
-        <%= link_to "[delete]", user_path(current_user),
-                                  method: :delete, data: { confirm: "You sure?" } %>
-      </span>
+        <span class="command">
+          <%= link_to "[edit]", edit_user_path(current_user) %>
+          <%= link_to "[delete]", user_path(current_user),
+                                    method: :delete, data: { confirm: "You sure?" } %>
+        </span>
+      </div>
 
     </section>
 

@@ -1,37 +1,43 @@
-<span class="title">
-  <% if note.can_show?(current_user) %>
-    <b><%= link_to note.title, note %></b>
-  <% else %>
-    <b><%= note.title %></b>
-  <% end %>
-</span>
+<div class="info-header">
 
-<% if note.pen_name %>
-  <span class="pen_name">
-    <% if note.pen_name.can_show?(current_user) %>
-      <i>by <%= link_to note.pen_name.name, note.pen_name %></i>
+  <span class="title">
+    <% if note.can_show?(current_user) %>
+      <b><%= link_to note.title, note %></b>
     <% else %>
-      <i>by <%= note.pen_name.name %></i>
+      <b><%= note.title %></b>
     <% end %>
   </span>
-<% end %>
 
-<% if note.is_open? %>
-  <span class="badge badge-primary">open</span>
-<% else %>
-  <span class="badge badge-dark">closed</span>
-<% end %>
-
-<% if note.user == current_user %>
-  <span class="badge badge-info">mine</span>
-<% end %>
-  
-<div class="tags small">
-  <% note.tags.each do |tag| %>
-    <%= link_to tag.name, tag %>
+  <% if note.pen_name %>
+    <span class="pen_name">
+      <% if note.pen_name.can_show?(current_user) %>
+        <i>by <%= link_to note.pen_name.name, note.pen_name %></i>
+      <% else %>
+        <i>by <%= note.pen_name.name %></i>
+      <% end %>
+    </span>
   <% end %>
-</div>
 
-<div class="outline">
-  <%= note.outline %>
+  <% if note.is_open? %>
+    <span class="badge badge-primary">open</span>
+  <% else %>
+    <span class="badge badge-dark">closed</span>
+  <% end %>
+  
+  <% if note.user == current_user %>
+    <span class="badge badge-info">mine</span>
+  <% end %>
+  
+  <div class="tags small">
+    <% note.tags.each do |tag| %>
+      <%= link_to tag.name, tag %>
+    <% end %>
+  </div>
+
+</div>
+  
+<div class="info-body">
+  <div class="outline">
+    <%= note.outline %>
+  </div>
 </div>

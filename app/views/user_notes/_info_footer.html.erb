@@ -1,23 +1,26 @@
-<span class="timestamp text-muted small">
-  <%= timestamp(note) %>
-</span>
+<div class="info-footer">
 
-<span class="command">
-  <% if kind == "show" %>
-
-    <% if note.can_set_point?(current_user) %>
-      <%= render 'notes/point_command', note: note %>
+  <span class="timestamp text-muted small">
+    <%= timestamp(note) %>
+  </span>
+  
+  <span class="command">
+    <% if kind == "show" %>
+  
+      <% if note.can_set_point?(current_user) %>
+        <%= render 'notes/point_command', note: note %>
+      <% end %>
+  
+      <% if note.can_update?(current_user) %>
+        <%= link_to "[edit]", edit_user_note_path(note) %>
+      <% end %>
+  
+      <% if note.can_destroy?(current_user) %>
+        <%= link_to "[delete]", user_note_path(note), method: :delete,
+                                data: { confirm: "You sure?" } %>
+      <% end %>
+  
     <% end %>
+  </span>
 
-    <% if note.can_update?(current_user) %>
-      <%= link_to "[edit]", edit_user_note_path(note) %>
-    <% end %>
-
-    <% if note.can_destroy?(current_user) %>
-      <%= link_to "[delete]", user_note_path(note), method: :delete,
-                              data: { confirm: "You sure?" } %>
-    <% end %>
-
-  <% end %>
-
-</span>
+</div>

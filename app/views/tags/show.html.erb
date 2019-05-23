@@ -2,6 +2,11 @@
 <div class="row">
 
   <aside class="col-md-4">
+
+    <%= render 'shared/paging_list',
+                title: "random pickups", all_list: @sample_notes, page_list: @sample_notes,
+                command: "", paging: false %>
+
   </aside>
 
   <div class="col-md-8">

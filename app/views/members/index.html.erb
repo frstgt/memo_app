@@ -8,11 +8,11 @@
 
     <section class="group_info">
 
-      (group members)<br>
+      (group members)
 
       <%= render 'groups/info_header_body', group: @group, pen_name: pen_name %>
 
-      <%= icon_for(@group, { name: @group.name, size: 256 }) %><br>
+      <%= icon_for(@group, { name: @group.name, size: 256 }) %>
 
       <%= render 'groups/info_footer',
                   group: @group, pen_name: pen_name, kind: "members" %>

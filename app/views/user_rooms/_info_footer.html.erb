@@ -1,15 +1,19 @@
-<span class="timestamp text-muted small">
-  <%= timestamp(room) %>
-</span>
+<div class="info-footer">
 
-<span class="command">
-  <% if kind == "show" %>
-    <% if room.can_update?(current_user) %>
-      <%= link_to "[edit]", edit_user_room_path(room) %>
+  <span class="timestamp text-muted small">
+    <%= timestamp(room) %>
+  </span>
+  
+  <span class="command">
+    <% if kind == "show" %>
+      <% if room.can_update?(current_user) %>
+        <%= link_to "[edit]", edit_user_room_path(room) %>
+      <% end %>
+      <% if room.can_destroy?(current_user) %>
+        <%= link_to "[delete]", user_room_path(room), method: :delete,
+                                data: { confirm: "You sure?" } %>
+      <% end %>
     <% end %>
-    <% if room.can_destroy?(current_user) %>
-      <%= link_to "[delete]", user_room_path(room), method: :delete,
-                              data: { confirm: "You sure?" } %>
-    <% end %>
-  <% end %>
-</span>
+  </span>
+
+</div>

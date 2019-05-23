@@ -5,6 +5,7 @@ class TagsController < ApplicationController
   def show
     @all_notes = @tag.notes.where(status: Note::ST_OPEN)
     @page_notes = @all_notes.paginate(page: params[:page])
+    @sample_notes = @all_notes.sample(3)
   end
   
   private

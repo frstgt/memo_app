@@ -4,65 +4,75 @@
 
   <div class="media-body">
 
-    <span class="name">
-      <% if member.can_show?(current_user) %>
-        <b><%= link_to member.name, member %></b>
-      <% else %>
-        <b><%= member.name %></b>
-      <% end %>
-    </span>
+    <div class="info-header">
 
-    <span class="position">
-      <span class="badge badge-info">
-        <%= @group.get_position_name(member) %>
+      <span class="name">
+        <% if member.can_show?(current_user) %>
+          <b><%= link_to member.name, member %></b>
+        <% else %>
+          <b><%= member.name %></b>
+        <% end %>
       </span>
-    </span>
+  
+      <span class="position">
+        <span class="badge badge-info">
+          <%= @group.get_position_name(member) %>
+        </span>
+      </span>
+  
+      <% if member.user == current_user %>
+        <span class="badge badge-info">me</span>
+      <% end %>
 
-    <% if member.user == current_user %>
-      <span class="badge badge-info">me</span>
-    <% end %>
-
-    <div class="outline">
-      <%= member.outline %>
     </div>
 
-    <span class="timestamp text-muted small">
-      <%= timestamp(member) %>
-    </span>
+    <div class="info-body">
+      <div class="outline">
+        <%= member.outline %>
+      </div>
+    </div>
 
-    <span class="command">
+    <div class="info-footer">
 
-      <% do_pos_id = @group.get_position_id(@user_member) %>
-      <% from_pos_id = @group.get_position_id(member) %>
-
-      <% if do_pos_id == Membership::POS_LEADER and do_pos_id == from_pos_id %>
-        <%= link_to "[change leader]",
-                    change_leader_group_path(@group), data: { confirm: "You sure?" } %>
-      <% end %>
-
-      <% if do_pos_id <= Membership::POS_SUBLEADER and do_pos_id < from_pos_id %>
-
-        <span class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            [position] <b class="caret"></b>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-right">
-            <% Membership::POSITIONS[(do_pos_id+1)..3].each do |to_pos_name, to_pos_id| %>
-
-              <% if from_pos_id != to_pos_id %>
-                <li><%= link_to to_pos_name,
-                                position_group_path(@group,
-                                                    { group: {pen_name_id: member.id, position: to_pos_id} }),
-                                data: { confirm: "You sure?" } %></li>
+      <span class="timestamp text-muted small">
+        <%= timestamp(member) %>
+      </span>
+  
+      <span class="command">
+  
+        <% do_pos_id = @group.get_position_id(@user_member) %>
+        <% from_pos_id = @group.get_position_id(member) %>
+  
+        <% if do_pos_id == Membership::POS_LEADER and do_pos_id == from_pos_id %>
+          <%= link_to "[change leader]",
+                      change_leader_group_path(@group), data: { confirm: "You sure?" } %>
+        <% end %>
+  
+        <% if do_pos_id <= Membership::POS_SUBLEADER and do_pos_id < from_pos_id %>
+  
+          <span class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              [position] <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right">
+              <% Membership::POSITIONS[(do_pos_id+1)..3].each do |to_pos_name, to_pos_id| %>
+  
+                <% if from_pos_id != to_pos_id %>
+                  <li><%= link_to to_pos_name,
+                                  position_group_path(@group,
+                                                      { group: {pen_name_id: member.id, position: to_pos_id} }),
+                                  data: { confirm: "You sure?" } %></li>
+                <% end %>
+  
               <% end %>
+            </ul>
+          </span>
+  
+        <% end %>
+  
+      </span>
 
-            <% end %>
-          </ul>
-        </span>
-
-      <% end %>
-
-    </span>
+    </div>
 
   </div>
 

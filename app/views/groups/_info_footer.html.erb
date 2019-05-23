@@ -1,56 +1,60 @@
-<span class="timestamp text-muted small">
-  <%= timestamp(group) %>
-</span>
-
-<span class="counter text-muted small">
-  (
-    <% if pen_name %>
-      <%= link_to "members: #{group.members.count}", group_members_path(group) %>
-    <% else %>
-      <%= "members: #{group.members.count}" %>
-    <% end %>
-  )
-</span>
-
-<span class="command">
-
-  <% if kind == "show" %>
-    <% if pen_name %>
-      <% if group.is_general_member?(pen_name) %>
+<div class="info-footer">
+  
+  <span class="timestamp text-muted small">
+    <%= timestamp(group) %>
+  </span>
+  
+  <span class="counter text-muted small">
+    (
+      <% if pen_name %>
+        <%= link_to "members: #{group.members.count}", group_members_path(group) %>
+      <% else %>
+        <%= "members: #{group.members.count}" %>
+      <% end %>
+    )
+  </span>
+  
+  <span class="command">
+  
+    <% if kind == "show" %>
+      <% if pen_name %>
+        <% if group.is_general_member?(pen_name) %>
+          <span class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              [unjoin] <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li><%= link_to pen_name.name,
+                      unjoin_group_path(group, { group: {pen_name_id: pen_name.id} }),
+                      data: { confirm: "You sure?" } %></li>
+            </ul>
+          </span>
+        <% end %>
+  
+        <% if group.is_leading_member?(pen_name) %>
+          <%= link_to "[edit]", edit_group_path(group) %>
+          <%= link_to "[delete]", group, method: :delete,
+                                 data: { confirm: "You sure?" } %>
+        <% end %>
+  
+      <% else %>
         <span class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            [unjoin] <b class="caret"></b>
+            [join] <b class="caret"></b>
           </a>
           <ul class="dropdown-menu dropdown-menu-right">
-            <li><%= link_to pen_name.name,
-                    unjoin_group_path(group, { group: {pen_name_id: pen_name.id} }),
-                    data: { confirm: "You sure?" } %></li>
+            <% current_user.pen_names.each do |pen_name| %>
+              <li><%= link_to pen_name.name,
+                              join_group_path(group, { group: {pen_name_id: pen_name.id} }),
+                              data: { confirm: "You sure?" } %></li>
+            <% end %>
           </ul>
         </span>
       <% end %>
-
-      <% if group.is_leading_member?(pen_name) %>
-        <%= link_to "[edit]", edit_group_path(group) %>
-        <%= link_to "[delete]", group, method: :delete,
-                               data: { confirm: "You sure?" } %>
-      <% end %>
-
-    <% else %>
-      <span class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          [join] <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-right">
-          <% current_user.pen_names.each do |pen_name| %>
-            <li><%= link_to pen_name.name,
-                            join_group_path(group, { group: {pen_name_id: pen_name.id} }),
-                            data: { confirm: "You sure?" } %></li>
-          <% end %>
-        </ul>
-      </span>
+  
+  
     <% end %>
-
-
-  <% end %>
-
-</span>
+  
+  </span>
+  
+</div>
