@@ -75,7 +75,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "associated notes should be destroyed" do
-    skip "here"
+    skip "i should test it anywhere"
 
     @user.save
     @user.user_notes.create!(title: "Lorem ipsum")

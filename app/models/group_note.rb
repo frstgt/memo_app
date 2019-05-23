@@ -6,6 +6,11 @@ class GroupNote < Note
     member = self.group.get_user_member(user)
     (member and self.group.is_regular_member?(member)) or self.is_open?
   end
+  def can_set_point?(user)
+    member = self.group.get_user_member(user)
+    self.is_open? and member == nil
+  end
+
   def can_update?(user)
     member = self.group.get_user_member(user)
     member and self.group.is_leading_member?(member)
@@ -14,6 +19,7 @@ class GroupNote < Note
     member = self.group.get_user_member(user)
     member and self.group.is_leading_member?(member)
   end
+
   def can_control_memos?(user)
     member = self.group.get_user_member(user)
     member and self.group.is_regular_member?(member)

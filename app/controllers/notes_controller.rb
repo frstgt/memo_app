@@ -1,6 +1,7 @@
 class NotesController < ApplicationController
   before_action :logged_in_user
-  before_action :note_is_exist,   only: [:set_point]
+  before_action :note_is_exist,      only: [:set_point]
+  before_action :user_can_set_point, only: [:set_point]
 
   def index
     store_location
@@ -25,7 +26,7 @@ class NotesController < ApplicationController
 
     @note.set_point(current_user, point)
 
-    redirect_back_or(notes_path)
+    redirect_to @note.redirect_path
   end
 
   private
@@ -34,5 +35,9 @@ class NotesController < ApplicationController
       @note = Note.find_by(id: params[:id])
       redirect_to root_url unless @note
     end
-  
+
+    def user_can_set_point
+      redirect_to root_url unless @note.can_set_point?(current_user)
+    end
+
 end

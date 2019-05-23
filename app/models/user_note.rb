@@ -5,12 +5,17 @@ class UserNote < Note
   def can_show?(user)
     self.user == user or self.is_open?
   end
+  def can_set_point?(user)
+    self.is_open? and self.user != user
+  end
+
   def can_update?(user)
     self.user == user
   end
   def can_destroy?(user)
     self.user == user
   end
+
   def can_control_memos?(user)
     self.user == user
   end

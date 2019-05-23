@@ -1,13 +1,23 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+user1_message1:
+  content: "first message"
+  room: user1_room1
+
+user1_message2:
+  content: "second message"
+  room: user1_room1
+
+user1_last_message:
+  content: "last message"
+  room: user1_room1
 
 group1_message1:
   content: "first message"
-  pen_name: user1_pen_name1
+  room: group1_room1
 
 group1_message2:
   content: "second message"
-  pen_name: user2_pen_name1
+  room: group1_room1
 
 group1_last_message:
   content: "last message"
-  pen_name: user3_pen_name1
+  room: group1_room1

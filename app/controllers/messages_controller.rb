@@ -1,16 +1,14 @@
 class MessagesController < ApplicationController
   before_action :logged_in_user
   before_action :room_is_exist
+  before_action :pen_name_is_exist
 
   def create
-    params[:message][:pen_name_id] = @user_member.id
-    @message = @group.messages.build(message_params)
+    @message = @room.messages.build(message_params)
     if @message.save
       flash[:success] = "Message created"
-      redirect_to @room.redirect_path
-    else
-      render 'rooms/show'
     end
+    redirect_to @room.redirect_path
   end
 
   private
@@ -23,10 +21,9 @@ class MessagesController < ApplicationController
       @room = Room.find_by(id: params[:room_id])
       redirect_to root_url unless @room and @room.can_control_messages?(current_user)
     end
-
-    def user_have_member
-      @user_member = @group.get_user_member(current_user)
-      redirect_to root_url unless @user_member
+    def pen_name_is_exist
+      @pen_name = PenName.find_by(id: params[:message][:pen_name_id])
+      redirect_to root_url unless @pen_name and (@pen_name.user == current_user)
     end
 
 end

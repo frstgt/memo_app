@@ -40,6 +40,20 @@ class GroupNotesControllerTest < ActionDispatch::IntegrationTest
       assert_redirected_to root_path
     end
   end
+
+  test "set point to group note" do
+    [@leader, @subleader, @common, @visitor].each do |user|
+      log_in_as(user)
+      get set_point_note_path(@note), params: { note: {point: 0} }
+      assert_redirected_to root_path
+    end
+
+    [@other].each do |user|
+      log_in_as(user)
+      get set_point_note_path(@note), params: { note: {point: 0} }
+      assert_redirected_to group_group_note_path(@group, @note)
+    end
+  end
   
   test "new/create group note" do
     [@leader, @subleader].each do |user|

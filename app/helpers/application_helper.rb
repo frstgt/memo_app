@@ -9,9 +9,9 @@ module ApplicationHelper
     end
   end
 
-  def icon_for(object, options = { name: noname, size: 80 })
+  def icon_for(object, options = { name: "noname", size: 80 })
 
-    if object.picture?
+    if object and object.picture?
       icon = object.picture.url
     else
       icon = "noimage_icons/noimage.png"

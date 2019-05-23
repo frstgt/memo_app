@@ -2,12 +2,20 @@
 
   <% pen_name = message.pen_name %>
 
-  <%= icon_for(pen_name, { name: pen_name.name, size: 32 }) %>
+  <% if pen_name %>
+    <%= icon_for(pen_name, { name: pen_name.name, size: 32 }) %>
+  <% else %>
+    <%= icon_for(nil, { name: "noname", size: 32 }) %>
+  <% end %>
 
   <div class="media-body">
 
     <span class="name">
-      <b><%= pen_name.name %></b>
+      <% if pen_name %>
+        <b><%= pen_name.name %></b>
+      <% else %>
+        <b><%= "noname" %></b>
+      <% end %>
     </span>
 
     <span class="content">

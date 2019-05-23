@@ -12,7 +12,7 @@ class UserRoom < Room
   end
 
   def can_show?(user)
-    self.user == user or self.is_open?
+    (self.user == user) or self.is_open?
   end
   def can_update?(user)
     self.user == user

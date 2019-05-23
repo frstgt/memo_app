@@ -20,7 +20,6 @@ class UserNotesControllerTest < ActionDispatch::IntegrationTest
     get user_note_path(@note)
     assert_template 'user_notes/show'
   end
-
   test "show closed note" do
     log_in_as(@other_user)
     get user_note_path(@closed_note)
@@ -29,6 +28,16 @@ class UserNotesControllerTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get user_note_path(@closed_note)
     assert_template 'user_notes/show'
+  end
+
+  test "set point to note" do
+    log_in_as(@other_user)
+    get set_point_note_path(@note), params: { note: {point: 0} }
+    assert_redirected_to user_note_path(@note)
+
+    log_in_as(@user)
+    get set_point_note_path(@note), params: { note: {point: 0} }
+    assert_redirected_to root_path
   end
   
   test "new/create note" do

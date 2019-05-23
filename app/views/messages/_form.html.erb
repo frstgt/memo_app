@@ -7,8 +7,8 @@
       <%= f.select :pen_name_id, [[pen_name.name, pen_name.id]], class: 'form-control' %>
     <% else %>
       <%= f.select :pen_name_id,
-                   current_user.pen_names.collect { |pen_name| [pen_name.name, pen_name.id] },
-                   { include_blank: "" }, class: 'form-control' %>
+                  current_user.pen_names.collect { |pen_name| [pen_name.name, pen_name.id] },
+                  class: 'form-control' %>
     <% end %>
   </div>
 
