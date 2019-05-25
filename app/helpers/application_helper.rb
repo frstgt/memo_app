@@ -1,7 +1,11 @@
 module ApplicationHelper
 
+  def app_name
+    "Memolet"
+  end
+
   def full_title(page_title = '')
-    base_title = "Memo App"
+    base_title = app_name
     if page_title.empty?
       base_title
     else
