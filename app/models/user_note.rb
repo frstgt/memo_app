@@ -3,8 +3,8 @@ class UserNote < Note
   validates :user_id, presence: true
 
   def to_group_note(group)
-    user_member = group.get_user_member(self.user)
-    if user_member and group.is_regular_member?(user_member) and (self.pen_name == user_member)
+    member = group.get_user_member(self.user)
+    if member and group.is_regular_member?(member) and (self.pen_name == member)
       note = self.becomes(Note)      
       note.update_attributes({type: "GroupNote", user_id: nil, group_id: group.id})
     end
@@ -26,8 +26,8 @@ class UserNote < Note
   
   def can_move?(user, group)
     if self.user == user
-      user_member = group.get_user_member(user)
-      if user_member and group.is_regular_member?(user_member) and (self.pen_name == user_member)
+      member = group.get_user_member(user)
+      if member and group.is_regular_member?(member) and (self.pen_name == member)
         true
       else
         false
