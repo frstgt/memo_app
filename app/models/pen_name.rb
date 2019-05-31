@@ -18,6 +18,7 @@ class PenName < ApplicationRecord
                     uniqueness: true
   validates :outline, length: { maximum: 1000 }
   validate  :picture_size
+
   validates :status,  presence: true
 
   ST_OPEN = 1
@@ -36,11 +37,8 @@ class PenName < ApplicationRecord
     end
   end
 
-  def can_setup?(user)
-    self.user == user
-  end 
   def can_show?(user)
-    self.user == user or self.is_open?
+    self.user == user or self.is_open? or (self.keyword and self.keyword == user.keyword)
   end
   def can_update?(user)
     self.user == user

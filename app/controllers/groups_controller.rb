@@ -1,20 +1,16 @@
 class GroupsController < ApplicationController
   before_action :logged_in_user
   before_action :group_is_exist,             except: [:new, :create]
-  before_action :user_have_member,           except: [:new, :create, :show, :join]
 
   before_action :user_can_show,                only: [:show]
+  before_action :user_can_create,              only: [:create]
+  before_action :user_can_update,              only: [:edit, :update]
+  before_action :user_can_destroy,             only: [:destroy]
+
   before_action :user_can_join,                only: [:join]
   before_action :user_can_unjoin,              only: [:unjoin]
-
-  before_action :user_pen_name,                only: [:create, :join, :unjoin]
-
-  before_action :user_have_leader,             only: [:change_leader]
-  before_action :user_have_leading_member,     only: [:edit, :update, :destroy, :position]
-  before_action :group_member,                 only: [:position]
-  before_action :position_check,               only: [:position]
-
-  before_action :user_have_only_member,        only: [:destroy]
+  before_action :user_can_change_leader,       only: [:change_leader]
+  before_action :user_can_set_position,        only: [:position]
 
   def show
     store_location
@@ -78,7 +74,8 @@ class GroupsController < ApplicationController
     redirect_to @group
   end
   def unjoin
-    @group.unjoin(@user_pen_name)
+    user_member = @group.get_user_member(current_user)
+    @group.unjoin(user_member)
     redirect_to current_user
   end
 
@@ -94,56 +91,43 @@ class GroupsController < ApplicationController
   private
 
     def group_params
-      params.require(:group).permit(:name, :outline, :picture, :pen_name_id, :status)
+      params.require(:group).permit(:name, :outline, :picture, :pen_name_id, :status, :keyword)
     end
 
     def group_is_exist
       @group = Group.find_by(id: params[:id])
       redirect_to root_url unless @group
     end
-    def user_have_member
-      @user_member = @group.get_user_member(current_user)
-      redirect_to root_url unless @user_member
-    end
 
     def user_can_show
       redirect_to root_url unless @group.can_show?(current_user)
     end
+    def user_can_create
+      @user_pen_name = current_user.pen_names.find_by(id: params[:group][:pen_name_id])
+      redirect_to root_url unless @user_pen_name      
+    end
+    def user_can_update
+      redirect_to root_url unless @group.can_update?(current_user)
+    end
+    def user_can_destroy
+      redirect_to root_url unless @group.can_destroy?(current_user)
+    end
     def user_can_join
-      user_member = @group.get_user_member(current_user)
-      redirect_to root_url unless (user_member == nil) and @group.is_joinus?
+      @user_pen_name = current_user.pen_names.find_by(id: params[:group][:pen_name_id])
+      redirect_to root_url unless @user_pen_name and @group.can_join?(current_user)
     end
     def user_can_unjoin
-      redirect_to root_url if @group.is_leader?(@user_member)
+      redirect_to root_url unless @group.can_unjoin?(current_user)
     end
-
-    def group_member
+    def user_can_change_leader
+      redirect_to root_url unless @group.can_change_leader?(current_user)
+    end
+    def user_can_set_position
       @group_member = @group.members.find_by(id: params[:group][:pen_name_id])
-      redirect_to root_url unless @group_member
-    end
-    def user_pen_name
-      @user_pen_name = current_user.pen_names.find_by(id: params[:group][:pen_name_id])
-      redirect_to root_url unless @user_pen_name
-    end
-    def position_check
-      @do_pos = @group.get_position_id(@user_member)
-      @from_pos = @group.get_position_id(@group_member)
       @to_pos = params[:group][:position].to_i
       @to_pos = Membership::POS_LEADER if @to_pos < Membership::POS_LEADER
       @to_pos = Membership::POS_VISITOR if @to_pos > Membership::POS_VISITOR
-      unless @do_pos <= Membership::POS_SUBLEADER and @do_pos < @from_pos and @do_pos < @to_pos and @from_pos != @to_pos
-          redirect_to root_url
-      end
-    end
-
-    def user_have_leader
-      redirect_to root_url unless @group.is_leader?(@user_member)
-    end
-    def user_have_leading_member
-      redirect_to root_url unless @group.is_leading_member?(@user_member)
-    end
-    def user_have_only_member
-      redirect_to root_url unless @group.is_leader?(@user_member) and @group.members.count == 1
+      redirect_to root_url unless @group_member and @group.can_set_position?(current_user, @group_member, @to_pos)
     end
 
 end

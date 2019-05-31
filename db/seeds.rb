@@ -18,8 +18,8 @@ users.each do |user|
     name = Faker::Name.name
     outline = Faker::Lorem.sentence(20)
     status = [PenName::ST_CLOSE, PenName::ST_OPEN].sample
-    user.pen_names.create!(name: name, outline: outline,
-                          status: status)
+    keyword = "this-is-keyword-for-pen-name"
+    user.pen_names.create!(name: name, outline: outline, status: status, keyword: keyword)
   end
 end
 
@@ -27,8 +27,9 @@ end
 2.times do |n|
   name  = Faker::Team.name
   outline = Faker::Lorem.sentence(20)
-  status = [Group::ST_CLOSE, Group::ST_OPEN, Group::ST_JOINUS].sample
-  Group.create!(name: name, outline: outline, status: status)
+  status = [Group::ST_CLOSE, Group::ST_OPEN].sample
+  keyword = "this-is-keyword-for-group"
+  Group.create!(name: name, outline: outline, status: status, keyword: keyword)
 end
 groups = Group.order(:created_at)
 

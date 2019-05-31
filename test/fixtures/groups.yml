@@ -1,12 +1,13 @@
 group1:
   name: "group1 name"
   outline: "group1 outline"
-  status: 2
+  status: 1
 group2:
   name: "group2 name"
   outline: "group2 outline"
-  status: 1
+  status: 0
 group3:
   name: "group3 name"
   outline: "group3 outline"
   status: 0
+  keyword: "keyword"

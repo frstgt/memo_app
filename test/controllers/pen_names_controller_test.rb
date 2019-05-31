@@ -6,8 +6,9 @@ class PenNamesControllerTest < ActionDispatch::IntegrationTest
     @user = users(:user1)
     @pen_name = pen_names(:user1_pen_name1)
 
-    @other_user = users(:user2)
+    @other_user = users(:user9)
     @closed_pen_name = pen_names(:user1_pen_name2)
+    @closed_pen_name_with_keyword = pen_names(:user1_pen_name3)
   end
 
   test "show opened pen_name" do
@@ -27,6 +28,16 @@ class PenNamesControllerTest < ActionDispatch::IntegrationTest
 
     log_in_as(@user)
     get pen_name_path(@closed_pen_name)
+    assert_template 'pen_names/show'
+  end
+
+  test "show opened pen_name with keyword" do
+    log_in_as(@other_user)
+    get pen_name_path(@closed_pen_name_with_keyword)
+    assert_template 'pen_names/show'
+
+    log_in_as(@user)
+    get pen_name_path(@closed_pen_name_with_keyword)
     assert_template 'pen_names/show'
   end
 

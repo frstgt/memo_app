@@ -16,21 +16,14 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
 
     @other     = users(:user9)
     @other_pname = pen_names(:user9_pen_name1)
-    @opened_group = groups(:group2)
-    @closed_group = groups(:group3)
+    @closed_group = groups(:group2)
+    @closed_group_with_keyword = groups(:group3)
   end
 
-  test "show joinused group" do
-    [@leader, @subleader, @common, @visitor, @other].each do |user|
-      log_in_as(user)
-      get group_path(@group)
-      assert_template 'groups/show'
-    end
-  end
   test "show opened group" do
     [@leader, @subleader, @common, @visitor, @other].each do |user|
       log_in_as(user)
-      get group_path(@opened_group)
+      get group_path(@group)
       assert_template 'groups/show'
     end
   end
@@ -45,6 +38,13 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
       log_in_as(user)
       get group_path(@closed_group)
       assert_redirected_to root_path
+    end
+  end
+  test "show closed group which has keyword" do
+    [@leader, @subleader, @common, @visitor, @other].each do |user|
+      log_in_as(user)
+      get group_path(@closed_group_with_keyword)
+      assert_template 'groups/show'
     end
   end
 
@@ -123,17 +123,17 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to @other
   end
 
-  test "other can join joinused group" do
+  test "other can join closed group with keyword" do
     log_in_as(@other)
+
+    get join_group_path(@group), params: { group: { pen_name_id: @other_pname.id } }
+    assert_redirected_to root_path
 
     get join_group_path(@closed_group), params: { group: { pen_name_id: @other_pname.id } }
     assert_redirected_to root_path
 
-    get join_group_path(@opened_group), params: { group: { pen_name_id: @other_pname.id } }
-    assert_redirected_to root_path
-
-    get join_group_path(@group), params: { group: { pen_name_id: @other_pname.id } }
-    assert_redirected_to @group
+    get join_group_path(@closed_group_with_keyword), params: { group: { pen_name_id: @other_pname.id } }
+    assert_redirected_to @closed_group_with_keyword
   end
   test "member cannot join group" do
     [@leader, @subleader, @common, @visitor].each do |user|

@@ -1,6 +1,9 @@
-<% 10.times do |n| %>
+<% 9.times do |n| %>
 user<%= n %>:
   name: <%= "user#{n} name" %>
   password_digest: <%= User.digest("z8aKm$@3rTEp#+bs") %>
 <% end %>
-
+user9:
+  name: "user9 name"
+  password_digest: <%= User.digest("z8aKm$@3rTEp#+bs") %>
+  keyword: "keyword"

@@ -9,7 +9,6 @@ class Membership < ApplicationRecord
   POS_SUBLEADER = 1
   POS_COMMON = 2
   POS_VISITOR = 3
-  INVALID = 100
   POSITIONS = [
     ["Leader", POS_LEADER],
     ["Subleader", POS_SUBLEADER],

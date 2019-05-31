@@ -8,9 +8,7 @@
     <% end %>
   </span>
   
-  <% if group.is_joinus? %>
-    <span class="badge badge-warning">join us</span>
-  <% elsif group.is_open? %>
+  <% if group.is_open? %>
     <span class="badge badge-primary">open</span>
   <% else %>
     <span class="badge badge-dark">closed</span>

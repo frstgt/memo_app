@@ -26,6 +26,12 @@
     <%= f.label "(other users cannot read pen_name home)" %>
   </div>
 
+  <div class="form-group">
+    <%= f.label :keyword %>
+    <%= f.label "(optional)" %><br>
+    <%= f.text_field :keyword, type: "text", class: 'form-control' %>
+  </div>
+
   <div class="form-group text-right">
     <%= f.submit yield(:button_text), class: "btn btn-primary" %>
   </div>

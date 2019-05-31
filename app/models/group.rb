@@ -16,16 +16,13 @@ class Group < ApplicationRecord
                     uniqueness: true
   validates :outline, length: { maximum: 1000 }
   validate  :picture_size
+
   validates :status,  presence: true
 
   attr_accessor  :pen_name_id
 
-  ST_JOINUS = 2
   ST_OPEN = 1
   ST_CLOSE = 0
-  def is_joinus?
-    self.status == ST_JOINUS
-  end
   def is_open?
     self.status == ST_OPEN
   end
@@ -85,16 +82,20 @@ class Group < ApplicationRecord
     end
   end
   def get_position_id(pen_name)
-    membership = active_memberships.find_by(member_id: pen_name.id)
-    if membership
-      membership.position
+    if pen_name
+      membership = active_memberships.find_by(member_id: pen_name.id)
+      if membership
+        membership.position
+      else
+        nil
+      end
     else
-      Membership::INVALID
+      nil
     end
   end
   def get_position_name(pen_name)
     position_id = self.get_position_id(pen_name)
-    if position_id <= Membership::POS_VISITOR
+    if position_id and position_id <= Membership::POS_VISITOR
       Membership::POSITIONS[position_id][0]
     else
       "Invalid"
@@ -168,7 +169,34 @@ class Group < ApplicationRecord
 
   def can_show?(user)
     user_member = self.get_user_member(user)
-    user_member or self.is_open? or self.is_joinus?
+    user_member or self.is_open? or (self.keyword and self.keyword == user.keyword)
+  end
+  def can_update?(user)
+    user_member = self.get_user_member(user)
+    user_member and self.is_leading_member?(user_member)
+  end
+  def can_destroy?(user)
+    user_member = self.get_user_member(user)
+    user_member and self.is_leading_member?(user_member) and (self.members.count == 1)
+  end 
+
+  def can_join?(user)
+    user_member = self.get_user_member(user)
+    (user_member == nil) and (self.keyword and self.keyword == user.keyword)
+  end
+  def can_unjoin?(user)
+    user_member = self.get_user_member(user)
+    user_member and (not self.is_leader?(user_member))
+  end
+  def can_change_leader?(user)
+    user_member = self.get_user_member(user)
+    user_member and self.is_leader?(user_member)
+  end
+  def can_set_position?(user, group_member, to_pos)
+    user_member = self.get_user_member(user)
+    do_pos = self.get_position_id(user_member)
+    from_pos = self.get_position_id(group_member)
+    user_member and (do_pos <= Membership::POS_SUBLEADER) and do_pos < from_pos and do_pos < to_pos and from_pos != to_pos
   end
 
   private

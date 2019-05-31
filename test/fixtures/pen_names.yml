@@ -9,6 +9,12 @@ user<%= n %>_pen_name2:
   outline: <%= "user#{n}_pen_name2 outline" %>
   user: user<%= n %>
   status: 0
+user<%= n %>_pen_name3:
+  name: <%= "user#{n}_pen_name3 name" %>
+  outline: <%= "user#{n}_pen_name3 outline" %>
+  user: user<%= n %>
+  status: 0
+  keyword: "keyword"
 <% end %>
-  
+
 

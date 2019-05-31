@@ -63,7 +63,7 @@ class PenNamesController < ApplicationController
   private
 
     def pen_name_params
-      params.require(:pen_name).permit(:name, :outline, :picture, :status)
+      params.require(:pen_name).permit(:name, :outline, :picture, :status, :keyword)
     end
 
     def pen_name_is_exist
