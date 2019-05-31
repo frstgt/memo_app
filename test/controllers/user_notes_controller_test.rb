@@ -9,6 +9,7 @@ class UserNotesControllerTest < ActionDispatch::IntegrationTest
 
     @other_user = users(:user2)
     @closed_note = user_notes(:user1_note2)
+    @group = groups(:group1)
   end
   
   test "show opened note" do
@@ -79,6 +80,20 @@ class UserNotesControllerTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     assert_difference '@user.user_notes.count', -1 do
       delete user_note_path(@note)
+    end
+    assert_redirected_to @user
+  end
+
+  test "move to group_note" do
+    log_in_as(@other_user)
+    assert_difference '@user.user_notes.count', 0 do
+      get move_user_note_path(@note, {group_id: @group.id})
+    end
+    assert_redirected_to root_path
+
+    log_in_as(@user)
+    assert_difference '@user.user_notes.count', -1 do
+      get move_user_note_path(@note, {group_id: @group.id})
     end
     assert_redirected_to @user
   end

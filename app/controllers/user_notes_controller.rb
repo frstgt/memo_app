@@ -5,6 +5,7 @@ class UserNotesController < ApplicationController
   before_action :user_can_show,     only: [:show]
   before_action :user_can_update,   only: [:edit, :update]
   before_action :user_can_destroy,  only: [:destroy]
+  before_action :user_can_move,     only: [:move]
 
   def show
     @all_memos = @note.memos
@@ -50,6 +51,11 @@ class UserNotesController < ApplicationController
     redirect_back_or(current_user)
   end
 
+  def move
+    @note.to_group_note(@group)
+    redirect_to current_user
+  end
+
   private
 
     def note_params
@@ -69,6 +75,11 @@ class UserNotesController < ApplicationController
     end
     def user_can_destroy
       redirect_to root_url unless @note.can_destroy?(current_user)
+    end
+
+    def user_can_move
+      @group = Group.find_by(id: params[:group_id])
+      redirect_to root_url unless @group and @note.can_move?(current_user, @group)
     end
 
 end

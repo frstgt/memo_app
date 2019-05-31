@@ -6,9 +6,14 @@
   
   <span class="command">
     <% if kind == "show" %>
-  
+
       <% if note.can_set_point?(current_user) %>
         <%= render 'notes/point_command', note: note %>
+      <% end %>
+
+      <% if note.can_move?(current_user) %>
+        <%= link_to "[move]", move_group_group_note_path(note.group, note),
+                                data: { confirm: "You sure?" } %>
       <% end %>
   
       <% if note.can_update?(current_user) %>

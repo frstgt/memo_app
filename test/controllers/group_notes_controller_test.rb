@@ -111,12 +111,14 @@ class GroupNotesControllerTest < ActionDispatch::IntegrationTest
     [@leader, @subleader].each do |user|
       log_in_as(user)
 
+      # new note
       assert_difference '@group.group_notes.count', 1 do
         post group_group_notes_path(@group),
              params: { group_note: {title: "Test Note", outline: "This is a test."} }
       end
       assert_redirected_to @group
 
+      # delete note
       assert_difference '@group.group_notes.count', -1 do
         delete group_group_note_path(@group, @group.group_notes.first)
       end
@@ -128,6 +130,47 @@ class GroupNotesControllerTest < ActionDispatch::IntegrationTest
 
       assert_difference '@group.group_notes.count', 0 do
         delete group_group_note_path(@group, @note)
+      end
+      assert_redirected_to root_path
+    end
+  end
+
+  test "move to user note" do
+    [@leader_pname, @subleader_pname, @common_pname].each do |pname|
+      log_in_as(@leader)
+      assert_difference '@group.group_notes.count', 1 do
+        post group_group_notes_path(@group),
+             params: { group_note: {title: "Test Note", outline: "This is a test.", pen_name_id: pname.id} }
+      end
+      assert_redirected_to @group
+
+      log_in_as(pname.user)
+      assert_difference '@group.group_notes.count', -1 do
+        get move_group_group_note_path(@group, @group.group_notes.first)
+      end
+      assert_redirected_to @group
+    end
+
+    [@visitor_pname].each do |pname|
+      log_in_as(@leader)
+      assert_difference '@group.group_notes.count', 1 do
+        post group_group_notes_path(@group),
+             params: { group_note: {title: "Test Note", outline: "This is a test.", pen_name_id: pname.id} }
+      end
+      assert_redirected_to @group
+
+      log_in_as(pname.user)
+      assert_difference '@group.group_notes.count', 0 do
+        get move_group_group_note_path(@group, @group.group_notes.first)
+      end
+      assert_redirected_to root_path
+    end
+
+    [@other].each do |user|
+      log_in_as(user)
+
+      assert_difference '@group.group_notes.count', 0 do
+        get move_group_group_note_path(@group, @note)
       end
       assert_redirected_to root_path
     end

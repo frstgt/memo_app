@@ -10,6 +10,21 @@
       <% if note.can_set_point?(current_user) %>
         <%= render 'notes/point_command', note: note %>
       <% end %>
+
+      <% if note.user == current_user and note.pen_name %>
+        <span class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            [move] <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <% note.pen_name.regular_groups.each do |group| %>
+              <li><%= link_to group.name,
+                              move_user_note_path(note, {group_id: group.id}),
+                              data: { confirm: "You sure?" } %></li>
+            <% end %>
+          </ul>
+        </span>
+      <% end %>
   
       <% if note.can_update?(current_user) %>
         <%= link_to "[edit]", edit_user_note_path(note) %>

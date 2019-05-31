@@ -149,13 +149,6 @@ class Group < ApplicationRecord
     end
   end
 
-  def self.get_user_groups(user)
-    groups = []
-    user.pen_names.each do |pen_name|
-      groups += pen_name.groups
-    end
-    groups
-  end
   def get_user_member(user)
     member = nil
     self.members.each { |pen_name|

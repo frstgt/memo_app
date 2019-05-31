@@ -37,6 +37,15 @@ class PenName < ApplicationRecord
     end
   end
 
+  def search_groups(condition)
+    group_ids = "SELECT group_id FROM memberships
+                  WHERE member_id = :member_id AND #{condition} ORDER BY position DESC"
+    Group.where("id IN (#{group_ids})", member_id: id)
+  end
+  def regular_groups
+    self.search_groups("position <= #{Membership::POS_COMMON}")
+  end
+
   def can_show?(user)
     self.user == user or self.is_open? or (self.keyword and self.keyword == user.keyword)
   end

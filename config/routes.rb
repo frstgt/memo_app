@@ -26,10 +26,16 @@ Rails.application.routes.draw do
     resources :messages,    only: [:create]
   end
 
+  resources :user_notes do
+    get :move, on: :member
+  end
   resources :user_notes, only: [:show, :new, :create, :edit, :update, :destroy]
   resources :user_rooms, only: [:show, :new, :create, :edit, :update, :destroy]
 
   resources :groups do
+    resources :group_notes do
+      get :move, on: :member
+    end
     resources :group_notes, only: [:show, :new, :create, :edit, :update, :destroy]
     resources :group_rooms, only: [:show, :new, :create, :edit, :update, :destroy]
     resources :members, only: [:index]
