@@ -28,6 +28,17 @@
             <% current_user.groups.each do |group| %>
               <li><%= link_to group.name, group, class: "dropdown-item" %></li>
             <% end %>
+
+            <% if current_user.keyword %>
+              <% keyword_groups = Group.where(keyword: current_user.keyword) %>
+              <% if keyword_groups.any? %>
+                <li class="dropdown-divider"></li>
+                <% keyword_groups.each do |group| %>
+                  <li><%= link_to group.name, group, class: "dropdown-item" %></li>
+                <% end %>
+              <% end %>
+            <% end %>
+
             <li class="dropdown-divider"></li>
             <li><%= link_to "New", new_group_path, class: "dropdown-item" %></li>
           </ul>
@@ -41,6 +52,17 @@
             <% current_user.pen_names.each do |pen_name| %>
               <li><%= link_to pen_name.name, pen_name, class: "dropdown-item" %></li>
             <% end %>
+
+            <% if current_user.keyword %>
+              <% keyword_pen_names = PenName.where(keyword: current_user.keyword) %>
+              <% if keyword_pen_names.any? %>
+                <li class="dropdown-divider"></li>
+                <% keyword_pen_names.each do |group| %>
+                  <li><%= link_to group.name, group, class: "dropdown-item" %></li>
+                <% end %>
+              <% end %>
+            <% end %>
+            
             <li class="dropdown-divider"></li>
             <li><%= link_to "New", new_pen_name_path, class: "dropdown-item" %></li>
           </ul>
