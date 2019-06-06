@@ -53,7 +53,7 @@ class UserNotesController < ApplicationController
 
   def move
     @note.to_group_note(@group)
-    redirect_to current_user
+    redirect_back_or(current_user)
   end
 
   private
