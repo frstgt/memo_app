@@ -1,7 +1,7 @@
 <% provide(:title, @group.name + " Home") %>
 
 <% pen_name = @group.get_user_member(current_user) %>
-<% if pen_name and @group.is_leading_member?(pen_name) %>
+<% if pen_name and @group.is_regular_member?(pen_name) %>
   <% new_room_command = link_to "[new]", new_group_group_room_path(@group) %>
   <% new_note_command = link_to "[new]", new_group_group_note_path(@group) %>
 <% else %>

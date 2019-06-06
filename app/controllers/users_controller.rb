@@ -6,8 +6,8 @@ class UsersController < ApplicationController
     store_location
 
     @user = User.find(params[:id])
-    @all_notes = @user.user_notes
-    @all_rooms = @user.user_rooms
+    @all_notes = @user.user_notes.where(pen_name_id: nil)
+    @all_rooms = @user.user_rooms.where(pen_name_id: nil)
     @page_notes = @all_notes.paginate(page: params[:page])
     @page_rooms = @all_rooms.paginate(page: params[:page])
   end

@@ -64,7 +64,7 @@ class GroupRoomsController < ApplicationController
     end
     def user_can_create
       member = @group.get_user_member(current_user)
-      redirect_to root_url unless member and @group.is_leading_member?(member)
+      redirect_to root_url unless member and @group.is_regular_member?(member)
     end
     def user_can_update
       redirect_to root_url unless @room.can_update?(current_user)
