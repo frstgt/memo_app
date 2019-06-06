@@ -11,7 +11,7 @@ class MemosController < ApplicationController
     @memo = @note.memos.build(memo_params)
     if @memo.save
 
-      update_number(@note.memos, @memo)
+      insert_one(@note.memos, @memo)
 
       flash[:success] = "Memo created"
 
@@ -30,7 +30,7 @@ class MemosController < ApplicationController
     @memo = @note.memos.find(params[:id])
     if @memo.update_attributes(memo_params)
 
-      update_number(@note.memos, @memo)
+      insert_one(@note.memos, @memo)
 
       flash[:success] = "Memo updated"
 
@@ -43,6 +43,8 @@ class MemosController < ApplicationController
   def destroy
     @note.memos.find(params[:id]).destroy
     flash[:success] = "Memo deleted"
+
+    delete_one(@note.memos)
 
     redirect_to @note.redirect_path
   end
