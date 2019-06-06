@@ -27,8 +27,8 @@ class UserNote < Note
   def can_move?(user, group)
     if self.user == user
       member = group.get_user_member(user)
-      if member and group.is_regular_member?(member) and (self.pen_name == member)
-        true
+      if self.pen_name
+        member and group.is_regular_member?(member) and (self.pen_name == member)
       else
         false
       end

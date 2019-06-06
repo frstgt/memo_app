@@ -15,14 +15,24 @@ class GroupRoom < Room
     member = self.group.get_user_member(user)
     (member and self.group.is_regular_member?(member)) or self.is_open?
   end
+
   def can_update?(user)
     member = self.group.get_user_member(user)
-    member and self.group.is_leading_member?(member)
+    if self.pen_name
+      member and self.group.is_regular_member?(member) and member == self.pen_name
+    else
+      member and self.group.is_leading_member?(member)
+    end
   end
   def can_destroy?(user)
     member = self.group.get_user_member(user)
-    member and self.group.is_leading_member?(member)
+    if self.pen_name
+      member and self.group.is_regular_member?(member) and member == self.pen_name
+    else
+      member and self.group.is_leading_member?(member)
+    end
   end
+
   def can_control_messages?(user)
     member = self.group.get_user_member(user)
     (member and self.group.is_regular_member?(member)) or self.is_open?

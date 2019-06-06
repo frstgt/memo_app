@@ -14,12 +14,14 @@ class UserRoom < Room
   def can_show?(user)
     (self.user == user) or self.is_open?
   end
+
   def can_update?(user)
     self.user == user
   end
   def can_destroy?(user)
     self.user == user
   end
+
   def can_control_messages?(user)
     (self.user == user) or self.is_open?
   end

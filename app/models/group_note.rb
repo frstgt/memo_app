@@ -21,17 +21,25 @@ class GroupNote < Note
 
   def can_update?(user)
     member = self.group.get_user_member(user)
-    member and self.group.is_leading_member?(member)
+    if self.pen_name
+      member and self.group.is_regular_member?(member) and member == self.pen_name
+    else
+      member and self.group.is_leading_member?(member)
+    end
   end
   def can_destroy?(user)
     member = self.group.get_user_member(user)
-    member and self.group.is_leading_member?(member)
+    if self.pen_name
+      member and self.group.is_regular_member?(member) and member == self.pen_name
+    else
+      member and self.group.is_leading_member?(member)
+    end
   end
 
   def can_move?(user)
     member = self.group.get_user_member(user)
-    if member and self.group.is_regular_member?(member) and (self.pen_name == member)
-      true
+    if self.pen_name
+      member and self.group.is_regular_member?(member) and member == self.pen_name
     else
       false
     end
@@ -39,18 +47,10 @@ class GroupNote < Note
 
   def can_control_memos?(user)
     member = self.group.get_user_member(user)
-    if member and self.group.is_regular_member?(member)
-      if self.pen_name
-        if self.pen_name == member
-          true
-        else
-          false
-        end
-      else
-        true
-      end
+    if self.pen_name
+      member and self.group.is_regular_member?(member) and member == self.pen_name
     else
-      false
+      member and self.group.is_regular_member?(member)
     end
   end
 
