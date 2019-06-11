@@ -56,7 +56,7 @@ class GroupNotesControllerTest < ActionDispatch::IntegrationTest
   end
   
   test "new/create group note" do
-    [@leader, @subleader].each do |user|
+    [@leader, @subleader, @common].each do |user|
       log_in_as(user)
 
       get new_group_group_note_path(@group)
@@ -69,7 +69,7 @@ class GroupNotesControllerTest < ActionDispatch::IntegrationTest
       assert_redirected_to @group
     end
 
-    [@common, @visitor, @other].each do |user|
+    [@visitor, @other].each do |user|
       log_in_as(user)
 
       get new_group_group_note_path(@group)

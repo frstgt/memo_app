@@ -69,34 +69,36 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
 
     assert_difference 'Group.count', 0 do
       post groups_path, params: { group: { name: "Test Group", outline: "This is a test.",
-                                           pen_name_id: @leader_pname.id} }
+                                           leader_id: @leader_pname.id} }
     end
     assert_redirected_to root_path
 
     assert_difference 'Group.count', 1 do
       post groups_path, params: { group: { name: "Test Group", outline: "This is a test.",
-                                           pen_name_id: @other_pname.id} }
+                                           leader_id: @other_pname.id} }
     end
     assert_redirected_to @other
     assert Group.first.is_leader?(@other_pname)
   end
 
   test "edit/update group" do
-    [@leader, @subleader].each do |user|
-      log_in_as(@leader)
+    [@leader_pname].each do |pname|
+      log_in_as(pname.user)
       get edit_group_path(@group)
       assert_template 'groups/edit'
 
-      patch group_path(@group), params: { group: { name: @group.name, outline: "This is a edit test." } }
+      patch group_path(@group), params: { group: { name: @group.name, outline: "This is a edit test.",
+                                                    leader_id: pname.id} }
       assert_redirected_to @group
     end
 
-    [@common, @visitor, @other].each do |user|
-      log_in_as(@other)
+    [@subleader_pname, @common_pname, @visitor_pname, @other_pname].each do |pname|
+      log_in_as(pname.user)
       get edit_group_path(@group)
       assert_redirected_to root_path
 
-      patch group_path(@group), params: { group: { name: @group.name, outline: "This is a edit test as a wrong user." } }
+      patch group_path(@group), params: { group: { name: @group.name, outline: "This is a edit test as a wrong user.",
+                                                    leader_id: pname.id} }
       assert_redirected_to root_path
     end
   end
@@ -113,7 +115,7 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     log_in_as(@other)
     assert_difference 'Group.count', 1 do
       post groups_path, params: { group: { name: "Test Group", outline: "This is a test.",
-                                           pen_name_id: @other_pname.id} }
+                                           leader_id: @other_pname.id} }
     end
     assert_redirected_to @other
 
@@ -324,40 +326,6 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
       end
     end
 
-  end
-
-  test "change_leader" do
-    leader_id = Membership::POS_LEADER
-    subleader_id = Membership::POS_SUBLEADER
-    common_id = Membership::POS_COMMON
-
-    [@subleader, @common, @visitor, @other].each do |user|
-      log_in_as(user)
-
-      get change_leader_group_path(@group)
-      assert_redirected_to root_path
-    end
-
-    log_in_as(@leader)
-
-    assert_equal @group.get_position_id(@leader_pname), leader_id
-    assert_equal @group.get_position_id(@subleader_pname), subleader_id
-    assert_equal @group.get_position_id(@common_pname), common_id
-
-    get position_group_path(@group),
-        params: { group: { pen_name_id: @common_pname.id, position: subleader_id } }
-    assert_redirected_to group_members_path(@group)
-
-    assert_equal @group.get_position_id(@leader_pname), leader_id
-    assert_equal @group.get_position_id(@subleader_pname), subleader_id
-    assert_equal @group.get_position_id(@common_pname), subleader_id
-
-    get change_leader_group_path(@group)
-    assert_redirected_to group_members_path(@group)
-
-    assert_equal @group.get_position_id(@leader_pname), subleader_id
-    assert_equal @group.get_position_id(@subleader_pname), leader_id
-    assert_equal @group.get_position_id(@common_pname), subleader_id
   end
 
 end

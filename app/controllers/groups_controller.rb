@@ -4,7 +4,8 @@ class GroupsController < ApplicationController
 
   before_action :user_can_show,                only: [:show]
   before_action :user_can_create,              only: [:create]
-  before_action :user_can_update,              only: [:edit, :update]
+  before_action :user_can_edit,                only: [:edit]
+  before_action :user_can_update,              only: [:update]
   before_action :user_can_destroy,             only: [:destroy]
 
   before_action :user_can_join,                only: [:join]
@@ -29,12 +30,13 @@ class GroupsController < ApplicationController
 
   def new
     @group = Group.new
+    @members = current_user.pen_names
   end
   def create
     @group = Group.new(group_params)
     if @group.save
 
-      @group.first_leader(@user_pen_name)
+      @group.set_leader(@leader)
 
       flash[:success] = "Group created"
       redirect_to current_user
@@ -44,10 +46,13 @@ class GroupsController < ApplicationController
   end
 
   def edit
+    @members = @group.regular_members
   end
   def update
     if @group.update_attributes(group_params)
       flash[:success] = "Group updated"
+
+      @group.set_leader(@leader)
 
       unless @group.is_open?
         @group.irregular_members.each do |member|
@@ -79,10 +84,6 @@ class GroupsController < ApplicationController
     redirect_to current_user
   end
 
-  def change_leader
-    @group.change_leader
-    redirect_to group_members_path(@group)
-  end
   def position
     @group.set_position(@group_member, @to_pos)
     redirect_to group_members_path(@group)
@@ -91,7 +92,7 @@ class GroupsController < ApplicationController
   private
 
     def group_params
-      params.require(:group).permit(:name, :outline, :picture, :pen_name_id, :status, :keyword)
+      params.require(:group).permit(:name, :outline, :picture, :leader_id, :status, :keyword)
     end
 
     def group_is_exist
@@ -103,11 +104,15 @@ class GroupsController < ApplicationController
       redirect_to root_url unless @group.can_show?(current_user)
     end
     def user_can_create
-      @user_pen_name = current_user.pen_names.find_by(id: params[:group][:pen_name_id])
-      redirect_to root_url unless @user_pen_name      
+      @leader = current_user.pen_names.find_by(id: params[:group][:leader_id])
+      redirect_to root_url unless @leader
+    end
+    def user_can_edit
+      redirect_to root_url unless @group.can_update?(current_user)
     end
     def user_can_update
-      redirect_to root_url unless @group.can_update?(current_user)
+      @leader = @group.regular_members.find_by(id: params[:group][:leader_id])
+      redirect_to root_url unless @leader and @group.can_update?(current_user)
     end
     def user_can_destroy
       redirect_to root_url unless @group.can_destroy?(current_user)

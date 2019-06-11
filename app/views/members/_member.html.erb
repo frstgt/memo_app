@@ -43,11 +43,6 @@
         <% do_pos_id = @group.get_position_id(@user_member) %>
         <% from_pos_id = @group.get_position_id(member) %>
   
-        <% if @group.can_change_leader?(current_user) %>
-          <%= link_to "[change leader]",
-                      change_leader_group_path(@group), data: { confirm: "You sure?" } %>
-        <% end %>
-  
         <% if do_pos_id <= Membership::POS_SUBLEADER and do_pos_id < from_pos_id %>
   
           <span class="dropdown">

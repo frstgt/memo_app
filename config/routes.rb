@@ -42,7 +42,6 @@ Rails.application.routes.draw do
 
     get :join, on: :member
     get :unjoin, on: :member
-    get :change_leader, on: :member
     get :position, on: :member
   end
   resources :groups, only: [:show, :new, :create, :edit, :update, :destroy]

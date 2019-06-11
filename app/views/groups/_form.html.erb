@@ -18,9 +18,10 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :first_master %>
-    <%= f.select :pen_name_id,
-                 current_user.pen_names.collect { |pen_name| [pen_name.name, pen_name.id] } %>
+    <%= f.label :leader %>
+    <%= f.select :leader_id,
+                 @members.collect { |pen_name| [pen_name.name, pen_name.id] },
+                 selected: (@group.leader) ? @group.leader.id : nil %>
   </div>
 
   <div class="form-group">

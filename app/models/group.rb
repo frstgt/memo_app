@@ -19,7 +19,7 @@ class Group < ApplicationRecord
 
   validates :status,  presence: true
 
-  attr_accessor  :pen_name_id
+  attr_accessor  :leader_id
 
   ST_OPEN = 1
   ST_CLOSE = 0
@@ -27,31 +27,22 @@ class Group < ApplicationRecord
     self.status == ST_OPEN
   end
 
-  def first_leader(pen_name)
+  def set_leader(pen_name)
     if self.members.count == 0
       active_memberships.create(member_id: pen_name.id, position: Membership::POS_LEADER)
-      true
     else
-      false
+      if (pen_name != self.leader) and self.is_regular_member?(pen_name)
+        leader_membership = active_memberships.find_by(position: Membership::POS_LEADER)
+        member_membership = active_memberships.find_by(member_id: pen_name.id)
+
+        leader_membership.update_attributes({position: Membership::POS_SUBLEADER})
+        member_membership.update_attributes({position: Membership::POS_LEADER})
+      end
     end
   end
-  def change_leader
-    members = self.leading_members
-    if members.count > 2
-      memberships = []
-      members.each do |member|
-        membership = active_memberships.find_by(member_id: member.id)
-        memberships.append(membership)
-      end
-      memberships.sort_by! do |member|
-        [member.position, member.updated_at]
-      end
-      memberships[0].update_attributes({position: Membership::POS_SUBLEADER})
-      memberships[1].update_attributes({position: Membership::POS_LEADER})
-      true
-    else
-      false
-    end
+  def leader
+    membership = active_memberships.find_by(position: Membership::POS_LEADER)
+    (membership) ? membership.member : nil
   end
 
   def join(pen_name)
@@ -121,8 +112,7 @@ class Group < ApplicationRecord
   end
 
   def is_leader?(pen_name)
-    membership = active_memberships.find_by(member_id: pen_name.id)
-    membership and membership.position == Membership::POS_LEADER
+    pen_name == self.leader
   end
   def is_leading_member?(pen_name) # leader, subleader
     membership = active_memberships.find_by(member_id: pen_name.id)
@@ -166,11 +156,11 @@ class Group < ApplicationRecord
   end
   def can_update?(user)
     user_member = self.get_user_member(user)
-    user_member and self.is_leading_member?(user_member)
+    user_member and (user_member == self.leader)
   end
   def can_destroy?(user)
     user_member = self.get_user_member(user)
-    user_member and self.is_leading_member?(user_member) and (self.members.count == 1)
+    user_member and (user_member == self.leader) and (self.members.count == 1)
   end 
 
   def can_join?(user)
@@ -179,11 +169,7 @@ class Group < ApplicationRecord
   end
   def can_unjoin?(user)
     user_member = self.get_user_member(user)
-    user_member and (not self.is_leader?(user_member))
-  end
-  def can_change_leader?(user)
-    user_member = self.get_user_member(user)
-    user_member and self.is_leader?(user_member)
+    user_member and (user_member != self.leader)
   end
   def can_set_position?(user, group_member, to_pos)
     user_member = self.get_user_member(user)
