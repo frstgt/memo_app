@@ -160,7 +160,12 @@ class Group < ApplicationRecord
   end
   def can_destroy?(user)
     user_member = self.get_user_member(user)
-    user_member and (user_member == self.leader) and (self.members.count == 1)
+    c1 = (user_member and (user_member == self.leader))
+    c2 = (self.members.count == 1)
+    c3 = (self.status != Group::ST_OPEN)
+    c4 = (self.group_notes.where(status: Note::ST_OPEN).count == 0)
+    c5 = (self.group_rooms.where(status: Room::ST_OPEN).count == 0)
+    c1 and c2 and c3 and c4 and c5
   end 
 
   def can_join?(user)

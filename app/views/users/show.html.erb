@@ -17,8 +17,11 @@
 
         <span class="command">
           <%= link_to "[edit]", edit_user_path(current_user) %>
-          <%= link_to "[delete]", user_path(current_user),
-                                    method: :delete, data: { confirm: "You sure?" } %>
+
+          <% if @user.can_destroy?(current_user) %>
+            <%= link_to "[delete]", user_path(current_user),
+                                      method: :delete, data: { confirm: "You sure?" } %>
+          <% end %>
         </span>
       </div>
 

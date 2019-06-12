@@ -77,7 +77,7 @@ class PenNamesControllerTest < ActionDispatch::IntegrationTest
 
     log_in_as(@user)
     assert_difference '@user.pen_names.count', -1 do
-      delete pen_name_path(@pen_name)
+      delete pen_name_path(@closed_pen_name)
     end
     assert_redirected_to @user
   end

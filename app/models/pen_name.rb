@@ -2,6 +2,8 @@ class PenName < ApplicationRecord
   belongs_to :user
   has_many :user_notes, dependent: :destroy
   has_many :user_rooms, dependent: :destroy
+  has_many :group_notes, dependent: :destroy
+  has_many :group_rooms, dependent: :destroy
 
   has_many :passive_memberships, class_name:  "Membership",
                                   foreign_key: "member_id",
@@ -53,7 +55,14 @@ class PenName < ApplicationRecord
     self.user == user
   end
   def can_destroy?(user)
-    self.user == user
+    c1 = (self.user == user)
+    c2 = (self.status != PenName::ST_OPEN)
+    c3 = (self.groups.count == 0)
+    c4 = (self.user_notes.where(status: Note::ST_OPEN).count == 0)
+    c5 = (self.user_rooms.where(status: Room::ST_OPEN).count == 0)
+    c6 = (self.group_notes.count == 0)
+    c7 = (self.group_rooms.count == 0)
+    c1 and c2 and c3 and c4 and c5 and c6 and c7
   end 
 
   private
