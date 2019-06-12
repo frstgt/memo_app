@@ -59,7 +59,7 @@ class UserNotesController < ApplicationController
   private
 
     def note_params
-      params.require(:user_note).permit(:title, :outline, :pen_name_id, :picture, :tag_list, :status)
+      params.require(:user_note).permit(:title, :outline, :pen_name_id, :picture, :tag_list, :status, :numbering)
     end
 
     def note_is_exist

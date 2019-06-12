@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190531005330) do
+ActiveRecord::Schema.define(version: 20190612083656) do
 
   create_table "group_notes", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 20190531005330) do
     t.string "type"
     t.integer "group_id"
     t.integer "status", default: 0
+    t.integer "numbering", default: 0
     t.index ["group_id"], name: "index_notes_on_group_id"
     t.index ["pen_name_id"], name: "index_notes_on_pen_name_id"
     t.index ["user_id"], name: "index_notes_on_user_id"

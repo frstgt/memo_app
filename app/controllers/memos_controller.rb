@@ -5,7 +5,12 @@ class MemosController < ApplicationController
 
   def new
     @memo = @note.memos.build
-    @max = @value = @note.memos.count + 1
+    @max = @note.memos.count + 1
+    if @note.add_first?
+      @value = 1
+    else
+      @value = @note.memos.count + 1
+    end
   end
   def create
     @memo = @note.memos.build(memo_params)

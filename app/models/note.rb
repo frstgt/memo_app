@@ -23,6 +23,7 @@ class Note < ApplicationRecord
   validate  :picture_size
 
   validates :status,  presence: true
+  validates :numbering,  presence: true
 
   attr_accessor  :tag_list
 
@@ -30,6 +31,15 @@ class Note < ApplicationRecord
   ST_CLOSE = 0
   def is_open?
     self.status == ST_OPEN
+  end
+
+  NUM_ADD_FIRST = 1
+  NUM_ADD_LAST = 0
+  def add_first?
+    self.numbering == NUM_ADD_FIRST
+  end
+  def add_last?
+    self.numbering == NUM_ADD_LAST
   end
 
   def load_tag_list

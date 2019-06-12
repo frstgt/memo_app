@@ -19,12 +19,12 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :picture %>
-    <%= image_tag @room.picture.url(:thumb) if @room.picture? %>
+    <%= f.label :picture %><br>
     <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
   </div>
 
   <div class="form-group">
+    <%= f.label :status %><br>
     <%= f.radio_button :status, Room::ST_OPEN %>
     <%= f.label :open %>
     <%= f.label "(other users can post messages)" %><br>
