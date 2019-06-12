@@ -28,7 +28,7 @@ class MemosController < ApplicationController
 
   def edit
     @memo = @note.memos.find(params[:id])
-    @max = @note.memos.count + 1
+    @max = @note.memos.count
     @value = @memo.number
   end
   def update
