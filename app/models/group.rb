@@ -174,7 +174,10 @@ class Group < ApplicationRecord
   end
   def can_unjoin?(user)
     user_member = self.get_user_member(user)
-    user_member and (user_member != self.leader)
+    c1 = (user_member and (user_member != self.leader))
+    c2 = (user_member.group_notes.count == 0)
+    c3 = (user_member.group_rooms.count == 0)
+    c1 and c2 and c3
   end
   def can_set_position?(user, group_member, to_pos)
     user_member = self.get_user_member(user)

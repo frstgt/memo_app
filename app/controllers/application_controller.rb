@@ -24,7 +24,9 @@ class ApplicationController < ActionController::Base
           if new_number == new_one.number
             new_number += 1
           end
-          one.update_attributes({number: new_number})
+          if new_number != one.number
+            one.update_attributes({number: new_number})
+          end
           new_number += 1
         end
       end
@@ -33,7 +35,9 @@ class ApplicationController < ActionController::Base
     def delete_one(ones)
       new_number = 1
       for one in ones do
-        one.update_attributes({number: new_number})
+        if new_number != one.number
+          one.update_attributes({number: new_number})
+        end
         new_number += 1
       end
     end
