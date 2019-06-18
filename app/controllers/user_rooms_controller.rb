@@ -14,12 +14,14 @@ class UserRoomsController < ApplicationController
 
   def new
     @room = current_user.user_rooms.build
+    @pen_names = current_user.pen_names
   end
   def create
     @room = current_user.user_rooms.build(room_params)
     if @room.save
       flash[:success] = "Room created"
-      redirect_to current_user
+
+      redirect_back_or(current_user)
     else
       render 'new'
     end
@@ -40,7 +42,7 @@ class UserRoomsController < ApplicationController
     @room.destroy
     flash[:success] = "Room deleted"
 
-    redirect_to current_user
+    redirect_back_or(current_user)
   end
 
   private

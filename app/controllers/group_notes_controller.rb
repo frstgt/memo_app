@@ -17,6 +17,7 @@ class GroupNotesController < ApplicationController
 
   def new
     @note = @group.group_notes.build
+    @pen_names = @group.members
   end
   def create
     @note = @group.group_notes.build(note_params)

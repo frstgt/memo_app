@@ -28,7 +28,8 @@ class PenNamesController < ApplicationController
     @pen_name = current_user.pen_names.build(pen_name_params)
     if @pen_name.save
       flash[:success] = "PenName created"
-      redirect_to current_user
+
+      redirect_back_or(current_user)
     else
       render 'new'
     end
@@ -47,8 +48,8 @@ class PenNamesController < ApplicationController
           end
         end
       end
-      
-      redirect_to @pen_name
+
+      redirect_back_or(current_user)
     else
       render 'edit'
     end
@@ -57,7 +58,8 @@ class PenNamesController < ApplicationController
   def destroy
     @pen_name.destroy
     flash[:success] = "PenName deleted"
-    redirect_to current_user
+
+    redirect_back_or(current_user)
   end
   
   private

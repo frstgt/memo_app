@@ -15,6 +15,7 @@ class UserNotesController < ApplicationController
 
   def new
     @note = current_user.user_notes.build
+    @pen_names = current_user.pen_names
   end
   def create
     @note = current_user.user_notes.build(note_params)

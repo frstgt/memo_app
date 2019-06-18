@@ -1,0 +1,48 @@
+<%= render 'shared/error_messages', object: f.object %>
+
+<div class="form-group">
+<%= f.label :title %>
+<%= f.text_field :title, class: 'form-control' %>
+</div>
+
+<div class="form-group">
+<%= f.label :pen_name %>
+<%= f.select :pen_name_id,
+             @pen_names.collect { |pen_name| [pen_name.name, pen_name.id] },
+              { include_blank: "" }, class: 'form-control' %>
+</div>
+
+<div class="form-group">
+<%= f.label :tag_list %> <label>(e.g. tag1, tag2, ...)</label>
+<%= f.text_field :tag_list, class: 'form-control' %>
+</div>
+
+<div class="form-group">
+<%= f.label :outline %>
+<%= f.text_area :outline, rows: '10', class: 'form-control' %>
+</div>
+
+<div class="form-group">
+<%= f.label :picture %><br>
+<%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
+</div>
+
+<div class="form-group">
+<%= f.label :status %><br>
+<%= f.radio_button :status, Note::ST_OPEN %>
+<%= f.label :open %><%= f.label "(other users can read memos)" %><br>
+<%= f.radio_button :status, Note::ST_CLOSE %>
+<%= f.label :close %><%= f.label "(other users cannot read memos)" %>
+</div>
+
+<div class="form-group">
+<%= f.label :numbering %><%= f.label "(for memos)" %><br>
+<%= f.radio_button :numbering, Note::NUM_ADD_FIRST %>
+<%= f.label :add_first %>
+<%= f.radio_button :numbering, Note::NUM_ADD_LAST %>
+<%= f.label :add_last %>
+</div>
+
+<div class="form-group text-right">
+<%= f.submit yield(:button_text), class: "btn btn-primary" %>
+</div>

@@ -16,6 +16,7 @@ class GroupRoomsController < ApplicationController
 
   def new
     @room = @group.group_rooms.build
+    @pen_names = @group.members
   end
   def create
     @room = @group.group_rooms.build(room_params)
