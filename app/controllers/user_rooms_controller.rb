@@ -28,6 +28,7 @@ class UserRoomsController < ApplicationController
   end
 
   def edit
+    @pen_names = current_user.pen_names
   end
   def update
     if @room.update_attributes(room_params)

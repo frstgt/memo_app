@@ -1,23 +1,29 @@
 user1_message1:
   content: "first message"
   room: user1_room1
+  pen_name: user1_pen_name1
 
 user1_message2:
   content: "second message"
   room: user1_room1
+  pen_name: user1_pen_name1
 
 user1_last_message:
   content: "last message"
   room: user1_room1
+  pen_name: user1_pen_name1
 
 group1_message1:
   content: "first message"
   room: group1_room1
+  pen_name: user1_pen_name1
 
 group1_message2:
   content: "second message"
   room: group1_room1
+  pen_name: user1_pen_name1
 
 group1_last_message:
   content: "last message"
   room: group1_room1
+  pen_name: user1_pen_name1

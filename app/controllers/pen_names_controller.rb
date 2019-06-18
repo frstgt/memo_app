@@ -49,7 +49,7 @@ class PenNamesController < ApplicationController
         end
       end
 
-      redirect_back_or(current_user)
+      redirect_to @pen_name
     else
       render 'edit'
     end

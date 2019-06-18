@@ -34,6 +34,7 @@ class GroupNotesController < ApplicationController
 
   def edit
     @note.load_tag_list
+    @pen_names = @group.members
   end
   def update
     if @note.update_attributes(note_params)

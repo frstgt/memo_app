@@ -29,6 +29,7 @@ class GroupRoomsController < ApplicationController
   end
 
   def edit
+    @pen_names = @group.members
   end
   def update
     if @room.update_attributes(room_params)

@@ -32,6 +32,7 @@ class UserNotesController < ApplicationController
 
   def edit
     @note.load_tag_list
+    @pen_names = current_user.pen_names
   end
   def update
     if @note.update_attributes(note_params)
