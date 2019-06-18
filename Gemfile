@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.5.3'
+ruby '2.6.3'
 
 gem 'rails',                    '5.1.6'
 gem 'bcrypt',                   '3.1.12'

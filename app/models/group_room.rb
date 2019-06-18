@@ -7,7 +7,14 @@ class GroupRoom < Room
     if member and member.user == user
       member
     else
-      nil
+      pen_name = nil
+      self.messages.each do |message|
+        if message.pen_name.user == user
+          pen_name = message.pen_name
+          break
+        end
+      end
+      pen_name
     end
   end
 

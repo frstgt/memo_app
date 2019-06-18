@@ -4,6 +4,7 @@ class PenName < ApplicationRecord
   has_many :user_rooms, dependent: :destroy
   has_many :group_notes, dependent: :destroy
   has_many :group_rooms, dependent: :destroy
+  has_many :messages, dependent: :destroy
 
   has_many :passive_memberships, class_name:  "Membership",
                                   foreign_key: "member_id",
@@ -62,7 +63,8 @@ class PenName < ApplicationRecord
     c5 = (self.user_rooms.where(status: Room::ST_OPEN).count == 0)
     c6 = (self.group_notes.count == 0)
     c7 = (self.group_rooms.count == 0)
-    c1 and c2 and c3 and c4 and c5 and c6 and c7
+    c8 = (self.messages.count == 0)
+    c1 and c2 and c3 and c4 and c5 and c6 and c7 and c8
   end 
 
   private

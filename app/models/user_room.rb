@@ -7,7 +7,14 @@ class UserRoom < Room
     if pen_name and pen_name.user == user
       pen_name
     else
-      nil
+      pen_name = nil
+      self.messages.each do |message|
+        if message.pen_name.user == user
+          pen_name = message.pen_name
+          break
+        end
+      end
+      pen_name
     end
   end
 
