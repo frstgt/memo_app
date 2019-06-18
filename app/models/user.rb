@@ -35,7 +35,13 @@ class User < ApplicationRecord
 
   def can_destroy?(user)
     c1 = (self == user)
-    c2 = (self.pen_names.where(status: PenName::ST_OPEN).count == 0)
+    c2 = true
+    self.pen_names.each do |pen_name|
+      unless pen_name.can_destroy?(user)
+        c2 = false
+        break
+      end
+    end
     c3 = (self.user_notes.where(status: Note::ST_OPEN).count == 0)
     c4 = (self.user_rooms.where(status: Room::ST_OPEN).count == 0)
     c1 and c2 and c3 and c4
