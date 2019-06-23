@@ -29,7 +29,7 @@ class PenNamesController < ApplicationController
     if @pen_name.save
       flash[:success] = "PenName created"
 
-      redirect_back_or(current_user)
+      redirect_to @pen_name
     else
       render 'new'
     end

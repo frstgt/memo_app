@@ -77,7 +77,7 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
       post groups_path, params: { group: { name: "Test Group", outline: "This is a test.",
                                            leader_id: @other_pname.id} }
     end
-    assert_redirected_to @other
+    assert_redirected_to Group.first
     assert Group.first.is_leader?(@other_pname)
   end
 
@@ -117,7 +117,7 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
       post groups_path, params: { group: { name: "Test Group", outline: "This is a test.",
                                            leader_id: @other_pname.id} }
     end
-    assert_redirected_to @other
+    assert_redirected_to Group.first
 
     assert_difference 'Group.count', -1 do
       delete group_path(@other_pname.groups.first)

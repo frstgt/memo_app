@@ -14,8 +14,6 @@ class GroupsController < ApplicationController
   before_action :user_can_set_position,        only: [:position]
 
   def show
-    store_location
-
     pen_name = @group.get_user_member(current_user)
     if pen_name and @group.is_regular_member?(pen_name)
       @all_notes = @group.group_notes
@@ -39,7 +37,8 @@ class GroupsController < ApplicationController
       @group.set_leader(@leader)
 
       flash[:success] = "Group created"
-      redirect_to current_user
+      
+      redirect_to @group
     else
       render 'new'
     end
@@ -69,7 +68,8 @@ class GroupsController < ApplicationController
   def destroy
     @group.destroy
     flash[:success] = "Group deleted"
-    redirect_to current_user
+
+    redirect_back_or(current_user)
   end
 
   #

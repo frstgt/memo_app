@@ -43,25 +43,13 @@ class PenNamesControllerTest < ActionDispatch::IntegrationTest
 
   test "new/create pen_name" do
     log_in_as(@user)
-    get pen_name_path(@pen_name)
-    assert_template 'pen_names/show'
     get new_pen_name_path
     assert_template 'pen_names/new'
 
     assert_difference '@user.pen_names.count', 1 do
-      post pen_names_path, params: { pen_name: { name: "Test PenName1", outline: "This is a test."} }
+      post pen_names_path, params: { pen_name: { name: "Test PenName", outline: "This is a test."} }
     end
-    assert_redirected_to @pen_name
-
-    get user_path(@user)
-    assert_template 'users/show'
-    get new_pen_name_path
-    assert_template 'pen_names/new'
-
-    assert_difference '@user.pen_names.count', 1 do
-      post pen_names_path, params: { pen_name: { name: "Test PenName2", outline: "This is a test."} }
-    end
-    assert_redirected_to @user
+    assert_redirected_to @user.pen_names.last
   end
 
   test "edit/update pen_name" do

@@ -4,8 +4,6 @@ class NotesController < ApplicationController
   before_action :user_can_set_point, only: [:set_point]
 
   def index
-    store_location
-
     case params[:mode]
     when "favorite"
       @all_notes = Note.positive_list(current_user).where(status: Note::ST_OPEN)
