@@ -13,6 +13,9 @@
 
   <div class="form-group">
     <%= f.label :picture %><br>
+    <% if @group.picture? %>
+      <%= image_tag @group.picture.url(:thumb) %>
+    <% end %>
     <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
   </div>
 

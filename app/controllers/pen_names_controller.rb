@@ -22,13 +22,21 @@ class PenNamesController < ApplicationController
   end
 
   def new
-    @pen_name = current_user.pen_names.build
+    # this code is for avoiding a bug
+    # build changes current_user.pen_names
+    # and we should not access current_user.pen_names at that time
+    # but memolet have PenName menu of the header
+    # new does not changes current_user.pen_names
+    # so we should use new at the situation
+
+#    @pen_name = current_user.pen_names.build
+    @pen_name = PenName.new
   end
   def create
     @pen_name = current_user.pen_names.build(pen_name_params)
     if @pen_name.save
       flash[:success] = "PenName created"
-
+ 
       redirect_to @pen_name
     else
       render 'new'
