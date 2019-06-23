@@ -26,7 +26,8 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-right">
             <% current_user.groups.each do |group| %>
-              <li><%= link_to group.name, group, class: "dropdown-item" %></li>
+              <% status = (group.is_open?) ? " [open]" : " [closed]" %>
+              <li><%= link_to group.name + status, group, class: "dropdown-item" %></li>
             <% end %>
 
             <% if current_user.keyword %>
@@ -34,7 +35,8 @@
               <% if keyword_groups.any? %>
                 <li class="dropdown-divider"></li>
                 <% keyword_groups.each do |group| %>
-                  <li><%= link_to group.name, group, class: "dropdown-item" %></li>
+                  <% status = (group.is_open?) ? " [open]" : " [closed]" %>
+                  <li><%= link_to group.name + status, group, class: "dropdown-item" %></li>
                 <% end %>
               <% end %>
             <% end %>
@@ -50,15 +52,17 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-right">
             <% current_user.pen_names.each do |pen_name| %>
-              <li><%= link_to pen_name.name, pen_name, class: "dropdown-item" %></li>
+              <% status = (pen_name.is_open?) ? " [open]" : " [closed]" %>
+              <li><%= link_to pen_name.name + status, pen_name, class: "dropdown-item" %></li>
             <% end %>
 
             <% if current_user.keyword %>
               <% keyword_pen_names = PenName.where(keyword: current_user.keyword) %>
               <% if keyword_pen_names.any? %>
                 <li class="dropdown-divider"></li>
-                <% keyword_pen_names.each do |group| %>
-                  <li><%= link_to group.name, group, class: "dropdown-item" %></li>
+                <% keyword_pen_names.each do |pen_name| %>
+                  <% status = (pen_name.is_open?) ? " [open]" : " [closed]" %>
+                  <li><%= link_to pen_name.name + status, pen_name, class: "dropdown-item" %></li>
                 <% end %>
               <% end %>
             <% end %>
