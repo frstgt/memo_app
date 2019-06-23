@@ -13,10 +13,11 @@ class UserRoomsController < ApplicationController
   end
 
   def new
-    @room = current_user.user_rooms.build
     @pen_names = current_user.pen_names
+    @room = current_user.user_rooms.build
   end
   def create
+    @pen_names = current_user.pen_names
     @room = current_user.user_rooms.build(room_params)
     if @room.save
       flash[:success] = "Room created"
@@ -31,6 +32,7 @@ class UserRoomsController < ApplicationController
     @pen_names = current_user.pen_names
   end
   def update
+    @pen_names = current_user.pen_names
     if @room.update_attributes(room_params)
       flash[:success] = "Room updated"
       redirect_to @room.redirect_path

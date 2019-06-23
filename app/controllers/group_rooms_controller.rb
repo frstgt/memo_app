@@ -15,10 +15,11 @@ class GroupRoomsController < ApplicationController
   end
 
   def new
-    @room = @group.group_rooms.build
     @pen_names = @group.members
+    @room = @group.group_rooms.build
   end
   def create
+    @pen_names = @group.members
     @room = @group.group_rooms.build(room_params)
     if @room.save
       flash[:success] = "Room created"
@@ -32,6 +33,7 @@ class GroupRoomsController < ApplicationController
     @pen_names = @group.members
   end
   def update
+    @pen_names = @group.members
     if @room.update_attributes(room_params)
       flash[:success] = "Room updated"
       redirect_to @room.redirect_path

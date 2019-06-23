@@ -14,10 +14,11 @@ class UserNotesController < ApplicationController
   end
 
   def new
-    @note = current_user.user_notes.build
     @pen_names = current_user.pen_names
+    @note = current_user.user_notes.build
   end
   def create
+    @pen_names = current_user.pen_names
     @note = current_user.user_notes.build(note_params)
     if @note.save
       flash[:success] = "Note created"
@@ -31,10 +32,11 @@ class UserNotesController < ApplicationController
   end
 
   def edit
-    @note.load_tag_list
     @pen_names = current_user.pen_names
+    @note.load_tag_list
   end
   def update
+    @pen_names = current_user.pen_names
     if @note.update_attributes(note_params)
       flash[:success] = "Note updated"
 

@@ -71,6 +71,9 @@ users.each do |user|
     title = Faker::Book.title
     outline = Faker::Lorem.sentence(20)
     status = [Note::ST_CLOSE, Note::ST_OPEN].sample
+    if pen_name_id == nil
+      status = Note::ST_CLOSE
+    end
     note = user.user_notes.create!(title: title, outline: outline,
                                   pen_name_id: pen_name_id, status: status)
 
@@ -139,7 +142,7 @@ groups.each do |group|
     title = Faker::Book.title
     outline = Faker::Lorem.sentence(20)
     pen_name_id = pen_name_ids.sample
-    status = [Note::ST_CLOSE, Note::ST_OPEN].sample
+    status = [Room::ST_CLOSE, Room::ST_OPEN].sample
     room = group.group_rooms.create(title: title, outline: outline,
                                     pen_name_id: pen_name_id, status: status)
 
@@ -164,7 +167,10 @@ users.each do |user|
     title = Faker::Book.title
     outline = Faker::Lorem.sentence(20)
     pen_name_id = pen_name_ids.sample
-    status = [Note::ST_CLOSE, Note::ST_OPEN].sample
+    status = [Room::ST_CLOSE, Room::ST_OPEN].sample
+    if pen_name_id == nil
+      status = Room::ST_CLOSE
+    end
     room = user.user_rooms.create(title: title, outline: outline,
                                   pen_name_id: pen_name_id, status: status)
 

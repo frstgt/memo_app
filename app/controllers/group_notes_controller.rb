@@ -16,10 +16,11 @@ class GroupNotesController < ApplicationController
   end
 
   def new
-    @note = @group.group_notes.build
     @pen_names = @group.members
+    @note = @group.group_notes.build
   end
   def create
+    @pen_names = @group.members
     @note = @group.group_notes.build(note_params)
     if @note.save
       flash[:success] = "Note created"
@@ -33,10 +34,11 @@ class GroupNotesController < ApplicationController
   end
 
   def edit
-    @note.load_tag_list
     @pen_names = @group.members
+    @note.load_tag_list
   end
   def update
+    @pen_names = @group.members
     if @note.update_attributes(note_params)
       flash[:success] = "Note updated"
 

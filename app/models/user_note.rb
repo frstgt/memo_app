@@ -1,6 +1,16 @@
+class UserNoteOpenValidator < ActiveModel::Validator
+  def validate(record)
+    if record.status == Note::ST_OPEN and record.pen_name == nil
+      record.errors[:base] << "PenName must be valid when the Note is open"
+    end
+  end
+end
+
 class UserNote < Note
   belongs_to :user
   validates :user_id, presence: true
+
+  validates_with UserNoteOpenValidator
 
   def to_group_note(group)
     member = group.get_user_member(self.user)

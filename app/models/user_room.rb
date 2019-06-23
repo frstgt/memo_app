@@ -1,6 +1,16 @@
+class UserRoomOpenValidator < ActiveModel::Validator
+  def validate(record)
+    if record.status == Room::ST_OPEN and record.pen_name == nil
+      record.errors[:base] << "PenName must be valid when the Room is open"
+    end
+  end
+end
+
 class UserRoom < Room
   belongs_to :user
   validates :user_id, presence: true
+
+  validates_with UserRoomOpenValidator
 
   def get_user_pen_name(user)
     pen_name = self.pen_name
