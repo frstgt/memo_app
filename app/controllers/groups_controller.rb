@@ -119,7 +119,10 @@ class GroupsController < ApplicationController
     end
     def user_can_join
       @user_pen_name = current_user.pen_names.find_by(id: params[:group][:pen_name_id])
-      redirect_to root_url unless @user_pen_name and @group.can_join?(current_user)
+      last_pen_name = @group.get_user_pen_name(current_user)
+      c1 = @user_pen_name and @group.can_join?(current_user)
+      c2 = (last_pen_name == nil) or (last_pen_name and last_pen_name == @user_pen_name)
+      redirect_to root_url unless c1 and c2
     end
     def user_can_unjoin
       redirect_to root_url unless @group.can_unjoin?(current_user)

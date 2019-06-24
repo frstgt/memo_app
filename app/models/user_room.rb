@@ -13,19 +13,29 @@ class UserRoom < Room
   validates_with UserRoomOpenValidator
 
   def get_user_pen_name(user)
-    pen_name = self.pen_name
-    if pen_name and pen_name.user == user
-      pen_name
+    pen_name = nil
+    if self.pen_name and self.pen_name.user == user
+      pen_name = self.pen_name
     else
-      pen_name = nil
       self.messages.each do |message|
         if message.pen_name and message.pen_name.user == user
           pen_name = message.pen_name
           break
         end
       end
+      unless pen_name
+        self.user.user_rooms do |room|
+          room.messages.each do |message|
+            if message.pen_name and message.pen_name.user == user
+              pen_name = message.pen_name
+              break
+            end
+          end
+        end
+      end
       pen_name
     end
+    pen_name
   end
 
   def can_show?(user)

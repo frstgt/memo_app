@@ -139,14 +139,27 @@ class Group < ApplicationRecord
     end
   end
 
+  def get_user_pen_name(user)
+    pen_name = nil
+    self.group_rooms do |room|
+      room.messages.each do |message|
+        if message.pen_name and message.pen_name.user == user
+          pen_name = message.pen_name
+          break
+        end
+      end
+    end
+    pen_name
+  end
+
   def get_user_member(user)
     member = nil
-    self.members.each { |pen_name|
+    self.members.each do |pen_name|
       if pen_name.user == user
         member = pen_name
         break
       end
-    }
+    end
     member
   end
 

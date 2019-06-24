@@ -3,19 +3,29 @@ class GroupRoom < Room
   validates :group_id, presence: true
 
   def get_user_pen_name(user)
+    pen_name = nil
     member = self.group.get_user_member(user)
     if member and member.user == user
-      member
+      pen_name = member
     else
-      pen_name = nil
       self.messages.each do |message|
         if message.pen_name and message.pen_name.user == user
           pen_name = message.pen_name
           break
         end
       end
-      pen_name
+      unless pen_name
+        self.group.group_rooms do |room|
+          room.messages.each do |message|
+            if message.pen_name and message.pen_name.user == user
+              pen_name = message.pen_name
+              break
+            end
+          end
+        end
+      end
     end
+    pen_name
   end
 
   def can_show?(user)

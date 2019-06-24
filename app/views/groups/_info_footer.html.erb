@@ -23,10 +23,17 @@
             [join] <b class="caret"></b>
           </a>
           <ul class="dropdown-menu dropdown-menu-right">
-            <% current_user.pen_names.each do |pen_name| %>
+            <% pen_name = group.get_user_pen_name(current_user) %>
+            <% if pen_name %>
               <li><%= link_to pen_name.name,
                               join_group_path(group, { group: {pen_name_id: pen_name.id} }),
                               data: { confirm: "You sure?" } %></li>
+            <% else %>
+              <% current_user.pen_names.each do |pen_name| %>
+                <li><%= link_to pen_name.name,
+                                join_group_path(group, { group: {pen_name_id: pen_name.id} }),
+                                data: { confirm: "You sure?" } %></li>
+              <% end %>
             <% end %>
           </ul>
         </span>
