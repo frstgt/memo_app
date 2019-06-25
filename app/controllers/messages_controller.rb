@@ -24,9 +24,10 @@ class MessagesController < ApplicationController
     def pen_name_is_exist
       @pen_name = PenName.find_by(id: params[:message][:pen_name_id])
       last_pen_name = @room.get_user_pen_name(current_user)
-      c1 = (@pen_name and @pen_name.user == current_user)
-      c2 = (last_pen_name == nil) or (last_pen_name and last_pen_name == @pen_name)
-      redirect_to root_url unless c1 and c2
+      c1 = @pen_name != nil
+      c2 = @pen_name.user == current_user
+      c3 = (last_pen_name == nil) || (last_pen_name == @pen_name)
+      redirect_to root_url unless c1 and c2 and c3
     end
 
 end
