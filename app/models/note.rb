@@ -27,8 +27,12 @@ class Note < ApplicationRecord
 
   attr_accessor  :tag_list
 
+  ST_WEB = 2
   ST_OPEN = 1
   ST_CLOSE = 0
+  def is_web?
+    self.status == ST_WEB
+  end
   def is_open?
     self.status == ST_OPEN
   end

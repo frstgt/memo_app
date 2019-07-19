@@ -1,7 +1,8 @@
 module ApplicationHelper
 
   def app_name
-    "Memolet"
+    site = Site.first
+    (site) ? site.name : "Memolet"
   end
 
   def full_title(page_title = '')

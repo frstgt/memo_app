@@ -1,5 +1,5 @@
 class UserNotesController < ApplicationController
-  before_action :logged_in_user
+  before_action :logged_in_user,  except: [:show]
   before_action :note_is_exist,   except: [:new, :create]
 
   before_action :user_can_show,     only: [:show]

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190612083656) do
+ActiveRecord::Schema.define(version: 20190719120543) do
 
   create_table "group_notes", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -130,6 +130,15 @@ ActiveRecord::Schema.define(version: 20190612083656) do
     t.index ["user_id"], name: "index_rooms_on_user_id"
   end
 
+  create_table "sites", force: :cascade do |t|
+    t.string "name", default: "memolet"
+    t.text "outline"
+    t.string "picture"
+    t.integer "status", default: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tags", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -163,6 +172,7 @@ ActiveRecord::Schema.define(version: 20190612083656) do
     t.datetime "updated_at", null: false
     t.string "password_digest"
     t.string "keyword"
+    t.string "picture"
     t.index ["name"], name: "index_users_on_name", unique: true
   end
 

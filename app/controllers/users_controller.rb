@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, only: [:edit, :update, :destroy]
   before_action :correct_user,   only: [:show, :edit, :update, :destroy]
+  before_action :user_can_create, only: [:new, :create]
   before_action :user_can_destroy, only: [:destroy]
 
   def show
@@ -57,6 +58,10 @@ class UsersController < ApplicationController
     def correct_user
       @user = User.find(params[:id])
       redirect_to(root_url) unless current_user?(@user)
+    end
+
+    def user_can_create
+      redirect_to root_url unless User::can_create?
     end
 
     def user_can_destroy

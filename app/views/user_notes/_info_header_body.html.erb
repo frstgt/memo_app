@@ -18,7 +18,9 @@
     </span>
   <% end %>
 
-  <% if note.is_open? %>
+  <% if note.is_web? %>
+    <span class="badge badge-danger">web</span>
+  <% elsif note.is_open? %>
     <span class="badge badge-primary">open</span>
   <% else %>
     <span class="badge badge-dark">closed</span>

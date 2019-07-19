@@ -11,8 +11,12 @@ class GroupNote < Note
   end
 
   def can_show?(user)
-    member = self.group.get_user_member(user)
-    (member and self.group.is_regular_member?(member)) or self.is_open?
+    if self.is_web?
+      true
+    else
+      member = self.group.get_user_member(user)
+      (member and self.group.is_regular_member?(member)) or self.is_open?
+    end
   end
   def can_set_point?(user)
     member = self.group.get_user_member(user)

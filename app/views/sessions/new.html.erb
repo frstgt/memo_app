@@ -21,6 +21,8 @@
       </div>
     <% end %>
 
-    <p class='center'>New user? <%= link_to "Sign up now!", signup_path %></p>
+    <% if User::can_create? %>
+      <p class='center'>New user? <%= link_to "Sign up now!", signup_path %></p>
+    <% end %>
   </div>
 </div>

@@ -70,7 +70,7 @@ users.each do |user|
       
     title = Faker::Book.title
     outline = Faker::Lorem.sentence(20)
-    status = [Note::ST_CLOSE, Note::ST_OPEN].sample
+    status = [Note::ST_CLOSE, Note::ST_OPEN, Note::ST_WEB].sample
     if pen_name_id == nil
       status = Note::ST_CLOSE
     end
@@ -104,7 +104,7 @@ groups.each do |group|
 
     title = Faker::Book.title
     outline = Faker::Lorem.sentence(20)
-    status = [Note::ST_CLOSE, Note::ST_OPEN].sample
+    status = [Note::ST_CLOSE, Note::ST_OPEN, Note::ST_WEB].sample
     note = group.group_notes.create!(title: title, outline: outline,
                                     pen_name_id: pen_name_id, status: status)
 

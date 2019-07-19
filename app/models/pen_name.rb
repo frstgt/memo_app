@@ -50,7 +50,11 @@ class PenName < ApplicationRecord
   end
 
   def can_show?(user)
-    self.user == user or self.is_open? or (self.keyword and self.keyword == user.keyword)
+    if user
+      self.user == user || self.is_open? || (self.keyword && self.keyword == user.keyword)
+    else
+      false
+    end
   end
   def can_update?(user)
     self.user == user

@@ -21,7 +21,11 @@ class UserNote < Note
   end
 
   def can_show?(user)
-    self.user == user or self.is_open?
+    if self.is_web?
+      true
+    else
+      self.user == user or self.is_open?
+    end
   end
   def can_set_point?(user)
     self.is_open? and self.user != user

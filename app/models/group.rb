@@ -164,8 +164,12 @@ class Group < ApplicationRecord
   end
 
   def can_show?(user)
-    user_member = self.get_user_member(user)
-    user_member or self.is_open? or (self.keyword and self.keyword == user.keyword)
+    if user
+      user_member = self.get_user_member(user)
+      user_member || self.is_open? || (self.keyword && self.keyword == user.keyword)
+    else
+      false
+    end
   end
   def can_update?(user)
     user_member = self.get_user_member(user)

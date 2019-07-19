@@ -19,10 +19,17 @@ class User < ApplicationRecord
                        format: { with: VALID_PASSWORD_REGEX },
                        allow_nil: true
 
+  mount_uploader :picture, PictureUploader
+  validate  :picture_size
+
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                   BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
+  end
+
+  def is_admin?
+    self.id == 1
   end
 
   def groups
@@ -31,6 +38,13 @@ class User < ApplicationRecord
       g |= p.groups
     end
     g
+  end
+
+  def self.can_create?
+    site = Site.first
+    c1 = site == nil
+    c2 = site != nil && site.is_open?
+    c1 || c2
   end
 
   def can_destroy?(user)
@@ -44,7 +58,15 @@ class User < ApplicationRecord
     end
     c3 = (self.user_notes.where(status: Note::ST_OPEN).count == 0)
     c4 = (self.user_rooms.where(status: Room::ST_OPEN).count == 0)
-    c1 and c2 and c3 and c4
+    c1 && c2 && c3 && c4
   end
+
+  private
+
+    def picture_size
+      if picture.size > 5.megabytes
+        errors.add(:picture, "should be less than 5MB")
+      end
+    end
 
 end

@@ -10,6 +10,8 @@
         <span class="name"><b><%= @user.name %></b></span>
       </div>
 
+      <%= icon_for(@user, { name: @user.name, size: 256 }) %>
+
       <div class="info-footer">
         <span class="timestamp text-muted small">
           <%= timestamp(@user) %>

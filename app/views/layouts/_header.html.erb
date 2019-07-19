@@ -83,6 +83,18 @@
                                         method: :delete, class: "dropdown-item" %></li>
           </ul>
         </li>
+
+        <% if current_user.is_admin? && Site.first %>
+          <li class="nav-item active dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+              Admin <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right">
+            <li><%= link_to "Site setting", edit_site_path(Site.first), class: "dropdown-item" %></li>
+            </ul>
+        </li>
+        <% end %>
+
       <% else %>
         <li class="nav-item active"><%= link_to "Log in", login_path, class: "nav-link" %></li>
       <% end %>

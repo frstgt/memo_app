@@ -7,6 +7,11 @@ class SessionsController < ApplicationController
     @user = User.find_by(name: params[:session][:name])
     if @user && @user.authenticate(params[:session][:password])
       log_in @user
+      
+      if @user.is_admin? && Site.count == 0
+        Site.create()
+      end
+      
       redirect_to @user
     else
       flash.now[:danger] = 'Invalid name/password combination'
