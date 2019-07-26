@@ -61,7 +61,7 @@ class UsersController < ApplicationController
     end
 
     def user_can_create
-      redirect_to root_url unless User::can_create?
+      redirect_to root_url unless User::can_create?(current_user)
     end
 
     def user_can_destroy

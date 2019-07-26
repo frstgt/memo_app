@@ -4,6 +4,27 @@
 
     <%= link_to app_name, root_path, id: "logo", class: "navbar-brand" %>
 
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+      <% if logged_in? %>
+
+        <% if current_user.is_admin? && Site.first %>
+          <li class="nav-item active dropdown">
+            <a href="#" class="nav-link  dropdown-toggle" data-toggle="dropdown">
+              Admin <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li><%= link_to "Site setting", edit_site_path(Site.first), class: "dropdown-item" %></li>
+              <li class="dropdown-divider"></li>
+              <li><%= link_to "New account", signup_path, class: "dropdown-item" %></li>
+            </ul>
+          </li>
+        <% end %>
+
+      <% end %>
+
+    </ul>
+
     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
 
       <% if logged_in? %>
@@ -84,19 +105,22 @@
           </ul>
         </li>
 
-        <% if current_user.is_admin? && Site.first %>
-          <li class="nav-item active dropdown">
-            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-              Admin <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-right">
-            <li><%= link_to "Site setting", edit_site_path(Site.first), class: "dropdown-item" %></li>
-            </ul>
-        </li>
-        <% end %>
-
       <% else %>
-        <li class="nav-item active"><%= link_to "Log in", login_path, class: "nav-link" %></li>
+
+        <li class="nav-item active dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+            User <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li><%= link_to "Log in", login_path, class: "dropdown-item" %></li>
+
+            <% if User::can_create?(current_user) %>
+              <li class="dropdown-divider"></li>
+              <li><%= link_to "Sign up", signup_path, class: "dropdown-item" %></li>
+            <% end %>
+          </ul>
+        </li>
+
       <% end %>
 
     </ul>

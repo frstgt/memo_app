@@ -40,11 +40,15 @@ class User < ApplicationRecord
     g
   end
 
-  def self.can_create?
+  def self.can_create?(user)
     site = Site.first
     c1 = site == nil
     c2 = site != nil && site.is_open?
-    c1 || c2
+    if c1 || c2
+      true
+    else
+      user && user.is_admin?
+    end
   end
 
   def can_destroy?(user)

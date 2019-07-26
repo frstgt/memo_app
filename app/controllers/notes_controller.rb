@@ -6,11 +6,11 @@ class NotesController < ApplicationController
   def index
     case params[:mode]
     when "favorite"
-      @all_notes = Note.positive_list(current_user).where(status: Note::ST_OPEN)
+      @all_notes = Note.positive_list(current_user).where(["status = ? or status = ?", Note::ST_OPEN, Note::ST_WEB])
     when "disliked"
-      @all_notes = Note.negative_list(current_user).where(status: Note::ST_OPEN)
+      @all_notes = Note.negative_list(current_user).where(["status = ? or status = ?", Note::ST_OPEN, Note::ST_WEB])
     else
-      @all_notes = Note.non_negative_list(current_user).where(status: Note::ST_OPEN)
+      @all_notes = Note.non_negative_list(current_user).where(["status = ? or status = ?", Note::ST_OPEN, Note::ST_WEB])
     end
 
     @page_notes = @all_notes.paginate(page: params[:page])
