@@ -2,17 +2,51 @@
 
   <aside class="col-md-4">
 
-<div class="center jumbotron">
-  <h1>Welcome to the <%= app_name %></h1>
+    <div class="center jumbotron">
+      <h1>Welcome to the <%= app_name %></h1>
+    
+      <% if Site.first %>
+        <p><%= Site.first.outline %></p>
+    
+        <% if Site.first.picture? %>
+          <div><%= icon_for(Site.first, { name: Site.first.name, size: 256 }) %></div>
+        <% end %>
+      <% end %>
+    </div>
 
-  <% if Site.first %>
-    <p><%= Site.first.outline %></p>
+    <div>
 
-    <% if Site.first.picture? %>
-      <div><%= icon_for(Site.first, { name: Site.first.name, size: 256 }) %></div>
-    <% end %>
-  <% end %>
-</div>
+      <%= link_to image_tag("logos/rails.png", alt: "Rails logo",
+                            width: 70, height: 80),
+                  'http://rubyonrails.org/' %>
+      <%= link_to image_tag("logos/ruby-logo-R.png", alt: "Ruby logo",
+                            width: 80, height: 80),
+                  'https://www.ruby-lang.org/' %>
+      <%= link_to image_tag("logos/bootstrap-solid.svg", alt: "Bootstrap logo",
+                            width: 80, height: 80),
+                  'https://getbootstrap.com/' %>
+      <%= link_to image_tag("logos/ubuntu-logo14.png", alt: "Ubuntu logo",
+                            width: 160, height: 80),
+                  'https://www.ubuntu.com/' %>
+      <%= link_to image_tag("logos/openlogo-100.png", alt: "debian logo",
+                            width: 80, height: 80),
+                  'https://www.debian.org/index.en.html' %>
+
+      <%= link_to image_tag("logos/logo-fsf.org.png", alt: "FSF logo",
+                            width: 240, height: 80),
+                  'https://www.fsf.org/' %>
+      <%= link_to image_tag("logos/gerwinski-gnu-head.png", alt: "GNU logo",
+                            width: 80, height: 80),
+                  'https://www.gnu.org/' %>
+                  
+      <%= link_to image_tag("logos/Amazon_Web_Services_logo_AWS.png", alt: "AWS logo",
+                            width: 240, height: 80),
+                  'https://aws.amazon.com' %>
+      <%= link_to image_tag("logos/heroku-logo.png", alt: "heroku logo",
+                            width: 60, height: 80),
+                  'https://heroku.com' %>
+
+    </div>
 
   </aside>
 
@@ -26,26 +60,6 @@
 
 </div>
 
-<%= link_to image_tag("logos/rails.png", alt: "Rails logo",
-                      width: 80, height: 80),
-            'http://rubyonrails.org/' %>
-<%= link_to image_tag("logos/ruby-logo-R.png", alt: "Ruby logo",
-                      width: 80, height: 80),
-            'https://www.ruby-lang.org/' %>
-<%= link_to image_tag("logos/bootstrap-solid.svg", alt: "Bootstrap logo",
-                      width: 80, height: 80),
-            'https://getbootstrap.com/' %>
-<%= link_to image_tag("logos/ubuntu-logo14.png", alt: "Ubuntu logo",
-                      width: 160, height: 80),
-            'https://www.ubuntu.com/' %>
-<%= link_to image_tag("logos/openlogo-100.png", alt: "debian logo",
-                      width: 80, height: 80),
-            'https://www.debian.org/index.en.html' %>
-<%= link_to image_tag("logos/gerwinski-gnu-head.png", alt: "GNU logo",
-                      width: 80, height: 80),
-            'https://www.gnu.org/' %>
-<%= link_to image_tag("logos/logo-fsf.org.png", alt: "FSF logo",
-                      width: 240, height: 80),
-            'https://www.fsf.org/' %>
+
 
 
