@@ -2,11 +2,11 @@ source 'https://rubygems.org'
 
 ruby '2.6.3'
 
-gem 'rails',                    '5.1.6'
+gem 'rails',                    '>= 5.1.6'
 gem 'bcrypt',                   '3.1.12'
 gem 'faker',                    '1.7.3'
 gem 'carrierwave',              '1.2.2'
-gem 'mini_magick',              '4.7.0'
+gem 'mini_magick',              '>= 4.9.4'
 gem 'will_paginate',            '3.1.7'
 gem 'will_paginate-bootstrap4', '0.2.2'
 gem "bootstrap",                '4.3.1'
