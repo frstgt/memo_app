@@ -30,16 +30,20 @@ module MarkdownHelper
       options = {
           filter_html:     true,
           hard_wrap:       true,
-          space_after_headers: true
+          link_attributes: {rel: 'nofollow', target: "_blank"},
       }
       extensions = {
-          autolink: true,
-          fenced_code_blocks: true,
-          lax_spacing: true,
           no_intra_emphasis: true,
+          tables: true,
+          fenced_code_blocks: true,
+          autolink: true,
           strikethrough: true,
+          lax_spacing: true,
           superscript: true,
-          tables: true
+          underline: true,
+          highlight: true,
+          quote: true,
+          footnotes: true,
       }
 
       renderer = MyRender.new(options)
