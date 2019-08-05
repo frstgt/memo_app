@@ -16,8 +16,8 @@ class MemoTest < ActiveSupport::TestCase
     assert_not @memo.valid?
   end
 
-  test "content should be at most 1000 characters" do
-    @memo.content = "a" * 1001
+  test "content should be at most 4000 characters" do
+    @memo.content = "a" * 4001
     assert_not @memo.valid?
   end
 
