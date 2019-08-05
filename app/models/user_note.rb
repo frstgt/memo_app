@@ -1,6 +1,6 @@
 class UserNoteOpenValidator < ActiveModel::Validator
   def validate(record)
-    if record.status == Note::ST_OPEN and record.pen_name == nil
+    if record.status == Note::ST_OPEN && record.pen_name == nil
       record.errors[:base] << "PenName must be valid when the Note is open"
     end
   end
@@ -14,7 +14,7 @@ class UserNote < Note
 
   def to_group_note(group)
     member = group.get_user_member(self.user)
-    if member and group.is_regular_member?(member) and (self.pen_name == member)
+    if member && group.is_regular_member?(member) && (self.pen_name == member)
       note = self.becomes(Note)      
       note.update_attributes({type: "GroupNote", user_id: nil, group_id: group.id})
     end
@@ -24,11 +24,11 @@ class UserNote < Note
     if self.is_web?
       true
     else
-      self.user == user or self.is_open?
+      self.user == user || self.is_open?
     end
   end
   def can_set_point?(user)
-    self.is_open? and self.user != user
+    self.is_open? && self.user != user
   end
 
   def can_update?(user)
@@ -42,7 +42,7 @@ class UserNote < Note
     if self.user == user
       member = group.get_user_member(user)
       if self.pen_name
-        member and group.is_regular_member?(member) and (self.pen_name == member)
+        member && group.is_regular_member?(member) && (self.pen_name == member)
       else
         false
       end

@@ -18,7 +18,7 @@ class NotesController < ApplicationController
   end
 
   def set_point
-    point = (params[:note][:point]).to_i
+    point = (params2d(:note, :point)).to_i
     point = -5 if point < -5
     point = 5 if point > 5
 

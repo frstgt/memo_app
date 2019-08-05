@@ -15,7 +15,7 @@ class GroupsController < ApplicationController
 
   def show
     pen_name = @group.get_user_member(current_user)
-    if pen_name and @group.is_regular_member?(pen_name)
+    if pen_name && @group.is_regular_member?(pen_name)
       @all_notes = @group.group_notes
       @all_rooms = @group.group_rooms
     else
@@ -104,26 +104,26 @@ class GroupsController < ApplicationController
       redirect_to root_url unless @group.can_show?(current_user)
     end
     def user_can_create
-      @leader = current_user.pen_names.find_by(id: params[:group][:leader_id])
+      @leader = current_user.pen_names.find_by(id: params2d(:group, :leader_id))
       redirect_to root_url unless @leader
     end
     def user_can_edit
       redirect_to root_url unless @group.can_update?(current_user)
     end
     def user_can_update
-      @leader = @group.regular_members.find_by(id: params[:group][:leader_id])
-      redirect_to root_url unless @leader and @group.can_update?(current_user)
+      @leader = @group.regular_members.find_by(id: params2d(:group, :leader_id))
+      redirect_to root_url unless @leader && @group.can_update?(current_user)
     end
     def user_can_destroy
       redirect_to root_url unless @group.can_destroy?(current_user)
     end
     def user_can_join
-      @user_pen_name = current_user.pen_names.find_by(id: params[:group][:pen_name_id])
+      @user_pen_name = current_user.pen_names.find_by(id: params2d(:group, :pen_name_id))
       last_pen_name = @group.get_user_pen_name(current_user)
       c1 = @user_pen_name != nil
       c2 = @group.can_join?(current_user)
       c3 = (last_pen_name == nil) || (last_pen_name == @user_pen_name)
-      redirect_to root_url unless c1 and c2 and c3
+      redirect_to root_url unless c1 && c2 && c3
     end
     def user_can_unjoin
       redirect_to root_url unless @group.can_unjoin?(current_user)
@@ -132,11 +132,11 @@ class GroupsController < ApplicationController
       redirect_to root_url unless @group.can_change_leader?(current_user)
     end
     def user_can_set_position
-      @group_member = @group.members.find_by(id: params[:group][:pen_name_id])
-      @to_pos = params[:group][:position].to_i
+      @group_member = @group.members.find_by(id: params2d(:group, :pen_name_id))
+      @to_pos = params2d(:group, :position).to_i
       @to_pos = Membership::POS_LEADER if @to_pos < Membership::POS_LEADER
       @to_pos = Membership::POS_VISITOR if @to_pos > Membership::POS_VISITOR
-      redirect_to root_url unless @group_member and @group.can_set_position?(current_user, @group_member, @to_pos)
+      redirect_to root_url unless @group_member && @group.can_set_position?(current_user, @group_member, @to_pos)
     end
 
 end

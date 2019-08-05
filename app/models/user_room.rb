@@ -1,6 +1,6 @@
 class UserRoomOpenValidator < ActiveModel::Validator
   def validate(record)
-    if record.status == Room::ST_OPEN and record.pen_name == nil
+    if record.status == Room::ST_OPEN && record.pen_name == nil
       record.errors[:base] << "PenName must be valid when the Room is open"
     end
   end
@@ -14,11 +14,11 @@ class UserRoom < Room
 
   def get_user_pen_name(user)
     pen_name = nil
-    if self.pen_name and self.pen_name.user == user
+    if self.pen_name && self.pen_name.user == user
       pen_name = self.pen_name
     else
       self.messages.each do |message|
-        if message.pen_name and message.pen_name.user == user
+        if message.pen_name && message.pen_name.user == user
           pen_name = message.pen_name
           break
         end
@@ -26,7 +26,7 @@ class UserRoom < Room
       unless pen_name
         self.user.user_rooms do |room|
           room.messages.each do |message|
-            if message.pen_name and message.pen_name.user == user
+            if message.pen_name && message.pen_name.user == user
               pen_name = message.pen_name
               break
             end
@@ -39,7 +39,7 @@ class UserRoom < Room
   end
 
   def can_show?(user)
-    (self.user == user) or self.is_open?
+    (self.user == user) || self.is_open?
   end
 
   def can_update?(user)
@@ -50,7 +50,7 @@ class UserRoom < Room
   end
 
   def can_control_messages?(user)
-    (self.user == user) or self.is_open?
+    (self.user == user) || self.is_open?
   end
 
   include Rails.application.routes.url_helpers

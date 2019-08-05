@@ -4,8 +4,8 @@ class SessionsController < ApplicationController
   end
   
   def create
-    @user = User.find_by(name: params[:session][:name])
-    if @user && @user.authenticate(params[:session][:password])
+    @user = User.find_by(name: params2d(:session, :name))
+    if @user && @user.authenticate(params2d(:session, :password))
       log_in @user
       
       if @user.is_admin? && Site.count == 0

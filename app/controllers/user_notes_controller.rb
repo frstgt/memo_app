@@ -83,7 +83,7 @@ class UserNotesController < ApplicationController
 
     def user_can_move
       @group = Group.find_by(id: params[:group_id])
-      redirect_to root_url unless @group and @note.can_move?(current_user, @group)
+      redirect_to root_url unless @group && @note.can_move?(current_user, @group)
     end
 
 end

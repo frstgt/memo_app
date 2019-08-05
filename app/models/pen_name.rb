@@ -68,7 +68,7 @@ class PenName < ApplicationRecord
     c6 = (self.group_notes.count == 0)
     c7 = (self.group_rooms.count == 0)
     c8 = (self.messages.count == 0)
-    c1 and c2 and c3 and c4 and c5 and c6 and c7 and c8
+    c1 && c2 && c3 && c4 && c5 && c6 && c7 && c8
   end 
 
   private

@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+    def params2d(key1, key2)
+      (params[key1]) ? params[key1][key2] : nil
+    end
+
     def logged_in_user
       unless logged_in?
         flash[:danger] = "Please log in."

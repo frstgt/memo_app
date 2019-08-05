@@ -68,6 +68,11 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     assert_template 'groups/new'
 
     assert_difference 'Group.count', 0 do
+      post groups_path # no params
+    end
+    assert_redirected_to root_path
+
+    assert_difference 'Group.count', 0 do
       post groups_path, params: { group: { name: "Test Group", outline: "This is a test.",
                                            leader_id: @leader_pname.id} }
     end
@@ -87,9 +92,27 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
       get edit_group_path(@group)
       assert_template 'groups/edit'
 
+      patch group_path(@group)
+      assert_redirected_to root_path # no params
+    end  
+    
+    [@leader_pname].each do |pname|
+      log_in_as(pname.user)
+      get edit_group_path(@group)
+      assert_template 'groups/edit'
+
       patch group_path(@group), params: { group: { name: @group.name, outline: "This is a edit test.",
                                                     leader_id: pname.id} }
       assert_redirected_to @group
+    end
+
+    [@subleader_pname, @common_pname, @visitor_pname, @other_pname].each do |pname|
+      log_in_as(pname.user)
+      get edit_group_path(@group)
+      assert_redirected_to root_path
+
+      patch group_path(@group) # no params
+      assert_redirected_to root_path
     end
 
     [@subleader_pname, @common_pname, @visitor_pname, @other_pname].each do |pname|

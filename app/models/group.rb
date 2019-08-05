@@ -31,7 +31,7 @@ class Group < ApplicationRecord
     if self.members.count == 0
       active_memberships.create(member_id: pen_name.id, position: Membership::POS_LEADER)
     else
-      if (pen_name != self.leader) and self.is_regular_member?(pen_name)
+      if (pen_name != self.leader) && self.is_regular_member?(pen_name)
         leader_membership = active_memberships.find_by(position: Membership::POS_LEADER)
         member_membership = active_memberships.find_by(member_id: pen_name.id)
 
@@ -86,7 +86,7 @@ class Group < ApplicationRecord
   end
   def get_position_name(pen_name)
     position_id = self.get_position_id(pen_name)
-    if position_id and position_id <= Membership::POS_VISITOR
+    if position_id && position_id <= Membership::POS_VISITOR
       Membership::POSITIONS[position_id][0]
     else
       "Invalid"
@@ -116,19 +116,19 @@ class Group < ApplicationRecord
   end
   def is_leading_member?(pen_name) # leader, subleader
     membership = active_memberships.find_by(member_id: pen_name.id)
-    membership and membership.position <= Membership::POS_SUBLEADER
+    membership && membership.position <= Membership::POS_SUBLEADER
   end
   def is_general_member?(pen_name) # common, visitor
     membership = active_memberships.find_by(member_id: pen_name.id)
-    membership and membership.position >= Membership::POS_COMMON
+    membership && membership.position >= Membership::POS_COMMON
   end
   def is_regular_member?(pen_name) # leader, subleader, common
     membership = active_memberships.find_by(member_id: pen_name.id)
-    membership and membership.position <= Membership::POS_COMMON
+    membership && membership.position <= Membership::POS_COMMON
   end
   def is_irregular_member?(pen_name) # visitor
     membership = active_memberships.find_by(member_id: pen_name.id)
-    membership and membership.position == Membership::POS_VISITOR
+    membership && membership.position == Membership::POS_VISITOR
   end
   def is_member?(pen_name)
     membership = active_memberships.find_by(member_id: pen_name.id)
@@ -143,7 +143,7 @@ class Group < ApplicationRecord
     pen_name = nil
     self.group_rooms do |room|
       room.messages.each do |message|
-        if message.pen_name and message.pen_name.user == user
+        if message.pen_name && message.pen_name.user == user
           pen_name = message.pen_name
           break
         end
@@ -173,34 +173,34 @@ class Group < ApplicationRecord
   end
   def can_update?(user)
     user_member = self.get_user_member(user)
-    user_member and (user_member == self.leader)
+    user_member && (user_member == self.leader)
   end
   def can_destroy?(user)
     user_member = self.get_user_member(user)
-    c1 = (user_member and (user_member == self.leader))
+    c1 = (user_member && (user_member == self.leader))
     c2 = (self.members.count == 1)
     c3 = (self.status != Group::ST_OPEN)
     c4 = (self.group_notes.where(status: Note::ST_OPEN).count == 0)
     c5 = (self.group_rooms.where(status: Room::ST_OPEN).count == 0)
-    c1 and c2 and c3 and c4 and c5
+    c1 && c2 && c3 && c4 && c5
   end 
 
   def can_join?(user)
     user_member = self.get_user_member(user)
-    (user_member == nil) and (self.keyword and self.keyword == user.keyword)
+    (user_member == nil) && (self.keyword && self.keyword == user.keyword)
   end
   def can_unjoin?(user)
     user_member = self.get_user_member(user)
-    c1 = (user_member and (user_member != self.leader))
-    c2 = (user_member and user_member.group_notes.count == 0)
-    c3 = (user_member and user_member.group_rooms.count == 0)
-    c1 and c2 and c3
+    c1 = (user_member && (user_member != self.leader))
+    c2 = (user_member && user_member.group_notes.count == 0)
+    c3 = (user_member && user_member.group_rooms.count == 0)
+    c1 && c2 && c3
   end
   def can_set_position?(user, group_member, to_pos)
     user_member = self.get_user_member(user)
     do_pos = self.get_position_id(user_member)
     from_pos = self.get_position_id(group_member)
-    user_member and (do_pos <= Membership::POS_SUBLEADER) and do_pos < from_pos and do_pos < to_pos and from_pos != to_pos
+    user_member && (do_pos <= Membership::POS_SUBLEADER) && do_pos < from_pos && do_pos < to_pos && from_pos != to_pos
   end
 
   private
