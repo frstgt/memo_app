@@ -27,28 +27,28 @@ module MarkdownHelper
   end
 
   def markdown(text)
-      options = {
-          filter_html:     true,
-          hard_wrap:       true,
-          link_attributes: {rel: 'nofollow', target: "_blank"},
-      }
-      extensions = {
-          no_intra_emphasis: true,
-          tables: true,
-          fenced_code_blocks: true,
-          autolink: true,
-          strikethrough: true,
-          lax_spacing: true,
-          superscript: true,
-          underline: true,
-          highlight: true,
-          quote: true,
-          footnotes: true,
-      }
+    options = {
+      filter_html:     true,
+      hard_wrap:       true,
+      link_attributes: {rel: 'nofollow', target: "_blank"},
+    }
+    extensions = {
+      no_intra_emphasis: true,
+      tables: true,
+      fenced_code_blocks: true,
+      autolink: true,
+      strikethrough: true,
+      lax_spacing: true,
+      superscript: true,
+      underline: true,
+      highlight: true,
+      quote: true,
+      footnotes: true,
+    }
 
-      renderer = MyRender.new(options)
-      @markdown = Redcarpet::Markdown.new(renderer, extensions)
-      @markdown.render(text).html_safe
+    renderer = MyRender.new(options)
+    rc_markdown = Redcarpet::Markdown.new(renderer, extensions)
+    rc_markdown.render(text).html_safe
   end
 end
 
