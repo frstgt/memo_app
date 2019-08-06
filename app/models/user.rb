@@ -13,7 +13,7 @@ class User < ApplicationRecord
                     uniqueness: true
 
   has_secure_password
-  VALID_PASSWORD_REGEX = /(?=.*\d+.*)(?=.*[a-z]+.*)(?=.*[A-Z]+.*).*[\-\+\/\*\%\^\&\|\~\<\=\>\"\'\`\;\:\[\]\{\}\(\)\!\?\@\#\$\,\.\_\\]+.*/
+  VALID_PASSWORD_REGEX = /(?=.*(\d+.*){2,})(?=.*([a-z]+.*){2,})(?=.*([A-Z]+.*){2,}).*([\-\+\/\*\%\^\&\|\~\<\=\>\"\'\`\;\:\[\]\{\}\(\)\!\?\@\#\$\,\.\_\\]+.*){2,}/
   validates :password, presence: true,
                        length: { minimum: 16, maximum: 64 },
                        format: { with: VALID_PASSWORD_REGEX },

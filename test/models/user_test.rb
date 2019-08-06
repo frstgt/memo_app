@@ -39,7 +39,9 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "password should satisfy some requirements" do
-    # valid_password = "z8aKm$@3rTEp#+bs"
+    password = "z8aKm$@3rTEp#+bs" # valid password
+    @user.password = @user.password_confirmation = password
+    assert @user.valid?
 
     password = "z8aKm$@3rTEp#+b" # 15chars
     @user.password = @user.password_confirmation = password
@@ -52,24 +54,28 @@ class UserTest < ActiveSupport::TestCase
     password = "z8akm$@3rtep#+bs" # no uppercase
     @user.password = @user.password_confirmation = password
     assert_not @user.valid?
-
-    password = "Z8AKM$@3RTEP#+BS" # no lowercase
-    @user.password = @user.password_confirmation = password
-    assert_not @user.valid?
-
-    password = "z8akm$@3rtep#+bs" # no uppercase
+    password = "z8akm$@3rTep#+bs" # one uppercase
     @user.password = @user.password_confirmation = password
     assert_not @user.valid?
 
     password = "Z8AKM$@3RTEP#+BS" # no lowercase
+    @user.password = @user.password_confirmation = password
+    assert_not @user.valid?
+    password = "Z8AKm$@3RTEP#+BS" # one lowercase
     @user.password = @user.password_confirmation = password
     assert_not @user.valid?
 
     password = "zEaKm$@TrTEp#+bs" # no number
     @user.password = @user.password_confirmation = password
     assert_not @user.valid?
+    password = "zEaKm$@3rTEp#+bs" # one number
+    @user.password = @user.password_confirmation = password
+    assert_not @user.valid?
 
     password = "z8aKmDA3rTEpSPbs" # no special character
+    @user.password = @user.password_confirmation = password
+    assert_not @user.valid?
+    password = "z8aKmDA3rTEp#Pbs" # one special character
     @user.password = @user.password_confirmation = password
     assert_not @user.valid?
   end
