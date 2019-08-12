@@ -44,6 +44,33 @@ blockquote {
   border-left: 5px solid orange;
 }
 
+.highlight .c1 {
+  color: #9594af!important;
+  font-style: italic;
+}
+
+.highlight {
+  border-radius: 3px;
+  max-width: 98%;
+  box-sizing: content-box;
+  display: block;
+  margin: 0 0 3rem;
+}
+
+code, .code, pre {
+  overflow-x: scroll;
+  word-break: normal;
+  white-space: pre!important;
+  word-wrap: normal;
+  padding: 14px 23px 14px 13px !important;
+
+  & code {
+  line-height: 1.5;
+  white-space: pre-wrap;
+  margin-left: -12px;
+  }
+}
+
 /* header */
 
 header {

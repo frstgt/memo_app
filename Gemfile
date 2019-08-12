@@ -11,9 +11,9 @@ gem 'will_paginate',            '3.1.7'
 gem 'will_paginate-bootstrap4', '0.2.2'
 gem "bootstrap",                '4.3.1'
 
-gem 'redcarpet',                '3.5.0'
-gem 'rouge',                    '3.3.0'
-gem 'mathjax-rails',            '2.6.1'
+gem 'redcarpet',                '>= 3.4.0'
+gem 'rouge',                    '>= 3.3.0'
+gem 'mathjax-rails',            '>= 2.6.1'
 
 gem 'puma',                     '3.9.1'
 gem 'sassc',                    '2.0.1'

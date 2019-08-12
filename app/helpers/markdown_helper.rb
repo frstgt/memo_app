@@ -1,9 +1,20 @@
-require 'rouge/plugins/redcarpet'
-
 module MarkdownHelper
+  require 'redcarpet'
+  require 'rouge'
+  require 'rouge/plugins/redcarpet'
 
   class MyRender < Redcarpet::Render::HTML
     include Rouge::Plugins::Redcarpet
+
+    def table(header, body)
+      "\n<table>\n<thead>\n#{header}</thead>\n<tbody>\n#{body}</tbody>\n</table>\n"
+    end
+    def table_row(content)
+      "<tr>\n#{content}</tr>\n"
+    end
+    def table_cell(content, alignment)
+      "<td>#{content}</td>\n"
+    end
 
     def block_code(code, language)
       if language=="mathjax"
@@ -27,12 +38,13 @@ module MarkdownHelper
   end
 
   def markdown(text)
-    options = {
-      filter_html:     true,
+    render_options = {
+#      filter_html:     true,
       hard_wrap:       true,
       link_attributes: {rel: 'nofollow', target: "_blank"},
+      prettify: true,
     }
-    extensions = {
+    markdown_options = {
       no_intra_emphasis: true,
       tables: true,
       fenced_code_blocks: true,
@@ -46,9 +58,10 @@ module MarkdownHelper
       footnotes: true,
     }
 
-    renderer = MyRender.new(options)
-    rc_markdown = Redcarpet::Markdown.new(renderer, extensions)
-    rc_markdown.render(text).html_safe
+    renderer = MyRender.new(render_options)
+    markdown = Redcarpet::Markdown.new(renderer, markdown_options)
+
+    raw markdown.render(text)
   end
 end
 
