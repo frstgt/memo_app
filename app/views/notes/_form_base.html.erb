@@ -32,6 +32,8 @@
 
 <div class="form-group">
   <%= f.label :status %><br>
+  <%= f.radio_button :status, Note::ST_WEB %>
+  <%= f.label :web %><%= f.label "(all of the people in the world can read memos)" %><br>
   <%= f.radio_button :status, Note::ST_OPEN %>
   <%= f.label :open %><%= f.label "(other users can read memos)" %><br>
   <%= f.radio_button :status, Note::ST_CLOSE %>
