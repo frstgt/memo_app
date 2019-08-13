@@ -51,24 +51,41 @@ blockquote {
 
 .highlight {
   border-radius: 3px;
-  max-width: 98%;
+  max-width: 750px;
   box-sizing: content-box;
   display: block;
-  margin: 0 0 3rem;
+  margin: 0 0 1rem; // rem ~ font-size
 }
 
 code, .code, pre {
-  overflow-x: scroll;
+  overflow-x: auto;
   word-break: normal;
-  white-space: pre!important;
+  white-space: pre;
   word-wrap: normal;
-  padding: 14px 23px 14px 13px !important;
+  padding: 5px 0px 3px 5px; // top right bottom left
 
   & code {
-  line-height: 1.5;
-  white-space: pre-wrap;
-  margin-left: -12px;
+    white-space: pre-wrap;
+    margin-left: -5px;
   }
+}
+
+table {
+  border-collapse: collapse;
+  border: 2px solid black;
+  margin: 0 0 1rem;
+}
+tr, th, td {
+  padding: 0 5px 0 5px; // top right bottom left
+  border: 1px solid black;
+}
+
+mark {
+  background: lightgreen;
+}
+
+q {
+  color: forestgreen;
 }
 
 /* header */

@@ -15,7 +15,6 @@ module MemoApp
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
-    # In config/application.rb
     default_tags = %w(
       del dd h3 address big sub tt a ul h4 cite dfn h5 small kbd code
       b ins img h6 sup pre strong blockquote acronym dt br p div samp
@@ -24,8 +23,8 @@ module MemoApp
     default_attributes = %w(
       name href cite class title src xml:lang height datetime alt abbr width
     )
-    config.action_view.sanitized_allowed_tags = default_tags + %w(table thead tbody tr td)
-    config.action_view.sanitized_allowed_attributes = default_attributes
+    config.action_view.sanitized_allowed_tags = default_tags + %w(table thead tbody tr th td mark q)
+    config.action_view.sanitized_allowed_attributes = default_attributes +%w(style)
 
   end
 end

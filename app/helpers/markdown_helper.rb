@@ -6,16 +6,6 @@ module MarkdownHelper
   class MyRender < Redcarpet::Render::HTML
     include Rouge::Plugins::Redcarpet
 
-    def table(header, body)
-      "\n<table>\n<thead>\n#{header}</thead>\n<tbody>\n#{body}</tbody>\n</table>\n"
-    end
-    def table_row(content)
-      "<tr>\n#{content}</tr>\n"
-    end
-    def table_cell(content, alignment)
-      "<td>#{content}</td>\n"
-    end
-
     def block_code(code, language)
       if language=="mathjax"
         "<script type=\"math/tex; mode=display\">\n#{code}\n</script>"
@@ -39,7 +29,7 @@ module MarkdownHelper
 
   def markdown(text)
     render_options = {
-#      filter_html:     true,
+      filter_html:     true,
       hard_wrap:       true,
       link_attributes: {rel: 'nofollow', target: "_blank"},
       prettify: true,
@@ -61,7 +51,7 @@ module MarkdownHelper
     renderer = MyRender.new(render_options)
     markdown = Redcarpet::Markdown.new(renderer, markdown_options)
 
-    raw markdown.render(text)
+    markdown.render(text).html_safe
   end
 end
 
