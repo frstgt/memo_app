@@ -41,12 +41,17 @@ textarea {
 blockquote {
   padding: 0 10px;
   margin-left: 0;
-  border-left: 5px solid orange;
+  border-left: 5px solid green;
 }
 
 .highlight .c1 {
   color: #9594af!important;
   font-style: italic;
+}
+
+.ge, .gs {
+  color: white;
+  font-style: normal;
 }
 
 .highlight {
