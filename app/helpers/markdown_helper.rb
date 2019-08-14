@@ -6,6 +6,30 @@ module MarkdownHelper
   class MyRender < Redcarpet::Render::HTML
     include Rouge::Plugins::Redcarpet
 
+    def is_yutube_link?(link)
+      (link =~ /https\:\/\/www\.youtube\.com\/watch\?v\=(\w+)/) ? $1 : nil
+    end
+    def yutube_embed_link(id)
+      "<iframe width=\"517\" height=\"291\" src=\"https://www.youtube.com/embed/#{id}\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>"
+    end
+
+    def link(link, title, content)
+      link = CGI::escapeHTML(link)
+      if id = is_yutube_link?(link)
+        yutube_embed_link(id) # ignore title and content
+      else
+        "<a href=\"#{link}\" title=\"#{title}\">#{content}</a>"
+      end
+    end
+    def autolink(link, link_type)
+      link = CGI::escapeHTML(link)
+      if id = is_yutube_link?(link)
+        yutube_embed_link(id)
+      else
+        "<a href=\"#{link}\">#{link}</a>"
+      end
+    end
+
     def block_code(code, language)
       if language=="mathjax"
         "<script type=\"math/tex; mode=display\">\n#{code}\n</script>"

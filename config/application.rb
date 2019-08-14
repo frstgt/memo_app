@@ -23,8 +23,8 @@ module MemoApp
     default_attributes = %w(
       name href cite class title src xml:lang height datetime alt abbr width
     )
-    config.action_view.sanitized_allowed_tags = default_tags + %w(table thead tbody tr th td mark q)
-    config.action_view.sanitized_allowed_attributes = default_attributes +%w(style)
+    config.action_view.sanitized_allowed_tags = default_tags + %w(table thead tbody tr th td mark q iframe)
+    config.action_view.sanitized_allowed_attributes = default_attributes +%w(style frameborder allow allowfullscreen)
 
   end
 end
