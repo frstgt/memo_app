@@ -7,7 +7,7 @@ module MarkdownHelper
     include Rouge::Plugins::Redcarpet
 
     def is_yutube_link?(link)
-      (link =~ /https\:\/\/www\.youtube\.com\/watch\?v\=(\w+)/) ? $1 : nil
+      (link =~ /https\:\/\/www\.youtube\.com\/watch\?v\=([\w\-]+)/) ? $1 : nil
     end
     def yutube_embed_link(id)
       "<iframe width=\"517\" height=\"291\" src=\"https://www.youtube.com/embed/#{id}\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>"
