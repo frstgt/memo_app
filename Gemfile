@@ -15,7 +15,7 @@ gem 'redcarpet',                '>= 3.4.0'
 gem 'rouge',                    '>= 3.3.0'
 gem 'mathjax-rails',            '>= 2.6.1'
 
-gem 'puma',                     '3.9.1'
+gem 'puma',                     '3.12.4'
 gem 'sassc',                    '2.0.1'
 gem 'uglifier',                 '3.2.0'
 gem 'coffee-rails',             '4.2.2'
